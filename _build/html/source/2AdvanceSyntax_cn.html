@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2 高级语法 &mdash; sv syntax  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3 特殊语法" href="3SpecialSyntax_cn.html" />
+    <link rel="prev" title="1 基础语法" href="1BasicSyntax_cn.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sv syntax
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1BasicSyntax_cn.html">1 基础语法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 高级语法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1 参数化电路设计规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#struct">2.2 struct 用法规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package">2.3 package 用法规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface">2.4 interface 用法规范</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3SpecialSyntax_cn.html">3 特殊语法</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sv syntax</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>2 高级语法</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/2AdvanceSyntax_cn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>2 高级语法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>2.1 参数化电路设计规范<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ol class="loweralpha simple">
+<li>不显示声明 <strong>generate</strong> 和 <strong>endgenerate</strong>。不声明在标准中允许，且没有任何影响。</li>
+<li>给必要的生成块 <strong>添加block name</strong>。若在生成语句中调用module或定义信号，该module或信号通过block name访问。若没有显示定义block name，仿真器或综合器会自动生成。</li>
+<li>所有在生成语句中使用的所有变量都是 <strong>固定值</strong> (参数 或 宏)，不是电路中的信号。</li>
+<li><dl class="first docutils">
+<dt>条件电路生成使用宏定义实现，用以区分电路中信号的 if 判断。</dt>
+<dd></dd>
+</dl>
+</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define gen_if   if</span>
+<span class="cp">`define gen_elif else if</span>
+<span class="cp">`define gen_else else</span>
+
+<span class="no">`gen_if</span><span class="p">(</span><span class="no">PARAM_A</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span><span class="k">begin</span><span class="o">:</span> <span class="n">dat</span>
+  <span class="k">assign</span> <span class="n">dat1</span> <span class="o">=</span> <span class="n">xx</span><span class="p">;</span>
+<span class="k">end</span> <span class="no">`gen_else</span> <span class="k">begin</span><span class="o">:</span> <span class="n">dat</span>
+  <span class="k">assign</span> <span class="n">dat1</span> <span class="o">=</span> <span class="n">yy</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="no">`gen_if</span><span class="p">(</span><span class="no">PARAM_A</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">dat2</span> <span class="o">=</span> <span class="n">xx</span><span class="p">;</span>
+  <span class="k">end</span> <span class="no">`gen_else</span> <span class="k">begin</span>
+    <span class="n">dat2</span> <span class="o">=</span> <span class="n">yy</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>生成块中for循环写法：<strong>for(genvar i=0; i&lt;xx; i++)</strong></li>
+<li>always中for循环写法：<strong>for(int i=0; i&lt;xx; i++)</strong></li>
+<li>always中可以使用foreach循环：<strong>foreach(dat[i])</strong></li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define signal outside the loop generate block is recommended.</span>
+<span class="kt">logic</span> <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat1</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="k">genvar</span> <span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="no">WIDTH</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="k">begin</span><span class="o">:</span> <span class="n">dat1</span>
+  <span class="k">assign</span> <span class="n">dat1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="k">end</span>
+
+<span class="k">for</span><span class="p">(</span><span class="k">genvar</span> <span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="no">WIDTH</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="k">begin</span><span class="o">:</span> <span class="n">dat2Block</span>
+  <span class="kt">wire</span> <span class="n">dat2</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>  <span class="c1">// The signal dat2 can only be accessed by block name: dat2Block.</span>
+<span class="k">end</span>
+
+<span class="kt">logic</span> <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat3</span><span class="p">,</span><span class="n">dat4</span><span class="p">;</span>
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="no">WIDTH</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="k">begin</span>
+    <span class="n">dat3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="n">foreach</span><span class="p">(</span><span class="n">iDatA</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="k">begin</span>
+    <span class="n">dat4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="struct">
+<h2>2.2 struct 用法规范<a class="headerlink" href="#struct" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define typedef_DemoStruct(width) \</span>
+<span class="cp">  typedef struct packed{\</span>
+<span class="cp">    logic [width-1:0] dat;\</span>
+<span class="cp">  }</span>
+<span class="cp">`define DemoStruct(width) \</span>
+<span class="cp">  struct packed{\</span>
+<span class="cp">    logic [width-1:0] dat;\</span>
+<span class="cp">  }</span>
+
+<span class="no">`typedef_DemoStruct</span><span class="p">(</span><span class="mh">8</span><span class="p">)</span> <span class="n">StructD</span><span class="p">;</span>
+<span class="n">StructD</span> <span class="n">dat</span><span class="p">;</span>
+<span class="k">struct</span> <span class="k">packed</span><span class="p">{</span>
+    <span class="kt">logic</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
+<span class="p">}</span><span class="n">datTemp</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="p">&#39;(</span><span class="n">datTemp</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>同方向有相关性信号，推荐使用struct定义。</li>
+<li>结构体定义必须使用packed形式。</li>
+<li>直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义。</li>
+<li>typedef struct 类型名用 <strong>大驼峰</strong> 命名法。</li>
+<li>使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)</li>
+<li>struct 可以使用 <strong>‘( )</strong> 操作符。</li>
+</ol>
+</div>
+<div class="section" id="package">
+<h2>2.3 package 用法规范<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="n">BasicPkg</span><span class="p">;</span>
+  <span class="k">parameter</span> <span class="no">PARAM_A</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+
+  <span class="k">function</span> <span class="k">automatic</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">DatAnd</span><span class="p">(</span><span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">in1</span><span class="p">,</span><span class="n">in2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">in1</span> <span class="o">&amp;</span> <span class="n">in2</span><span class="p">;</span>
+  <span class="k">endfunction</span>
+<span class="k">endpackage</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>有相关性的信号、参数、数据类型、函数可以集合在一起定义在一个package内。</li>
+<li>package以 <strong>大驼峰</strong> 方式命名，以 <strong>Pkg</strong> 作为名称结尾。</li>
+<li>package内的定义都不支持参数化。(SystemVerilog标准中尚不支持)</li>
+<li>利用package可以进行参数无关的电路抽象。例如：指令集中基本指令执行功能可抽象为function。</li>
+<li>package中定义的function必须 <strong>包含automatic</strong> 声明。</li>
+</ol>
+</div>
+<div class="section" id="interface">
+<h2>2.4 interface 用法规范<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">TestIf</span>
+<span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span>
+<span class="p">);</span>
+
+  <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datOh</span><span class="p">;</span>  <span class="c1">// All signal defined in &#39;logic&#39;.</span>
+  <span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
+  <span class="kt">logic</span>       <span class="n">datOh0</span><span class="p">,</span><span class="n">datOh1</span><span class="p">,</span><span class="n">datOh2</span><span class="p">,</span><span class="n">datOh3</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span><span class="kt">logic</span> <span class="n">dat1</span><span class="p">;</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat2</span><span class="p">;}</span> <span class="n">DataStruct</span><span class="p">;</span>
+  <span class="k">assign</span> <span class="n">datOh0</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+  <span class="k">assign</span> <span class="n">datOh1</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>   <span class="c1">// Only bit selection/extension is allowed.</span>
+  <span class="k">assign</span> <span class="n">datOh2</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
+  <span class="k">assign</span> <span class="n">datOh3</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">3</span><span class="p">];</span>
+
+  <span class="k">function</span> <span class="k">automatic</span> <span class="k">void</span> <span class="n">Codec</span><span class="p">;</span>  <span class="c1">// &#39;automatic&#39; is necessary.</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="p">{(</span><span class="n">datOh3</span><span class="o">|</span><span class="n">datOh2</span><span class="p">),(</span><span class="n">datOh3</span><span class="o">|</span><span class="n">datOh1</span><span class="p">)};</span>
+  <span class="k">endfunction</span>
+  <span class="k">function</span> <span class="k">automatic</span> <span class="kt">logic</span> <span class="n">BiggerThan1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{(</span><span class="n">dat</span> <span class="o">&gt;</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">),</span><span class="n">dat</span><span class="p">};</span>
+  <span class="k">endfunction</span>
+
+  <span class="n">modport</span> <span class="n">datOhOut</span><span class="p">(</span><span class="k">output</span> <span class="n">datOh</span><span class="p">);</span>
+  <span class="n">modport</span> <span class="n">datIn</span><span class="p">(</span><span class="k">input</span> <span class="n">dat</span><span class="p">,</span> <span class="n">import</span> <span class="n">BiggerThan1</span><span class="p">);</span> <span class="c1">// import function in modport.</span>
+  <span class="n">modport</span> <span class="n">Unit</span><span class="p">(</span><span class="k">input</span> <span class="n">datOh0</span><span class="p">,</span><span class="n">datOh1</span><span class="p">,</span><span class="n">datOh2</span><span class="p">,</span><span class="n">datOh3</span><span class="p">,</span> <span class="k">output</span> <span class="n">dat</span><span class="p">,</span> <span class="n">import</span> <span class="n">Codec</span><span class="p">);</span>
+
+<span class="nl">endinterface:</span> <span class="n">TestIf</span>
+
+<span class="k">module</span> <span class="n">TestIfUnit</span>
+<span class="p">(</span>
+  <span class="n">TestIf</span><span class="p">.</span><span class="n">Unit</span> <span class="n">bDat</span>
+<span class="p">);</span>
+  <span class="n">bDat</span><span class="p">.</span><span class="n">Codec</span><span class="p">();</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">TestIfUnit</span>
+
+<span class="k">module</span> <span class="n">ModuleBb</span>
+<span class="p">(</span>
+  <span class="n">TestIf</span><span class="p">.</span><span class="n">datIn</span> <span class="n">iDat</span><span class="p">,</span>
+  <span class="k">output</span> <span class="kt">logic</span> <span class="n">oResult</span>
+<span class="p">);</span>
+  <span class="k">typedef</span> <span class="n">iDat</span><span class="p">.</span><span class="n">DataStruct</span> <span class="n">DatStruct</span><span class="p">;</span>  <span class="c1">// Use typedef in interface.</span>
+  <span class="n">DatStruct</span> <span class="n">data</span><span class="p">;</span>
+  <span class="k">assign</span> <span class="n">data</span> <span class="o">=</span> <span class="n">iDat</span><span class="p">.</span><span class="n">BiggerThan1</span><span class="p">();</span>   <span class="c1">// Use function in interface.</span>
+  <span class="k">assign</span> <span class="n">oResult</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">dat1</span><span class="p">;</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">ModuleBb</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>interface中所有信号使用 <strong>logic</strong> 或 <strong>struct</strong> 定义。</li>
+<li>interface中只能存在 <strong>位选择、位截取、位扩展</strong> 逻辑电路，不能存在任何会生成具体器件的逻辑电路。</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>interface中实现的电路逻辑在综合后会直接出现在例化interface的module中，这种写法不利于综合、后端流程。因此不允许直接在interface中实现具体电路。</li>
+<li>位选择、位截取、位扩展逻辑并不存在实际电路，只是改变连接关系，不影响其他流程。</li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>实现与interface相关性较高的逻辑，通过以下两种方式：</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>单独实现一个module。<ol class="arabic">
+<li>命名方式：<strong>interface名称 + Unit</strong>。在module设计需要实现的电路。</li>
+<li>在interface中 <strong>添加modport：Unit</strong>，在例化interface的位置例化该module，传递interface到module内。</li>
+</ol>
+</li>
+<li>在interface中设计 <strong>function</strong> 或 <strong>task</strong>。<ol class="arabic">
+<li>将需要实现的功能设计在interface的 <strong>function</strong> 或 <strong>task</strong> 中。</li>
+<li>通过modport将 function 或 task 直接 <strong>import</strong> 到module中。</li>
+<li>在module中直接调用。</li>
+<li>注意：function 或 task 可以直接访问interface里的信号，不需要通过端口传递。</li>
+</ol>
+</li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="4">
+<li>可以在interface中typedef数据类型，通过interface将数据类型引入到module中。</li>
+<li>标准中允许在module中直接访问interface中的parameter，该功能目前尚未被EDA工具支持。(TBD:EDA工具更新后重新测试)</li>
+<li>减少在interface中的input信号数量，尤其是会参与计算的信号。在测试中遇到过相关EDA工具Bug。</li>
+<li>interface在端口定义和信号连接时必须 <strong>指定modport</strong> 。否则综合会提示信号未使用warning。</li>
+<li>通过 <strong>interface + modport + 参数化设计</strong> 可以实现verilog可变端口数量。</li>
+</ol>
+<p>TBD：在附录中给出各种复杂设计下的Demo。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="3SpecialSyntax_cn.html" class="btn btn-neutral float-right" title="3 特殊语法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="1BasicSyntax_cn.html" class="btn btn-neutral float-left" title="1 基础语法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ll
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

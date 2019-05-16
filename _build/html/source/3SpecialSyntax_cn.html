@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3 特殊语法 &mdash; sv syntax  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2 高级语法" href="2AdvanceSyntax_cn.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sv syntax
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1BasicSyntax_cn.html">1 基础语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2AdvanceSyntax_cn.html">2 高级语法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3 特殊语法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1 基于宏定义的模板例化方法。</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2 基于宏的电路库的设计方法</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sv syntax</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>3 特殊语法</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/3SpecialSyntax_cn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>3 特殊语法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>3.1 基于宏定义的模板例化方法。<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>利用Verilog进行电路设计时，大部分参数与可以通过接口连接的信号进行推算。例如：数据位宽、地址对应的memory深度等等。因此在该设计方法中，使用宏作为module模板，减少需要显式传递的参数数量。宏模板定义代码如下：</p>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define __DefErr__(Str) Macro Define Error: Str has already been defined!!</span>
+<span class="c1">// __DefErr__() is defined in the library.</span>
+
+<span class="c1">// Macro templete defination for ZionCircuitLib_Adder.</span>
+<span class="no">`ifdef</span> <span class="no">MACRO_TEMPLETE</span>
+  <span class="no">`ifdef</span> <span class="n">ZionCircuitLib_Adder</span>
+    <span class="n">__DefErr__</span><span class="p">(</span><span class="n">ZionCircuitLib_Adder</span><span class="p">)</span>
+  <span class="no">`else</span>
+<span class="cp">    `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\</span>
+<span class="cp">  ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)),\</span>
+<span class="cp">                          .WIDTH_O($bits(oDat_MT)))\</span>
+<span class="cp">                          .TypeB(TypeB_MT),\</span>
+<span class="cp">                        UnitName(\</span>
+<span class="cp">                          .iDatA(iDatA_MT),\</span>
+<span class="cp">                          .iDatB(iDatB_MT),\</span>
+<span class="cp">                          .oDat(oDat_MT)\</span>
+<span class="cp">                        )</span>
+  <span class="no">`endif</span>
+<span class="no">`endif</span>
+<span class="k">module</span> <span class="n">ZionCircuitLib_Adder</span>
+<span class="p">#(</span><span class="no">WIDTH_A</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>  <span class="c1">//$bits(iDatA)//</span>
+  <span class="no">WIDTH_O</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>  <span class="c1">//$bits(oDat)//</span>
+<span class="k">parameter</span> <span class="k">type</span>
+  <span class="n">TypeB</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span>
+<span class="p">)(</span>
+  <span class="k">input</span>  <span class="p">[</span><span class="no">WIDTH_A</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">iDatA</span><span class="p">,</span>
+  <span class="k">input</span>  <span class="p">[</span><span class="no">WIDTH_B</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">iDatB</span><span class="p">,</span>
+  <span class="k">output</span> <span class="p">[</span><span class="no">WIDTH_O</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">oDat</span>
+<span class="p">);</span>
+  <span class="k">assign</span> <span class="n">oDat</span> <span class="o">=</span> <span class="n">iDatA</span> <span class="o">+</span> <span class="n">iDatB</span><span class="p">;</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">ZionCircuitLib_Adder</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>按照规范设计module。在module定义上声明宏模板。宏模板格式：</p>
+<ol class="loweralpha simple">
+<li>条件编译语句：’<strong>(TBD)ifdef MACRO_TEMPLETE</strong>’，通过宏定义指定是否启用全部宏模板。</li>
+<li>重定义检查。’<strong>__DefErr__()</strong>’ 是库中已经定义好的宏。</li>
+<li>定义宏模板，宏模板定义第一行无空格，结尾直接使用 ‘<strong>\</strong>’ 换行。</li>
+<li>宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。</li>
+<li>参数中先定义例化名称，再定义type参数，最后定义输入、输出端口。</li>
+<li>输入输出端口与端口名称相同，增加 ‘_MT’ 后缀。</li>
+<li>完成module定义。</li>
+<li>定义module时，参数在两个 ‘<strong>//</strong>’ 间标注计算方法。在后面的 ‘<strong>//</strong>’后写注释。若某参数与端口无关则不标注计算方法。(改写法用于宏自动生成)</li>
+<li>除最后一行外，其他行宏以 ‘<strong>\</strong>’ 结尾。(多行宏定义标准写法)</li>
+<li>结束条件编译。</li>
+</ol>
+<p>宏模板例化代码如下：</p>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="no">`ZionCircuitLib_Adder</span> <span class="p">(</span><span class="n">UnitName</span><span class="p">,</span><span class="n">TypeB</span><span class="p">,</span><span class="n">InA</span><span class="p">,</span><span class="n">InB</span><span class="p">,</span><span class="n">Out</span><span class="p">);</span>
+
+<span class="no">`ZionCircuitLib_Adder</span> <span class="p">(</span><span class="n">UnitName</span><span class="p">,</span>
+                        <span class="n">TypeB</span><span class="p">,</span>   <span class="c1">//TypeB</span>
+
+                        <span class="n">InA</span><span class="p">,</span><span class="n">InB</span><span class="p">,</span> <span class="c1">//input</span>
+                        <span class="n">Out</span>      <span class="c1">//output</span>
+                      <span class="p">);</span>
+
+<span class="no">`ZionCircuitLib_Adder</span> <span class="p">(</span><span class="n">UnitName</span><span class="p">,</span>
+                        <span class="n">TypeB</span><span class="p">,</span>  <span class="c1">//TypeB</span>
+
+                        <span class="n">InA</span><span class="p">,</span>    <span class="c1">//iDatA</span>
+                        <span class="n">InB</span><span class="p">,</span>    <span class="c1">//iDatB</span>
+                        <span class="n">Out</span>     <span class="c1">//oDat</span>
+                      <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>宏模板例化时可参考无端口声明module例化方式。</p>
+<ul>
+<li><p class="first">单行例化</p>
+<p>按照顺序填写 <strong>例化名</strong>、 <strong>type参数</strong> 和 <strong>输入、输出端口</strong>。</p>
+</li>
+<li><p class="first">多行例化</p>
+<ol class="arabic simple">
+<li>宏module名与例化名写在同一行</li>
+<li>若有type参数，在新行中填写type参数。从 ‘<strong>(</strong>‘ 缩进两个空格。</li>
+<li>最后一个type参数后空行，按序填写输入输出端口。</li>
+<li>端口填写完毕后，在新行中写 ‘<strong>);</strong>’ , 与 ‘<strong>(</strong>‘ 对齐。</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>3.2 基于宏的电路库的设计方法<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应的库、包管理方法。不利于设计复用。因此我们在宏模板基础上，利用宏进行电路库管理。假设已经存在基于宏模板设计的模块：</p>
+<ul class="simple">
+<li>`ZionCircuitLib_Adder(UnitName,iDatA_MT,iDatB_MT,oDat_MT)</li>
+<li>`ZionCircuitLib_Sub(UnitName,iDatA_MT,iDatB_MT,oDat_MT)</li>
+</ul>
+<p>这两个模块都属于 ZionCircuitLib 电路库。电路库头文件 ZionCircuitLib.vh 定义代码如下：</p>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Code shown as below is defined in another Header file.</span>
+<span class="c1">// It is used by all Macro Library Header file.</span>
+<span class="no">`ifdef</span> <span class="n">MacroLibDesign</span>
+<span class="cp">`define MacroLibDef(LibName,ImportName,ModuleName)         \</span>
+<span class="cp">  `ifdef ImportName``ModuleName                            \</span>
+<span class="cp">    `__DefErr__(ImportName``ModuleName);                   \</span>
+<span class="cp">  `else                                                    \</span>
+<span class="cp">    `define ImportName``ModuleName `LibName``_``ModuleName \</span>
+<span class="cp">  `endif</span>
+<span class="no">`endif</span>
+
+<span class="c1">// This is the Library Header.</span>
+<span class="no">`ifdef</span> <span class="n">MacroLibDesign</span>
+<span class="cp">`define Use_ZionCircuitLib(ImportName)          \</span>
+<span class="cp">  `MacroLibDef(ZionCircuitLib,ImportName,Adder)  \</span>
+<span class="cp">  `MacroLibDef(ZionCircuitLib,ImportName,Sub)</span>
+
+
+<span class="cp">`define Unuse_ZionCircuitLib(ImportName) \</span>
+<span class="cp">  `undef ImportName``Adder               \</span>
+<span class="cp">  `undef ImportName``Sub</span>
+
+<span class="no">`endif</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>条件编译语句，通过定义 <strong>MacroLibDesign</strong> 宏启用宏库设计方法。</li>
+<li>定义 ZionCircuitLib 宏库使用命令，定义格式：<strong>Use_ZionCircuitLib(ImportName)</strong>。</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>ZionCircuitLib 为库名称。</li>
+<li>ImportName为在module内调用时使用的缩写。当一个module内使用多个库时，该缩写可以用于找到电路库名称。</li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>使用 <strong>MacroLibDef</strong> 宏定义每一个module。</li>
+<li>由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。</li>
+</ol>
+<p>宏库的调用代码如下：</p>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">Aaa</span>
+<span class="p">(</span>
+  <span class="p">...</span>
+<span class="p">);</span>
+
+  <span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span>
+            <span class="n">a</span><span class="p">,</span>  <span class="c1">//iDatA</span>
+            <span class="n">b</span><span class="p">,</span>  <span class="c1">//iDatB</span>
+            <span class="n">x</span>   <span class="c1">//oDat</span>
+          <span class="p">);</span>
+  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+
+  <span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="k">endmodule</span>
+
+<span class="k">module</span> <span class="n">Bbb</span>
+<span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="p">(</span>
+  <span class="p">...</span>
+<span class="p">);</span>
+
+  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+
+  <span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="k">endmodule</span>
+
+
+<span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="k">module</span> <span class="n">Ccc</span>
+<span class="p">(</span>
+  <span class="p">...</span>
+<span class="p">);</span>
+
+  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+
+<span class="k">endmodule</span>
+
+<span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>显示声明使用宏库：Use_MacroLibraryName(ImportName)。结尾无分号。</li>
+<li>用import name进行设计。</li>
+<li>显示声明关闭宏库：Unuse_MacroLibraryName(ImportName)。结尾无分号。</li>
+<li>宏库声明的位置与 import 用法相同。可以用于文件，或单个module。</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="2AdvanceSyntax_cn.html" class="btn btn-neutral float-left" title="2 高级语法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ll
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

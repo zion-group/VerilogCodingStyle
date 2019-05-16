@@ -1,0 +1,883 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1 基础语法 &mdash; sv syntax  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2 高级语法" href="2AdvanceSyntax_cn.html" />
+    <link rel="prev" title="前言" href="Preface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sv syntax
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Preface.html">前言</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1 基础语法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.1 命名规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.1.1 文件命名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#moduleclasspackagefunctiontask">1.1.2 module、class、package、function、task命名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.1.3 信号命名</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.1.3.1 命名风格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.1.3.2 前缀</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.1.3.3 后缀</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.1.4 参数、宏命名</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">1.2 格式规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">1.2.1 文件头</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">1.2.2 代码格式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">1.2.2.1 通用格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module">1.2.2.2 module端口格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">1.2.2.2 module例化格式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">1.3 设计规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">1.3.1 信号定义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">1.3.2 位宽定义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">1.3.3 组合逻辑电路设计规范</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">1.3.4 时序电路设计规范</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">1.3.5 例化设计规范</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fsm">1.3.6 FSM设计规范</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2AdvanceSyntax_cn.html">2 高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3SpecialSyntax_cn.html">3 特殊语法</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sv syntax</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>1 基础语法</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/1BasicSyntax_cn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>1 基础语法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>1.1 命名规范<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>1.1.1 文件命名<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ol class="loweralpha simple">
+<li>每个文件中只包含一个module、class、package，文件名与文件内内容名称相同。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">TestModule</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">TestModule</span>
+</pre></div>
+</div>
+<p>上述代码保存在 <strong>TestModule.sv</strong> 文件中。</p>
+</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>头文件根据需要命名，以vh作为后缀。例如：<strong>StructDef.vh</strong> 。</li>
+<li>电路库文件以 <strong>库名 + .sv</strong> 命名。 例如：<strong>ZionCircuitLib.sv</strong> 文件中包含以下内容：</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">ZionCircuitLib_ModuleAaa</span>
+<span class="p">...</span>
+<span class="k">module</span> <span class="n">ZionCircuitLib_ModuleBbb</span>
+<span class="p">...</span>
+<span class="k">module</span> <span class="n">ZionCircuitLib_ModuleCcc</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="moduleclasspackagefunctiontask">
+<h3>1.1.2 module、class、package、function、task命名<a class="headerlink" href="#moduleclasspackagefunctiontask" title="Permalink to this headline">¶</a></h3>
+<ol class="loweralpha simple">
+<li>以 <strong>大驼峰</strong> 格式命名，package以Pkg结尾。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//AaBbCc.sv</span>
+<span class="k">module</span> <span class="n">AaBbCc</span><span class="p">;</span>
+  <span class="p">...</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">AaBbCc</span>
+
+<span class="c1">//XxxYyyPkg.sv</span>
+<span class="kn">package</span> <span class="n">XxxYyyPkg</span><span class="p">;</span>
+  <span class="p">...</span>
+<span class="k">endpackage</span><span class="o">:</span> <span class="n">XxxYyyPkg</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>若module属于某个电路库，module命名格式：<strong>电路库名称 + ‘_’ + module名称</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">ZionCircuitLib_Max</span>
+  <span class="p">...</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">ZionCircuitLib_Max</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>module例化使用前缀：<strong>’U_’</strong> 或 <strong>‘Ux_’</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">Adder</span> <span class="n">U_Adder</span><span class="p">(...);</span>
+<span class="n">Adder</span> <span class="n">U1_Adder</span><span class="p">(...);</span>
+<span class="n">Adder</span> <span class="n">U2_Adder</span><span class="p">(...);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h3>1.1.3 信号命名<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h4>1.1.3.1 命名风格<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<ol class="loweralpha simple">
+<li>所有信号采用 <strong>小驼峰</strong> 命名方式。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="n">dat</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="n">memWrDat</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h4>1.1.3.2 前缀<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">DemoModule</span>
+<span class="p">(</span>
+  <span class="k">input</span>  <span class="n">iDat1</span><span class="p">,</span>
+  <span class="k">inout</span>  <span class="n">bDat2</span><span class="p">,</span>
+  <span class="k">output</span> <span class="n">oDat3</span>
+<span class="p">);</span>
+
+  <span class="kt">logic</span> <span class="n">dat0</span><span class="p">,</span><span class="n">datTemp</span><span class="p">;</span>
+  <span class="kt">logic</span> <span class="n">rDat</span><span class="p">,</span><span class="n">lDat</span><span class="p">;</span>
+
+  <span class="p">...</span>
+
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">DemoModule</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>前缀用于标志信号的特殊用途或特殊含义，以一个小写字母写在信号名前，信号名为大驼峰命名，整个信号为 <strong>小驼峰</strong> 命名。</li>
+<li>端口信号：(C1_1.1.3.2.b)</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>input: <strong>i</strong> (input port)， 例如：<strong>iAaaBbb</strong></li>
+<li>inout: <strong>b</strong> (bi-directional port)， 例如：<strong>bAaaBbb</strong></li>
+<li>output: <strong>o</strong> (output port)， 例如：<strong>oAaaBbb</strong></li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>寄存器：<strong>r</strong> (register) ，例如：<strong>rAaaBbb</strong> 。</li>
+<li>锁存器：<strong>l</strong> (latch) ，例如：<strong>lAaaBbb</strong> 。</li>
+<li>低有效：<strong>n</strong> (negative)，例如：<strong>nAaaBbb</strong> 。</li>
+<li>异步信号：<strong>a</strong> (asynchronous)，例如：<strong>aAaaBbb</strong> 。</li>
+<li>前缀顺序：i/b/o &gt; a &gt; n &gt; r，端口信号可以只写方向，不写其他前缀。</li>
+</ol>
+</div>
+<div class="section" id="id7">
+<h4>1.1.3.3 后缀<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<ol class="loweralpha simple">
+<li>后缀用于在不改变信号名情况下表示信号属性变化，命名方式：<strong>信号名 + ‘_’ + 后缀</strong> 。所有前缀都可以用于后缀。例如：</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">dat</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="k">always_ff</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+  <span class="n">dat_r</span> <span class="o">&lt;=</span> <span class="n">dat</span><span class="p">;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>在上面的示例代码中，dat_r表示保存dat的寄存器的输出信号。使用 ‘_’ 前的名称可以在代码中直接找到该信号。</p>
+</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>寄存器下一个时钟周期的值：<strong>f</strong> (following)，例如：</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">rWrData</span><span class="p">,</span><span class="n">rWrData_f</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">rWrData_f</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
+<span class="k">always_ff</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+  <span class="n">rWrData</span> <span class="o">&lt;=</span> <span class="n">rWrData_f</span><span class="p">;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>信号取反：<strong>i</strong> (invert)，例如：<strong>assign aaaBbbVld_i = ~aaaBbbVld</strong>;</li>
+<li>同步后信号：<strong>s</strong> (synchronous)，例如：<strong>aWrEn_s</strong>。</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>1.1.4 参数、宏命名<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define DEMO_MACRO 1</span>
+<span class="k">parameter</span> <span class="no">PARAM_A</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
+<span class="k">localparam</span> <span class="no">PARAM_B</span> <span class="o">=</span> <span class="mh">3</span><span class="p">;</span>
+<span class="k">localparam</span> <span class="no">PARAM_A_LG</span> <span class="o">=</span> <span class="n">$clog</span><span class="p">(</span><span class="no">PARAM_A</span><span class="p">);</span>
+<span class="k">parameter</span> <span class="k">type</span> <span class="n">TypeA</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+
+<span class="k">module</span> <span class="n">Demo</span>
+<span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span>
+  <span class="no">PARAM_B</span> <span class="o">=</span> <span class="mh">2</span><span class="p">,</span>
+<span class="k">parameter</span> <span class="k">type</span>
+  <span class="n">TypeA</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span>
+<span class="k">localparam</span>
+  <span class="no">PARAM_C</span> <span class="o">=</span> <span class="mh">3</span>
+<span class="p">)(</span>
+<span class="p">);</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>由于 <strong>参数</strong> 和 <strong>宏</strong> 表示常数，与普通信号不同，因此所有字母全部大写，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。</li>
+<li>单词间用 ‘_’ 隔开。</li>
+<li>若某参数 <strong>PARAM_A</strong> 是 <strong>PARAM_B</strong> 的对数，可以写成 <strong>PARAM_B_LG</strong>，例如： <strong>PARAM_B_LG = $clog(PARAM_B)</strong>。</li>
+<li>在端口中定义顺序为: parameter &gt; parameter type &gt; localparam。</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>1.2 格式规范<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h3>1.2.1 文件头<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>TBD</p>
+</div>
+<div class="section" id="id11">
+<h3>1.2.2 代码格式<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h4>1.2.2.1 通用格式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<ol class="loweralpha simple">
+<li>代码缩进 <strong>禁止使用Tab</strong> ，一律使用 <strong>2空格</strong> 。</li>
+<li>begin 在当前行末尾，不重新开启一行。end 与 else 写在同一行。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="k">if</span><span class="p">(...)</span> <span class="k">begin</span>
+    <span class="p">...</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">if</span><span class="p">(...)</span> <span class="k">begin</span>
+    <span class="p">...</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+    <span class="p">...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>语句间可以有1个或多个空格。多余一个空格可以方便对齐和查看(对于开启彩虹对齐插件的开发者)。</li>
+<li>重要的block，及包含信号定义的block，需要添加 <strong>block name</strong> 。所有 <strong>module</strong> 和 <strong>有名字的block</strong> 主要添加对应的 <strong>ending name</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">DemoModule</span><span class="p">();</span>
+  <span class="k">always_comb</span> <span class="k">begin</span><span class="o">:</span> <span class="n">DemoBlock</span>
+    <span class="p">...</span>
+  <span class="k">end</span><span class="o">:</span> <span class="n">DemoBlock</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">DemoModule</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="module">
+<h4>1.2.2.2 module端口格式<a class="headerlink" href="#module" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>端口格式定义如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">DemoLib_ModuleXxxYyy</span> <span class="c1">// 单独一行，前后无空格。</span>
+<span class="kn">import</span> <span class="nn">DemoAaaPkg::*</span><span class="p">;</span>       <span class="c1">// 引用package，单独一行，前后无空格。</span>
+<span class="kn">import</span> <span class="nn">DemoBbbPkg::*</span><span class="p">;</span>       <span class="c1">// 多个package写在不同的行中。</span>
+<span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>            <span class="c1">// 第一个参数以 &#39;#(&#39; 开头，定义在新行中，前后无空格，省略parameter标识符。</span>
+  <span class="no">P_B</span>     <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>            <span class="c1">// 其他parameter在新的行中定义，定义前需要 2个空格 进行缩进。</span>
+<span class="k">localparam</span>                  <span class="c1">// 若存在local parameter，localparam在新的一行中定义，前后无空格。</span>
+  <span class="no">P_B_LG</span> <span class="o">=</span> <span class="n">$clog</span><span class="p">(</span><span class="no">P_B</span><span class="p">),</span>      <span class="c1">// local parameter定义格式与parameter相同。</span>
+  <span class="no">PARAM_C</span> <span class="o">=</span> <span class="no">PARAM_A</span> <span class="o">-</span> <span class="mh">1</span>
+<span class="p">)(</span>                          <span class="c1">// 在新的行中写 &#39;参数定义右括号&#39; 和 &#39;端口定义左括号&#39;。</span>
+  <span class="k">input</span>        <span class="n">clk</span><span class="p">,</span><span class="n">rst</span><span class="p">,</span>     <span class="c1">// 端口在新行中定义，2个空格缩进。&#39;clk,rst&#39; 可以写在同一行</span>
+  <span class="k">input</span>        <span class="n">iEn</span><span class="p">,</span>         <span class="c1">// 端口定义顺序：input, inout, output。</span>
+  <span class="k">input</span>        <span class="n">iDat</span><span class="p">,</span>        <span class="c1">// 同方向端口定义顺序：clock, reset, enable, data。</span>
+  <span class="k">inout</span>        <span class="n">bVld</span><span class="p">,</span>
+  <span class="k">output</span> <span class="kt">logic</span> <span class="n">oDat</span><span class="p">,</span>
+<span class="p">);</span>                          <span class="c1">// 端口定义 右括号 及 分号 单独一行，前后无空格。</span>
+  <span class="p">...</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">DemoLib_ModuleXxxYyy</span> <span class="c1">//单独一行，前后无空格。添加 ending name。</span>
+
+
+<span class="k">module</span> <span class="n">DemoLib_Aaa</span>
+<span class="p">(</span>                           <span class="c1">// 如果没有模块中没有参数，直接在新行中写接口定义左括号。</span>
+  <span class="k">input</span>  <span class="n">clk</span><span class="p">,</span><span class="n">rst</span><span class="p">,</span>
+  <span class="k">input</span>  <span class="n">iDat</span><span class="p">,</span>
+  <span class="k">output</span> <span class="n">oDat</span>
+<span class="p">);</span>
+  <span class="p">...</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">DemoLib_Aaa</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h4>1.2.2.2 module例化格式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<ol class="loweralpha simple">
+<li>模块例化时，只有定义信号类型的参数在例化时传递，其他参数在module结尾统一使用defparam定义。理由如下：</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>参数化设计中，参数定义数量很多，在module例化时传递大量参数影响代码阅读</li>
+<li>大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog…)，统一写在module结尾方便脚本进行自动生成。</li>
+</ul>
+<p>示例代码：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">Adder</span> <span class="n">U_Adder</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">o</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+      <span class="p">);</span>
+
+<span class="n">Sub</span> <span class="p">#(.</span><span class="n">TypeA</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">])</span>
+      <span class="p">.</span><span class="n">TypeB</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
+    <span class="n">U_Sub</span><span class="p">(</span>
+      <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">o</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="p">);</span>
+
+<span class="k">defparam</span> <span class="n">U_Addr</span><span class="p">.</span><span class="no">WIDTH_A</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
+<span class="k">defparam</span> <span class="n">U_Addr</span><span class="p">.</span><span class="no">WIDTH_B</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha" start="2">
+<li><p class="first">有参数例化格式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="n">空格</span> <span class="o">+</span> <span class="n">module名</span> <span class="o">+</span> <span class="n">空格</span> <span class="o">+</span>  <span class="c1">#(第一个参数传递 ，</span>
+                            <span class="n">第二个参数传递</span><span class="p">))</span>
+                          <span class="n">实例化名</span><span class="p">(</span>
+                            <span class="n">端口连接</span><span class="o">...</span>
+                          <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">参数例化格式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="n">空格</span> <span class="o">+</span> <span class="n">module名</span> <span class="o">+</span> <span class="n">空格</span> <span class="o">+</span>  <span class="n">实例化名</span><span class="p">(</span>
+                            <span class="n">端口连接</span><span class="o">...</span>
+                          <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>参数传递</strong> 及 <strong>端口连接</strong> 格式</p>
+</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>尽量避免使用 <strong>‘.*’</strong> 方式连接，容易引起隐藏的Bug。</li>
+<li>使用 <strong>‘.port(signal)’</strong> 连接信号和端口。</li>
+<li>若信号和端口命名相同，可以使用 <strong>‘.port’</strong> 方式连接。</li>
+<li>连接顺序：input, inout, output。</li>
+<li>同方向端口顺序：clock, reset, enable, data。</li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="5">
+<li>若需要使用不指定端口，按顺序连接的方式，按照如下格式书写并用注释进行标注：</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">ModuleName</span>  <span class="n">U1_ModuleName</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span><span class="n">signal2</span><span class="p">,</span><span class="n">signal3</span><span class="p">,</span><span class="n">signal4</span><span class="p">,</span><span class="n">signal5</span><span class="p">);</span>
+
+<span class="n">ModuleName</span>  <span class="n">U2_ModuleName</span><span class="p">(</span>
+              <span class="n">signal1</span><span class="p">,</span><span class="n">signal2</span><span class="p">,</span>  <span class="c1">//input</span>
+              <span class="n">signal3</span><span class="p">,</span>          <span class="c1">//inout</span>
+              <span class="n">signal4</span><span class="p">,</span><span class="n">signal5</span>   <span class="c1">//output</span>
+            <span class="p">);</span>
+
+<span class="n">ModuleName</span>  <span class="n">U3_ModuleName</span><span class="p">(</span>
+              <span class="n">signal1</span><span class="p">,</span>     <span class="c1">//port1</span>
+              <span class="n">signal2</span><span class="p">,</span>     <span class="c1">//port2</span>
+              <span class="n">signal3</span><span class="p">,</span>     <span class="c1">//port3</span>
+              <span class="n">signal4</span><span class="p">,</span>     <span class="c1">//port4</span>
+              <span class="n">signal5</span>      <span class="c1">//port5</span>
+            <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="6">
+<li>完整示例代码：</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">AaaBbb</span>
+<span class="p">(</span>
+  <span class="k">input</span>        <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">iDatA</span><span class="p">,</span>
+  <span class="k">input</span>        <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">iDatB</span><span class="p">,</span>
+  <span class="k">output</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datSum</span><span class="p">,</span>
+  <span class="k">output</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datMult</span>
+<span class="p">);</span>
+
+  <span class="n">Mult</span>  <span class="p">#(.</span><span class="no">A_TYPE</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+          <span class="p">.</span><span class="no">B_TYPE</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
+        <span class="n">U_Mult</span><span class="p">(</span>
+          <span class="p">.</span><span class="n">iDatA</span><span class="p">(</span><span class="n">iDatA</span><span class="p">),</span>
+          <span class="p">.</span><span class="n">iDatB</span><span class="p">(</span><span class="n">iDatB</span><span class="p">),</span>
+          <span class="p">.</span><span class="n">oDat</span><span class="p">(</span><span class="n">datMult</span><span class="p">)</span>
+        <span class="p">);</span>
+
+  <span class="n">Adder</span> <span class="n">U_Adder</span><span class="p">(</span>
+          <span class="p">.</span><span class="n">iDatA</span><span class="p">(</span><span class="n">iDatA</span><span class="p">),</span>
+          <span class="p">.</span><span class="n">iDatB</span><span class="p">(</span><span class="n">iDatB</span><span class="p">),</span>
+          <span class="p">.</span><span class="n">oDat</span><span class="p">(</span><span class="n">datSum</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
+        <span class="p">);</span>
+
+  <span class="n">Adder</span> <span class="n">U0_Adder</span><span class="p">(</span>
+          <span class="p">.</span><span class="n">iDatA</span><span class="p">,</span>
+          <span class="p">.</span><span class="n">iDatB</span><span class="p">,</span>
+          <span class="p">.</span><span class="n">oDat</span><span class="p">(</span><span class="n">datSum</span><span class="p">[</span><span class="mh">1</span><span class="p">]));</span>
+
+  <span class="n">Adder</span> <span class="n">U1_Adder</span><span class="p">(</span><span class="n">iDatA</span><span class="p">,</span><span class="n">iDatB</span><span class="p">,</span><span class="n">datSum</span><span class="p">[</span><span class="mh">2</span><span class="p">]);</span>
+
+  <span class="n">Adder</span> <span class="n">U2_Adder</span><span class="p">(</span>
+          <span class="n">iDatA</span><span class="p">,</span><span class="n">iDatB</span><span class="p">,</span><span class="c1">//input</span>
+          <span class="n">datSum</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span>   <span class="c1">//output</span>
+        <span class="p">);</span>
+
+  <span class="n">Adder</span> <span class="n">U3_Adder</span><span class="p">(</span>
+          <span class="n">iDatA</span><span class="p">,</span>   <span class="c1">//iDatA</span>
+          <span class="n">iDatB</span><span class="p">,</span>   <span class="c1">//iDatB</span>
+          <span class="n">datSum</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="c1">//oDat</span>
+        <span class="p">);</span>
+
+  <span class="k">defparam</span> <span class="n">U_Mult</span><span class="p">.</span><span class="no">WIDTH</span> <span class="o">=</span> <span class="nb">$bits</span><span class="p">(</span><span class="n">datMult</span><span class="p">);</span>
+
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">AaaBbb</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>1.3 设计规范<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h3>1.3.1 信号定义<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">wrDat</span><span class="p">;</span>
+<span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">rWrDat</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">oWrDat</span> <span class="o">=</span> <span class="n">wrDat</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">wrDat</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="k">always_ff</span><span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span><span class="k">begin</span>
+  <span class="n">rWrDat</span> <span class="o">&lt;=</span> <span class="n">wrDat</span><span class="p">;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple">
+<li>所有信号使用 <strong>logic</strong> 定义。</li>
+<li>在定义时直接复制的信号使用wire类型。因为logic不支持定义时赋值。</li>
+<li>组合逻辑电路表达式中包含function，使用always_comb赋值。因为assign赋值时，使用function可能引起仿真器bug。</li>
+<li>同向结构化信号，尽量使用struct定义。struct类型可以通过 <strong>parameter type</strong> 在不同模块间传递。</li>
+</ol>
+</div>
+<div class="section" id="id16">
+<h3>1.3.2 位宽定义<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<ol class="loweralpha simple">
+<li>MSB写在左侧，LSB写在右侧。</li>
+<li>LSB最好从0开始，如果有特殊需求，LSB可以从非零值开始，比如总线对齐：<strong>logic [31:2] BusAddr;</strong></li>
+<li>固定值赋值使用以下方式：</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>0赋值使用：<strong>‘0</strong>，例如：<strong>assign dat = ‘0;</strong></li>
+<li>全1赋值值使用：<strong>‘1</strong>，例如：<strong>assign dat = ‘0;</strong></li>
+<li>某确定值使用：<strong>位宽 + ‘b/d/h/o’ + 数值</strong>，例如 <strong>assign dat = 8’d1;</strong></li>
+</ul>
+</div></blockquote>
+<ol class="loweralpha simple" start="4">
+<li>当两个信号位宽有相关性，使用$bits()代替parameter定义信号位宽，这样可以使电路更利于复用，减少位宽对应参数变化引起的问题。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span>             <span class="n">en</span><span class="p">;</span>
+<span class="kt">logic</span> <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">xx</span><span class="p">;</span>
+<span class="c1">// Use like this.</span>
+<span class="kt">logic</span> <span class="p">[</span><span class="nb">$bits</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">*</span><span class="mh">2</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">yy</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">yy</span><span class="p">[</span><span class="nb">$bits</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">xx</span><span class="p">){</span><span class="n">en</span><span class="p">}}</span> <span class="o">&amp;</span> <span class="n">xx</span><span class="p">;</span>
+
+<span class="c1">// Dont use like this!!</span>
+<span class="kt">logic</span> <span class="p">[</span><span class="no">WIDTH</span><span class="o">*</span><span class="mh">2</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">yy</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">yy</span><span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="no">WIDTH</span><span class="p">{</span><span class="n">en</span><span class="p">}}</span> <span class="o">&amp;</span> <span class="n">xx</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="5">
+<li>尽量使用 <strong>[位置+:位宽]</strong> 或 <strong>[位置-:位宽]</strong> 方式赋值。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use like this.</span>
+<span class="k">assign</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mh">16</span><span class="o">+:</span><span class="mh">8</span><span class="p">];</span>
+<span class="k">assign</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mh">16</span><span class="o">-:</span><span class="mh">8</span><span class="p">];</span>
+
+<span class="c1">// Dont use like this!!</span>
+<span class="k">assign</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">];</span>
+<span class="k">assign</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">8</span><span class="p">];</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="6">
+<li>使用packed方式定义多维向量信号。例如：<strong>logic [7:0][2:0] dat;</strong></li>
+<li>使用系统函数进行位宽相关计算。</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>$bits：计算向量信号或struct信号的位宽。</li>
+<li>$size：计算当前向量中一共有多少组信号。</li>
+<li>$signed/$unsigned：有符号/无符号位宽扩展</li>
+<li>$clog：计算log<sub>2</sub>(x), 可以使用在端口定义中。</li>
+<li>$high：获取信号最高位。<strong>使用时需要小心，信号有可能不是第0开始</strong>。</li>
+<li>$low： 获取信号最低位。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id17">
+<h3>1.3.3 组合逻辑电路设计规范<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ol class="loweralpha simple">
+<li>在设计中使用data mask写法：<strong>yy = {$bits(xx){en}} &amp; xx;</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>改写法综合生产的电路简洁高效，Bug少。</li>
+<li>改写法可以用来代替三目运算符 ()?: ，实现更好的性能。</li>
+</ul>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use like this.</span>
+<span class="k">assign</span> <span class="n">dat</span>  <span class="o">=</span> <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">a</span><span class="p">){(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)}}</span> <span class="o">&amp;</span> <span class="n">a</span><span class="p">;</span>
+              <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">b</span><span class="p">){(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)}}</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;</span>
+              <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">c</span><span class="p">){(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)}}</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">;</span>
+              <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">d</span><span class="p">){(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)}}</span> <span class="o">&amp;</span> <span class="n">d</span><span class="p">;</span>
+
+<span class="c1">// Dont use like this!!</span>
+<span class="k">assign</span> <span class="n">dat</span>  <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)</span><span class="o">?</span> <span class="n">a</span> <span class="o">:</span>
+              <span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d2</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d2</span><span class="p">)</span><span class="o">?</span> <span class="n">b</span> <span class="o">:</span>
+              <span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d3</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d3</span><span class="p">)</span><span class="o">?</span> <span class="n">c</span> <span class="o">:</span> <span class="n">d</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>使用操作符：<strong>inside</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">datEn</span> <span class="o">=</span> <span class="n">dat</span> <span class="n">inside</span> <span class="p">{</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">,</span> <span class="mh">2</span><span class="mi">&#39;d3</span><span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="3">
+<li>使用操作符：<strong>{&lt;&lt;N{Signal}}</strong> 或 <strong>{&gt;&gt;N{Signal}}</strong> 。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="o">&lt;&lt;</span><span class="mh">2</span><span class="p">{</span><span class="n">b</span><span class="p">}};</span>
+<span class="k">assign</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="o">&gt;&gt;</span><span class="mh">2</span><span class="p">{</span><span class="n">c</span><span class="p">}};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="4">
+<li>使用操作符：<strong>==?</strong> 或 <strong>!=?</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">datEn</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">==?</span> <span class="mh">3</span><span class="mb">&#39;b1</span><span class="o">?</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">b</span> <span class="o">!=?</span> <span class="mh">3</span><span class="p">&#39;</span><span class="n">b</span><span class="o">??</span><span class="mh">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="5">
+<li>使用操作符：<strong>’( )</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">NewType</span><span class="p">;</span>
+<span class="n">NewType</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">b</span> <span class="o">=</span> <span class="n">NewType</span><span class="p">&#39;(</span><span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="6">
+<li>使用操作符：<strong>&gt;&gt;&gt;</strong>。<strong>该操作符必须对signed类型信号是用，否则计算结果错误</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="k">signed</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">&gt;&gt;&gt;</span> <span class="mh">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="7">
+<li>组合逻辑使用 <strong>assign</strong> 和 <strong>always_comb</strong> 块。在always_comb块中，使用 <strong>‘=’</strong> 赋值。</li>
+<li>在组合逻辑中，if只与else搭配， <strong>不允许使用else if</strong> 。如果有多判断条件存在，使用case语句。简单的 if()…else… 语句综合生成无优先级电路。而 if()… else if()… else… 语句在大多数情况下会综合出带优先级逻辑。为避免过度使用else if引入不必要的逻辑路径，禁止在逻辑电路中使用该语法。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="k">if</span><span class="p">(...)</span><span class="k">begin</span>
+    <span class="p">...</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span> <span class="c1">// no else if(..) !!</span>
+    <span class="p">...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="lowerroman simple">
+<li>case 语句用法规范。</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>case条件如果互斥，使用：unique case(xxx) inside 或 unique case(1’b1)</li>
+<li>case条件若非互斥，使用：priority case(xxx) inside 或 priority case(1’b1)</li>
+<li>设计中，尽量使用unique case。综合后生成无优先级电路，priority生成带优先级电路。</li>
+<li>case条件复杂，需要在判断条件后添加注释说明判断条件含义。</li>
+<li>default规范。<ul>
+<li>若有一个固定默认值，则default为固定值。</li>
+<li>若case条件已经是full case，则default替换为：’<strong>// full case</strong>’。注意在full case的情况下，不要写default，不然综合器会发现无法进入该条件，报warning。</li>
+<li>若不存在default，则禁止使用case语句。这种情况使用case有可能造成后仿与前仿行为不一致。</li>
+</ul>
+</li>
+<li>case最多允许嵌套2层。</li>
+<li>尽量避免使用太长的case语句。如果逻辑过于复杂，建议拆分逻辑实现。</li>
+</ul>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+  <span class="n">unique</span> <span class="k">case</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="n">inside</span>
+    <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">dat0</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">dat0</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">dat0</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span> <span class="n">dat0</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="c1">// full case</span>
+  <span class="k">endcase</span>
+
+<span class="k">always_comb</span>
+  <span class="n">priority</span> <span class="k">case</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="n">inside</span>
+    <span class="mh">2</span><span class="mb">&#39;b0</span><span class="o">?:</span> <span class="n">dat1</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">dat1</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="k">default</span><span class="o">:</span> <span class="n">dat1</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+  <span class="k">endcase</span>
+
+<span class="k">always_comb</span>
+  <span class="n">unique</span> <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">==</span><span class="mh">2</span><span class="mb">&#39;b00</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="o">==</span><span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// Add comments for case 1 condition!</span>
+      <span class="n">dat2</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="k">end</span>
+    <span class="n">a</span><span class="o">==</span><span class="mh">2</span><span class="mb">&#39;b11</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="o">==</span><span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// Add comments for case 2 condition!</span>
+      <span class="n">dat2</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="k">end</span>
+    <span class="k">default</span><span class="o">:</span> <span class="n">dat2</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+  <span class="k">endcase</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id18">
+<h3>1.3.4 时序电路设计规范<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<ol class="loweralpha simple">
+<li>寄存器设计使用：<strong>always_ff</strong></li>
+<li>锁存器设计使用：<strong>always_latch</strong></li>
+<li>寄存器电路赋值使用：<strong>&lt;=</strong></li>
+<li>寄存器设计时，信号顺序遵循：reset &gt; enable &gt; assignment。<strong>信号保持的else不要写</strong>。</li>
+</ol>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always_ff</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">,</span> <span class="k">negedge</span> <span class="n">rst</span><span class="p">)</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst</span><span class="p">)</span>
+    <span class="n">dat</span> <span class="o">&lt;=</span> <span class="p">...;</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">en</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+      <span class="n">dat</span> <span class="o">&lt;=</span> <span class="p">...;</span>
+    <span class="k">else</span>
+      <span class="n">dat</span> <span class="o">&lt;=</span> <span class="p">...;</span>
+<span class="c1">//else  &lt;---------- Dont write the assignment for data keeping!</span>
+<span class="c1">//  dat &lt;= dat; &lt;-- Dont write the assignment for data keeping!</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="5">
+<li>在IC设计中，使用 <strong>异步低有效</strong> 复位。标准单元对于这种复位方式支持更好。</li>
+<li>在FPGA设计中，使用 <strong>同步高有效</strong> 复位。</li>
+<li>尽量简化寄存器块中逻辑判断电路的复杂度，需要复杂逻辑的场景中，先使用组合逻辑电路计算寄存器数据，再保存到寄存器中。</li>
+<li>推荐使用module对寄存器进行封装，在需要寄存器电路时直接调用。</li>
+<li>当设计可能同时用于不同的工艺或器件中时，使用CfgDff进行寄存器电路实现。</li>
+</ol>
+</div>
+<div class="section" id="id19">
+<h3>1.3.5 例化设计规范<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>TBD</p>
+</div>
+<div class="section" id="fsm">
+<h3>1.3.6 FSM设计规范<a class="headerlink" href="#fsm" title="Permalink to this headline">¶</a></h3>
+<p>TBD</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2AdvanceSyntax_cn.html" class="btn btn-neutral float-right" title="2 高级语法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Preface.html" class="btn btn-neutral float-left" title="前言" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ll
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

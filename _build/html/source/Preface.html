@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>前言 &mdash; sv syntax  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1 基础语法" href="1BasicSyntax_cn.html" />
+    <link rel="prev" title="Welcome to sv syntax’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sv syntax
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1BasicSyntax_cn.html">1 基础语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2AdvanceSyntax_cn.html">2 高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3SpecialSyntax_cn.html">3 特殊语法</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sv syntax</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>前言</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/Preface.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>前言<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>本文档规定了ZION团队及西安理工大学集成电路实验室在利用SystemVerilog语言进行电路描述时推荐遵守的代码规范。除了相关代码规范外，还介绍了目前SystemVerilog中，可以被最新工具识别的可综合语法。文档中介绍的语法及规范适用于进行电路设计描述，不适用于验证。示例代码中中除非特殊说明，所有均为语法演示代码，无任何有效的电路功能。项目中附有若干示例代码，均用于展示格式规范，亦无任何实际电路功效。整个文档分为五个部分：基础语法，高级语法，特殊语法，Bug与期望，附录。</p>
+<ul>
+<li><p class="first">第一部分：<strong>基础语法</strong></p>
+<p>该部分主要介绍了一些代码书写规定和基础的电路描述方法。该部分除常见的语法外，还提供了一些在新版SystemVerilogy语言中支持的新语法，文档中列出的语法均经过最新的仿真和综合工具测试。推荐大家在设计中尽量使用该部分介绍的语法。</p>
+</li>
+<li><p class="first">第二部分：<strong>高级语法</strong></p>
+<p>该部分为进阶语法介绍，主要介绍SystemVerilog中引入用于封装和做通用设计的相关语法。该部分内容建议有一定基础的设计人员采用。由于EDA工具支持不够完善，虽然我们在最新工具下测试了文档中介绍的相关语法，但是不排除目前该部分语法可能存在隐藏的Bug。采用该部分推荐的语法可以极大简化电路设计，尤其是顶层互联的相关代码。同时合理的利用相关语法可以实现一定程度的基础电路抽象，极大提高电路可读性。相关示例在附录中展示。</p>
+</li>
+<li><p class="first">第三部分：<strong>特殊用法</strong></p>
+<p>该部分介绍了ZION团队为了简化代码、进行快速设计采用的相关语法。使用方法比较激进，建议酌情采用。（TBD：内容概述）</p>
+</li>
+<li><p class="first">第四部分：<strong>Bug与期望</strong></p>
+<p>该部分介绍了目前已知的高级语法在不同EDA工具中的Bug。也列出了希望EDA工具和SystemVerilog未来能够支持的特性。</p>
+</li>
+<li><p class="first">第五部分：<strong>附录</strong></p>
+<p>附录中，我们在不同的小结介绍了一些更详细的代码示例和用法解释。（TBD：待补充）</p>
+</li>
+</ul>
+<p><strong>该文档是写作规范文档，不是Verilog的学习文档，需要在一定的设计经验和设计能力基础上进行阅读。</strong> 任何人有任何建议或想法欢迎向我们反馈。如果希望在附录中针对规范中某些语法提供更详细的解释，也欢迎大家进行反馈。</p>
+<blockquote>
+<div><strong>该文档解释权归ZION团队所有。</strong></div></blockquote>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="1BasicSyntax_cn.html" class="btn btn-neutral float-right" title="1 基础语法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to sv syntax’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ll
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
