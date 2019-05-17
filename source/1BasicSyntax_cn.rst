@@ -162,7 +162,7 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
 a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此所有字母全部大写，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。
 b) 单词间用 \'_\' 隔开。
 c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog(PARAM_B)**。
-d) 在端口中定义顺序为: parameter > parameter type > localparam。
+d) 在端口中定义顺序为: **parameter** > **parameter type** > **localparam**。
 
 1.2 格式规范
 ************
