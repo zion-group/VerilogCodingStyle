@@ -102,7 +102,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 
     // Code shown as below is defined in another Header file.
     // It is used by all Macro Library Header file.
-    `ifdef MacroLibDesign
+    `ifdef MACRO_CIRCUIT_LIB
     `define MacroLibDef(LibName,ImportName,ModuleName)         \
       `ifdef ImportName``ModuleName                            \
         `__DefErr__(ImportName``ModuleName);                   \
@@ -112,7 +112,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     `endif
     
     // This is the Library Header.
-    `ifdef MacroLibDesign
+    `ifdef MACRO_CIRCUIT_LIB
     `define Use_ZionCircuitLib(ImportName)           \
       `MacroLibDef(ZionCircuitLib,ImportName,Adder)  \
       `MacroLibDef(ZionCircuitLib,ImportName,Sub)
@@ -124,7 +124,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 
     `endif
 
-a) 条件编译语句，通过定义 **MacroLibDesign** 宏启用宏库设计方法。
+a) 条件编译语句，通过定义 **MACRO_CIRCUIT_LIB** 宏启用宏库设计方法。
 b) 定义 ZionCircuitLib 宏库使用命令，定义格式：**Use_ZionCircuitLib(ImportName)**。
 
   - ZionCircuitLib 为库名称。
