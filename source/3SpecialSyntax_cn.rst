@@ -103,11 +103,18 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     // Code shown as below is defined in another Header file.
     // It is used by all Macro Library Header file.
     `ifdef MACRO_CIRCUIT_LIB
-    `define MacroLibDef(LibName,ImportName,ModulePkgName)            \
-      `ifdef ImportName``ModulePkgName                               \
-        `__DefErr__(ImportName``ModulePkgName)                       \
-      `else                                                          \
-        `define ImportName``ModulePkgName `LibName``_``ModulePkgName \
+    `define MacroLibModuleDef(LibName,ImportName,ModuleName)     \
+      `ifdef ImportName``ModuleName                              \
+        `__DefErr__(ImportName``ModuleName)                      \
+      `else                                                      \
+        `define ImportName``ModuleName `LibName``_``ModuleName   \
+      `endif
+
+    `define MacroLibPkgDef(LibName,ImportName,PkgName)           \
+      `ifdef ImportName``PkgName                                 \
+        `__DefErr__(ImportName``PkgName)                         \
+      `else                                                      \
+        `define ImportName``PkgName LibName``_``PkgName          \
       `endif
     `endif
     
@@ -130,7 +137,7 @@ b) 定义 ZionCircuitLib 宏库使用命令，定义格式：**Use_ZionCircuitLi
   - ZionCircuitLib 为库名称。
   - ImportName为在module内调用时使用的缩写。当一个module内使用多个库时，该缩写可以用于找到电路库名称。
 
-c) 使用 **MacroLibDef** 宏定义每一个module。
+c) 使用 **MacroLibModuleDef** 宏声明 **module**，使用 **MacroLibPkgDef** 宏声明 **package**。
 d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。
 
 宏库的调用代码如下：
@@ -157,6 +164,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
 
     module Bbb
     `Use_ZionCircuitLib(z)
+    import `zBasicPkg::*;
     (
       ...
     );
@@ -169,15 +177,16 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
     endmodule
 
 
-    `Use_ZionCircuitLib(z)
+    `Use_ZionCircuitLib()
 
     module Ccc
+    import `BasicPkg::*;
     (
       ...
     );
 
-      `zAdder (U_Adder,a,b,x);
-      `zSub (U_Sub,a,b,y);
+      `Adder (U_Adder,a,b,x);
+      `Sub (U_Sub,a,b,y);
 
     endmodule
 
