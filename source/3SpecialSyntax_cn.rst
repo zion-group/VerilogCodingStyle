@@ -19,8 +19,8 @@
       `else
         `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\
       ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
-                              .WIDTH_O($bits(oDat_MT)))  \
-                              .TypeB(TypeB_MT),          \
+                              .WIDTH_O($bits(oDat_MT)),  \
+                              .TypeB(TypeB_MT))          \
                             UnitName(                    \
                               .iDatA(iDatA_MT),          \
                               .iDatB(iDatB_MT),          \
