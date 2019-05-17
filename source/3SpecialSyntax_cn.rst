@@ -197,3 +197,4 @@ a) 显示声明使用宏库：Use_MacroLibraryName(ImportName)。结尾无分号
 b) 用import name进行设计。
 c) 显示声明关闭宏库：Unuse_MacroLibraryName(ImportName)。结尾无分号。
 d) 宏库声明的位置与 import 用法相同。可以用于文件，或单个module。
+e) 若模块比较简单，只调用了1个库，则库可以不指定ImportName。
