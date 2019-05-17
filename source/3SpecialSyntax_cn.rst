@@ -190,7 +190,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
 
     endmodule
 
-    `Unuse_ZionCircuitLib(z)
+    `Unuse_ZionCircuitLib()
 
 
 a) 显示声明使用宏库：Use_MacroLibraryName(ImportName)。结尾无分号。
