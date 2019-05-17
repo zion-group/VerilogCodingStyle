@@ -103,11 +103,11 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     // Code shown as below is defined in another Header file.
     // It is used by all Macro Library Header file.
     `ifdef MACRO_CIRCUIT_LIB
-    `define MacroLibDef(LibName,ImportName,ModuleName)         \
-      `ifdef ImportName``ModuleName                            \
-        `__DefErr__(ImportName``ModuleName);                   \
-      `else                                                    \
-        `define ImportName``ModuleName `LibName``_``ModuleName \
+    `define MacroLibDef(LibName,ImportName,ModulePkgName)            \
+      `ifdef ImportName``ModulePkgName                               \
+        `__DefErr__(ImportName``ModulePkgName);                      \
+      `else                                                          \
+        `define ImportName``ModulePkgName `LibName``_``ModulePkgName \
       `endif
     `endif
     
