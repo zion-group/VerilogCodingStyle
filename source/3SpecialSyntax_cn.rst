@@ -18,13 +18,13 @@
         __DefErr__(ZionCircuitLib_Adder)
       `else
         `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\
-      ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)),\
-                              .WIDTH_O($bits(oDat_MT)))\
-                              .TypeB(TypeB_MT),\
-                            UnitName(\
-                              .iDatA(iDatA_MT),\
-                              .iDatB(iDatB_MT),\
-                              .oDat(oDat_MT)\
+      ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
+                              .WIDTH_O($bits(oDat_MT)))  \
+                              .TypeB(TypeB_MT),          \
+                            UnitName(                    \
+                              .iDatA(iDatA_MT),          \
+                              .iDatB(iDatB_MT),          \
+                              .oDat(oDat_MT)             \
                             )
       `endif
     `endif
@@ -43,7 +43,7 @@
 
 按照规范设计module。在module定义上声明宏模板。宏模板格式：
 
-a) 条件编译语句：'**(TBD)ifdef MACRO_TEMPLETE**'，通过宏定义指定是否启用全部宏模板。
+a) 条件编译语句：'**`ifdef MACRO_TEMPLETE**'，通过宏定义指定是否启用全部宏模板。
 b) 重定义检查。'**__DefErr__()**' 是库中已经定义好的宏。
 c) 定义宏模板，宏模板定义第一行无空格，结尾直接使用 '**\\**' 换行。
 d) 宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。
@@ -113,7 +113,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     
     // This is the Library Header.
     `ifdef MacroLibDesign
-    `define Use_ZionCircuitLib(ImportName)          \
+    `define Use_ZionCircuitLib(ImportName)           \
       `MacroLibDef(ZionCircuitLib,ImportName,Adder)  \
       `MacroLibDef(ZionCircuitLib,ImportName,Sub)
 
