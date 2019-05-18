@@ -79,7 +79,7 @@ e) always中可以使用foreach循环：**foreach(dat[i])**
     `typedef_DemoStruct(8) StructD;
     StructD dat;
     struct packed{
-        logic [width-1:0] dat;
+        logic [7:0] dat;
     }datTemp;
     assign dat = dat'(datTemp);
 
