@@ -13,12 +13,4 @@ Welcome to sv syntax's documentation!
    source/1BasicSyntax_cn
    source/2AdvanceSyntax_cn
    source/3SpecialSyntax_cn
-   
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
