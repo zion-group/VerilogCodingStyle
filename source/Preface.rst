@@ -35,7 +35,7 @@
 
   附录中，我们在不同的小结介绍了一些更详细的代码示例和用法解释。（TBD：待补充）
 
-**该文档是写作规范文档，不是Verilog的学习文档，需要在一定的设计经验和设计能力基础上进行阅读。** 该文档github地址为：`Verilog Coding Style<https://github.com/zion-group/VerilogCodingStyle>`_。欢迎大家star该项目。任何人有任何建议或想法欢迎向我们反馈。如果希望在附录中针对规范中某些语法提供更详细的解释，也欢迎大家进行反馈。
+**该文档是写作规范文档，不是Verilog的学习文档，需要在一定的设计经验和设计能力基础上进行阅读。** 该文档github地址为：`Verilog Coding Style <https://github.com/zion-group/VerilogCodingStyle/>`_。欢迎大家star该项目。任何人有任何建议或想法欢迎向我们反馈。如果希望在附录中针对规范中某些语法提供更详细的解释，也欢迎大家进行反馈。
 
   **该文档解释权归ZION团队所有。**
 
