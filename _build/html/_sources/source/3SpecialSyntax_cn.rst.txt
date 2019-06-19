@@ -18,13 +18,13 @@
         __DefErr__(ZionCircuitLib_Adder)
       `else
         `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\
-      ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)),\
-                              .WIDTH_O($bits(oDat_MT)))\
-                              .TypeB(TypeB_MT),\
-                            UnitName(\
-                              .iDatA(iDatA_MT),\
-                              .iDatB(iDatB_MT),\
-                              .oDat(oDat_MT)\
+      ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
+                              .WIDTH_O($bits(oDat_MT)),  \
+                              .TypeB(TypeB_MT))          \
+                            UnitName(                    \
+                              .iDatA(iDatA_MT),          \
+                              .iDatB(iDatB_MT),          \
+                              .oDat(oDat_MT)             \
                             )
       `endif
     `endif
@@ -43,7 +43,7 @@
 
 按照规范设计module。在module定义上声明宏模板。宏模板格式：
 
-a) 条件编译语句：'**(TBD)ifdef MACRO_TEMPLETE**'，通过宏定义指定是否启用全部宏模板。
+a) 条件编译语句：'**`ifdef MACRO_TEMPLETE**'，通过宏定义指定是否启用全部宏模板。
 b) 重定义检查。'**__DefErr__()**' 是库中已经定义好的宏。
 c) 定义宏模板，宏模板定义第一行无空格，结尾直接使用 '**\\**' 换行。
 d) 宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。
@@ -102,18 +102,25 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 
     // Code shown as below is defined in another Header file.
     // It is used by all Macro Library Header file.
-    `ifdef MacroLibDesign
-    `define MacroLibDef(LibName,ImportName,ModuleName)         \
-      `ifdef ImportName``ModuleName                            \
-        `__DefErr__(ImportName``ModuleName);                   \
-      `else                                                    \
-        `define ImportName``ModuleName `LibName``_``ModuleName \
+    `ifdef MACRO_CIRCUIT_LIB
+    `define MacroLibModuleDef(LibName,ImportName,ModuleName)     \
+      `ifdef ImportName``ModuleName                              \
+        `__DefErr__(ImportName``ModuleName)                      \
+      `else                                                      \
+        `define ImportName``ModuleName `LibName``_``ModuleName   \
+      `endif
+
+    `define MacroLibPkgDef(LibName,ImportName,PkgName)           \
+      `ifdef ImportName``PkgName                                 \
+        `__DefErr__(ImportName``PkgName)                         \
+      `else                                                      \
+        `define ImportName``PkgName LibName``_``PkgName          \
       `endif
     `endif
     
     // This is the Library Header.
-    `ifdef MacroLibDesign
-    `define Use_ZionCircuitLib(ImportName)          \
+    `ifdef MACRO_CIRCUIT_LIB
+    `define Use_ZionCircuitLib(ImportName)           \
       `MacroLibDef(ZionCircuitLib,ImportName,Adder)  \
       `MacroLibDef(ZionCircuitLib,ImportName,Sub)
 
@@ -124,13 +131,13 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 
     `endif
 
-a) 条件编译语句，通过定义 **MacroLibDesign** 宏启用宏库设计方法。
+a) 条件编译语句，通过定义 **MACRO_CIRCUIT_LIB** 宏启用宏库设计方法。
 b) 定义 ZionCircuitLib 宏库使用命令，定义格式：**Use_ZionCircuitLib(ImportName)**。
 
   - ZionCircuitLib 为库名称。
   - ImportName为在module内调用时使用的缩写。当一个module内使用多个库时，该缩写可以用于找到电路库名称。
 
-c) 使用 **MacroLibDef** 宏定义每一个module。
+c) 使用 **MacroLibModuleDef** 宏声明 **module**，使用 **MacroLibPkgDef** 宏声明 **package**。
 d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。
 
 宏库的调用代码如下：
@@ -157,6 +164,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
 
     module Bbb
     `Use_ZionCircuitLib(z)
+    import `zBasicPkg::*;
     (
       ...
     );
@@ -169,22 +177,24 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
     endmodule
 
 
-    `Use_ZionCircuitLib(z)
+    `Use_ZionCircuitLib()
 
     module Ccc
+    import `BasicPkg::*;
     (
       ...
     );
 
-      `zAdder (U_Adder,a,b,x);
-      `zSub (U_Sub,a,b,y);
+      `Adder (U_Adder,a,b,x);
+      `Sub (U_Sub,a,b,y);
 
     endmodule
 
-    `Unuse_ZionCircuitLib(z)
+    `Unuse_ZionCircuitLib()
 
 
 a) 显示声明使用宏库：Use_MacroLibraryName(ImportName)。结尾无分号。
 b) 用import name进行设计。
 c) 显示声明关闭宏库：Unuse_MacroLibraryName(ImportName)。结尾无分号。
 d) 宏库声明的位置与 import 用法相同。可以用于文件，或单个module。
+e) 若模块比较简单，只调用了1个库，则库可以不指定ImportName。
