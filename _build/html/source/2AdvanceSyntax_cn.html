@@ -162,6 +162,7 @@
 <ol class="loweralpha simple">
 <li>不显示声明 <strong>generate</strong> 和 <strong>endgenerate</strong>。不声明在标准中允许，且没有任何影响。</li>
 <li>给必要的生成块 <strong>添加block name</strong>。若在生成语句中调用module或定义信号，该module或信号通过block name访问。若没有显示定义block name，仿真器或综合器会自动生成。</li>
+<li>互斥的block可以使用**相同的block name**。比如：if(…)begin:BlkName … end else begin:BlkName … end。</li>
 <li>所有在生成语句中使用的所有变量都是 <strong>固定值</strong> (参数 或 宏)，不是电路中的信号。</li>
 <li><dl class="first docutils">
 <dt>条件电路生成使用宏定义实现，用以区分电路中信号的 if 判断。</dt>
@@ -193,7 +194,7 @@
 <ol class="loweralpha simple" start="3">
 <li>生成块中for循环写法：<strong>for(genvar i=0; i&lt;xx; i++)</strong></li>
 <li>always中for循环写法：<strong>for(int i=0; i&lt;xx; i++)</strong></li>
-<li>always中可以使用foreach循环：<strong>foreach(dat[i])</strong></li>
+<li>always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：<strong>foreach(dat[i])</strong></li>
 </ol>
 <blockquote>
 <div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define signal outside the loop generate block is recommended.</span>
@@ -234,12 +235,12 @@
 <span class="cp">    logic [width-1:0] dat;\</span>
 <span class="cp">  }</span>
 
-<span class="no">`typedef_DemoStruct</span><span class="p">(</span><span class="mh">8</span><span class="p">)</span> <span class="n">StructD</span><span class="p">;</span>
-<span class="n">StructD</span> <span class="n">dat</span><span class="p">;</span>
+<span class="no">`typedef_DemoStruct</span><span class="p">(</span><span class="mh">8</span><span class="p">)</span> <span class="n">type_StructD</span><span class="p">;</span>
+<span class="n">type_StructD</span> <span class="n">datSt</span><span class="p">;</span>
 <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span>
     <span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
-<span class="p">}</span><span class="n">datTemp</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="p">&#39;(</span><span class="n">datTemp</span><span class="p">);</span>
+<span class="p">}</span><span class="n">datTempSt</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">datSt</span> <span class="o">=</span> <span class="n">dat</span><span class="p">&#39;(</span><span class="n">datTempSt</span><span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -247,9 +248,10 @@
 <li>同方向有相关性信号，推荐使用struct定义。</li>
 <li>结构体定义必须使用packed形式。</li>
 <li>直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义。</li>
-<li>typedef struct 类型名用 <strong>大驼峰</strong> 命名法。</li>
+<li>typedef struct 类型名用 <strong>大驼峰</strong> 命名法，<strong>type_</strong> 作为前缀。struct定义的变量用 <strong>小驼峰</strong> 命名法，<strong>St</strong> 作为后缀。</li>
 <li>使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)</li>
 <li>struct 可以使用 <strong>‘( )</strong> 操作符。</li>
+<li>union定义方式与struct相同，变量后缀为 <strong>Un</strong> 。</li>
 </ol>
 </div>
 <div class="section" id="package">
@@ -276,14 +278,14 @@
 <div class="section" id="interface">
 <h2>2.4 interface 用法规范<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">TestIf</span>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">TestItf</span>
 <span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span>
 <span class="p">);</span>
 
   <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datOh</span><span class="p">;</span>  <span class="c1">// All signal defined in &#39;logic&#39;.</span>
   <span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
   <span class="kt">logic</span>       <span class="n">datOh0</span><span class="p">,</span><span class="n">datOh1</span><span class="p">,</span><span class="n">datOh2</span><span class="p">,</span><span class="n">datOh3</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span><span class="kt">logic</span> <span class="n">dat1</span><span class="p">;</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat2</span><span class="p">;}</span> <span class="n">DataStruct</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span><span class="kt">logic</span> <span class="n">dat1</span><span class="p">;</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat2</span><span class="p">;}</span> <span class="n">type_DataStruct</span><span class="p">;</span>
   <span class="k">assign</span> <span class="n">datOh0</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
   <span class="k">assign</span> <span class="n">datOh1</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>   <span class="c1">// Only bit selection/extension is allowed.</span>
   <span class="k">assign</span> <span class="n">datOh2</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
@@ -300,30 +302,30 @@
   <span class="n">modport</span> <span class="n">datIn</span><span class="p">(</span><span class="k">input</span> <span class="n">dat</span><span class="p">,</span> <span class="n">import</span> <span class="n">BiggerThan1</span><span class="p">);</span> <span class="c1">// import function in modport.</span>
   <span class="n">modport</span> <span class="n">Unit</span><span class="p">(</span><span class="k">input</span> <span class="n">datOh0</span><span class="p">,</span><span class="n">datOh1</span><span class="p">,</span><span class="n">datOh2</span><span class="p">,</span><span class="n">datOh3</span><span class="p">,</span> <span class="k">output</span> <span class="n">dat</span><span class="p">,</span> <span class="n">import</span> <span class="n">Codec</span><span class="p">);</span>
 
-<span class="nl">endinterface:</span> <span class="n">TestIf</span>
+<span class="nl">endinterface:</span> <span class="n">TestItf</span>
 
-<span class="k">module</span> <span class="n">TestIfUnit</span>
+<span class="k">module</span> <span class="n">TestItfUnit</span>
 <span class="p">(</span>
-  <span class="n">TestIf</span><span class="p">.</span><span class="n">Unit</span> <span class="n">bDat</span>
+  <span class="n">TestItf</span><span class="p">.</span><span class="n">Unit</span> <span class="n">bDatIf</span>
 <span class="p">);</span>
-  <span class="n">bDat</span><span class="p">.</span><span class="n">Codec</span><span class="p">();</span>
-<span class="k">endmodule</span><span class="o">:</span> <span class="n">TestIfUnit</span>
+  <span class="n">bDatIf</span><span class="p">.</span><span class="n">Codec</span><span class="p">();</span>
+<span class="k">endmodule</span><span class="o">:</span> <span class="n">TestItfUnit</span>
 
 <span class="k">module</span> <span class="n">ModuleBb</span>
 <span class="p">(</span>
-  <span class="n">TestIf</span><span class="p">.</span><span class="n">datIn</span> <span class="n">iDat</span><span class="p">,</span>
+  <span class="n">TestItf</span><span class="p">.</span><span class="n">datIn</span> <span class="n">iDatIfIf</span><span class="p">,</span>
   <span class="k">output</span> <span class="kt">logic</span> <span class="n">oResult</span>
 <span class="p">);</span>
-  <span class="k">typedef</span> <span class="n">iDat</span><span class="p">.</span><span class="n">DataStruct</span> <span class="n">DatStruct</span><span class="p">;</span>  <span class="c1">// Use typedef in interface.</span>
-  <span class="n">DatStruct</span> <span class="n">data</span><span class="p">;</span>
-  <span class="k">assign</span> <span class="n">data</span> <span class="o">=</span> <span class="n">iDat</span><span class="p">.</span><span class="n">BiggerThan1</span><span class="p">();</span>   <span class="c1">// Use function in interface.</span>
-  <span class="k">assign</span> <span class="n">oResult</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">dat1</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">iDatIf</span><span class="p">.</span><span class="n">type_DataStruct</span> <span class="n">type_DatStruct</span><span class="p">;</span>  <span class="c1">// Use typedef in interface.</span>
+  <span class="n">type_DatStruct</span> <span class="n">dataSt</span><span class="p">;</span>
+  <span class="k">assign</span> <span class="n">dataSt</span> <span class="o">=</span> <span class="n">iDatIf</span><span class="p">.</span><span class="n">BiggerThan1</span><span class="p">();</span>   <span class="c1">// Use function in interface.</span>
+  <span class="k">assign</span> <span class="n">oResult</span> <span class="o">=</span> <span class="n">dataSt</span><span class="p">.</span><span class="n">dat1</span><span class="p">;</span>
 <span class="k">endmodule</span><span class="o">:</span> <span class="n">ModuleBb</span>
 </pre></div>
 </div>
 </div></blockquote>
 <ol class="loweralpha simple">
-<li>interface中所有信号使用 <strong>logic</strong> 或 <strong>struct</strong> 定义。</li>
+<li>interface名称定义使用 <strong>Itf</strong> 作为后缀，信号定义使用 <strong>If</strong> 作为后缀。内部信号使用 <strong>logic</strong> 或 <strong>struct</strong> 定义。</li>
 <li>interface中只能存在 <strong>位选择、位截取、位扩展</strong> 逻辑电路，不能存在任何会生成具体器件的逻辑电路。</li>
 </ol>
 <blockquote>
