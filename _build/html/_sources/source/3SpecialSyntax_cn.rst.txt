@@ -50,7 +50,7 @@ d) 宏对应的module在新一行中缩进2个空格，直接按照例化格式�
 e) 参数中先定义例化名称，再定义type参数，最后定义输入、输出端口。
 f) 输入输出端口与端口名称相同，增加 '_MT' 后缀。
 g) 完成module定义。
-h) 定义module时，参数在两个 '**//**' 间标注计算方法。在后面的 '**//**'后写注释。若某参数与端口无关则不标注计算方法。(改写法用于宏自动生成)
+h) 定义module时，参数在两个 '**//**' 间标注计算方法。在后面的 '**//**'后写注释。若某参数与端口无关则不标注计算方法。(该写法用于宏自动生成)
 i) 除最后一行外，其他行宏以 '**\\**' 结尾。(多行宏定义标准写法)
 j) 结束条件编译。
 
@@ -144,6 +144,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
 
   .. code-block:: verilog 
 
+    // File: Aaa.sv
     module Aaa
     (
       ...
@@ -162,6 +163,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
 
     endmodule
 
+    // File: Bbb.sv
     module Bbb
     `Use_ZionCircuitLib(z)
     import `zBasicPkg::*;
@@ -177,6 +179,7 @@ d) 由于宏定义是全局有效，为了避免互相干扰，需要在宏库�
     endmodule
 
 
+    // File: Ccc.sv
     `Use_ZionCircuitLib()
 
     module Ccc
@@ -198,3 +201,5 @@ b) 用import name进行设计。
 c) 显示声明关闭宏库：Unuse_MacroLibraryName(ImportName)。结尾无分号。
 d) 宏库声明的位置与 import 用法相同。可以用于文件，或单个module。
 e) 若模块比较简单，只调用了1个库，则库可以不指定ImportName。
+
+

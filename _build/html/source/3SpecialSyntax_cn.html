@@ -201,7 +201,7 @@
 <li>参数中先定义例化名称，再定义type参数，最后定义输入、输出端口。</li>
 <li>输入输出端口与端口名称相同，增加 ‘_MT’ 后缀。</li>
 <li>完成module定义。</li>
-<li>定义module时，参数在两个 ‘<strong>//</strong>’ 间标注计算方法。在后面的 ‘<strong>//</strong>’后写注释。若某参数与端口无关则不标注计算方法。(改写法用于宏自动生成)</li>
+<li>定义module时，参数在两个 ‘<strong>//</strong>’ 间标注计算方法。在后面的 ‘<strong>//</strong>’后写注释。若某参数与端口无关则不标注计算方法。(该写法用于宏自动生成)</li>
 <li>除最后一行外，其他行宏以 ‘<strong>\</strong>’ 结尾。(多行宏定义标准写法)</li>
 <li>结束条件编译。</li>
 </ol>
@@ -299,7 +299,8 @@
 </ol>
 <p>宏库的调用代码如下：</p>
 <blockquote>
-<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>module Aaa
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>// File: Aaa.sv
+module Aaa
 (
   ...
 );
@@ -317,6 +318,7 @@
 
 endmodule
 
+// File: Bbb.sv
 module Bbb
 `Use_ZionCircuitLib(z)
 import `zBasicPkg::*;
@@ -332,6 +334,7 @@ import `zBasicPkg::*;
 endmodule
 
 
+// File: Ccc.sv
 `Use_ZionCircuitLib()
 
 module Ccc
