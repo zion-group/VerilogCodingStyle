@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3 特殊语法 &mdash; sv syntax  documentation</title>
+  <title>3 特殊语法 &mdash; Verilog Coding Style  documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> sv syntax
+            <a href="../index.html" class="icon icon-home"> Verilog Coding Style
           
 
           
@@ -102,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">sv syntax</a>
+          <a href="../index.html">Verilog Coding Style</a>
         
       </nav>
 
@@ -167,13 +167,13 @@
     <span class="n">__DefErr__</span><span class="p">(</span><span class="n">ZionCircuitLib_Adder</span><span class="p">)</span>
   <span class="no">`else</span>
 <span class="cp">    `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\</span>
-<span class="cp">  ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)),\</span>
-<span class="cp">                          .WIDTH_O($bits(oDat_MT)))\</span>
-<span class="cp">                          .TypeB(TypeB_MT),\</span>
-<span class="cp">                        UnitName(\</span>
-<span class="cp">                          .iDatA(iDatA_MT),\</span>
-<span class="cp">                          .iDatB(iDatB_MT),\</span>
-<span class="cp">                          .oDat(oDat_MT)\</span>
+<span class="cp">  ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \</span>
+<span class="cp">                          .WIDTH_O($bits(oDat_MT)),  \</span>
+<span class="cp">                          .TypeB(TypeB_MT))          \</span>
+<span class="cp">                        UnitName(                    \</span>
+<span class="cp">                          .iDatA(iDatA_MT),          \</span>
+<span class="cp">                          .iDatB(iDatB_MT),          \</span>
+<span class="cp">                          .oDat(oDat_MT)             \</span>
 <span class="cp">                        )</span>
   <span class="no">`endif</span>
 <span class="no">`endif</span>
@@ -194,7 +194,7 @@
 </div></blockquote>
 <p>按照规范设计module。在module定义上声明宏模板。宏模板格式：</p>
 <ol class="loweralpha simple">
-<li>条件编译语句：’<strong>(TBD)ifdef MACRO_TEMPLETE</strong>’，通过宏定义指定是否启用全部宏模板。</li>
+<li>条件编译语句：’<strong>`ifdef MACRO_TEMPLETE</strong>’，通过宏定义指定是否启用全部宏模板。</li>
 <li>重定义检查。’<strong>__DefErr__()</strong>’ 是库中已经定义好的宏。</li>
 <li>定义宏模板，宏模板定义第一行无空格，结尾直接使用 ‘<strong>\</strong>’ 换行。</li>
 <li>宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。</li>
@@ -252,18 +252,25 @@
 <blockquote>
 <div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Code shown as below is defined in another Header file.</span>
 <span class="c1">// It is used by all Macro Library Header file.</span>
-<span class="no">`ifdef</span> <span class="n">MacroLibDesign</span>
-<span class="cp">`define MacroLibDef(LibName,ImportName,ModuleName)         \</span>
-<span class="cp">  `ifdef ImportName``ModuleName                            \</span>
-<span class="cp">    `__DefErr__(ImportName``ModuleName);                   \</span>
-<span class="cp">  `else                                                    \</span>
-<span class="cp">    `define ImportName``ModuleName `LibName``_``ModuleName \</span>
+<span class="no">`ifdef</span> <span class="no">MACRO_CIRCUIT_LIB</span>
+<span class="cp">`define MacroLibModuleDef(LibName,ImportName,ModuleName)     \</span>
+<span class="cp">  `ifdef ImportName``ModuleName                              \</span>
+<span class="cp">    `__DefErr__(ImportName``ModuleName)                      \</span>
+<span class="cp">  `else                                                      \</span>
+<span class="cp">    `define ImportName``ModuleName `LibName``_``ModuleName   \</span>
+<span class="cp">  `endif</span>
+
+<span class="cp">`define MacroLibPkgDef(LibName,ImportName,PkgName)           \</span>
+<span class="cp">  `ifdef ImportName``PkgName                                 \</span>
+<span class="cp">    `__DefErr__(ImportName``PkgName)                         \</span>
+<span class="cp">  `else                                                      \</span>
+<span class="cp">    `define ImportName``PkgName LibName``_``PkgName          \</span>
 <span class="cp">  `endif</span>
 <span class="no">`endif</span>
 
 <span class="c1">// This is the Library Header.</span>
-<span class="no">`ifdef</span> <span class="n">MacroLibDesign</span>
-<span class="cp">`define Use_ZionCircuitLib(ImportName)          \</span>
+<span class="no">`ifdef</span> <span class="no">MACRO_CIRCUIT_LIB</span>
+<span class="cp">`define Use_ZionCircuitLib(ImportName)           \</span>
 <span class="cp">  `MacroLibDef(ZionCircuitLib,ImportName,Adder)  \</span>
 <span class="cp">  `MacroLibDef(ZionCircuitLib,ImportName,Sub)</span>
 
@@ -277,7 +284,7 @@
 </div>
 </div></blockquote>
 <ol class="loweralpha simple">
-<li>条件编译语句，通过定义 <strong>MacroLibDesign</strong> 宏启用宏库设计方法。</li>
+<li>条件编译语句，通过定义 <strong>MACRO_CIRCUIT_LIB</strong> 宏启用宏库设计方法。</li>
 <li>定义 ZionCircuitLib 宏库使用命令，定义格式：<strong>Use_ZionCircuitLib(ImportName)</strong>。</li>
 </ol>
 <blockquote>
@@ -287,56 +294,58 @@
 </ul>
 </div></blockquote>
 <ol class="loweralpha simple" start="3">
-<li>使用 <strong>MacroLibDef</strong> 宏定义每一个module。</li>
+<li>使用 <strong>MacroLibModuleDef</strong> 宏声明 <strong>module</strong>，使用 <strong>MacroLibPkgDef</strong> 宏声明 <strong>package</strong>。</li>
 <li>由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。</li>
 </ol>
 <p>宏库的调用代码如下：</p>
 <blockquote>
-<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">Aaa</span>
-<span class="p">(</span>
-  <span class="p">...</span>
-<span class="p">);</span>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>module Aaa
+(
+  ...
+);
 
-  <span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+  `Use_ZionCircuitLib(z)
 
-  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span>
-            <span class="n">a</span><span class="p">,</span>  <span class="c1">//iDatA</span>
-            <span class="n">b</span><span class="p">,</span>  <span class="c1">//iDatB</span>
-            <span class="n">x</span>   <span class="c1">//oDat</span>
-          <span class="p">);</span>
-  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+  `zAdder (U_Adder,
+            a,  //iDatA
+            b,  //iDatB
+            x   //oDat
+          );
+  `zSub (U_Sub,a,b,y);
 
-  <span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+  `Unuse_ZionCircuitLib(z)
 
-<span class="k">endmodule</span>
+endmodule
 
-<span class="k">module</span> <span class="n">Bbb</span>
-<span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-<span class="p">(</span>
-  <span class="p">...</span>
-<span class="p">);</span>
+module Bbb
+`Use_ZionCircuitLib(z)
+import `zBasicPkg::*;
+(
+  ...
+);
 
-  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
-  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+  `zAdder (U_Adder,a,b,x);
+  `zSub (U_Sub,a,b,y);
 
-  <span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+  `Unuse_ZionCircuitLib(z)
 
-<span class="k">endmodule</span>
+endmodule
 
 
-<span class="no">`Use_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+`Use_ZionCircuitLib()
 
-<span class="k">module</span> <span class="n">Ccc</span>
-<span class="p">(</span>
-  <span class="p">...</span>
-<span class="p">);</span>
+module Ccc
+import `BasicPkg::*;
+(
+  ...
+);
 
-  <span class="no">`zAdder</span> <span class="p">(</span><span class="n">U_Adder</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
-  <span class="no">`zSub</span> <span class="p">(</span><span class="n">U_Sub</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+  `Adder (U_Adder,a,b,x);
+  `Sub (U_Sub,a,b,y);
 
-<span class="k">endmodule</span>
+endmodule
 
-<span class="no">`Unuse_ZionCircuitLib</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+`Unuse_ZionCircuitLib()
 </pre></div>
 </div>
 </div></blockquote>
@@ -345,6 +354,7 @@
 <li>用import name进行设计。</li>
 <li>显示声明关闭宏库：Unuse_MacroLibraryName(ImportName)。结尾无分号。</li>
 <li>宏库声明的位置与 import 用法相同。可以用于文件，或单个module。</li>
+<li>若模块比较简单，只调用了1个库，则库可以不指定ImportName。</li>
 </ol>
 </div>
 </div>
@@ -367,7 +377,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, ll
+        &copy; Copyright 2019, Zion Research Team
 
     </p>
   </div>

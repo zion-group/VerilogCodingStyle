@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1 基础语法 &mdash; sv syntax  documentation</title>
+  <title>1 基础语法 &mdash; Verilog Coding Style  documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> sv syntax
+            <a href="../index.html" class="icon icon-home"> Verilog Coding Style
           
 
           
@@ -132,7 +132,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">sv syntax</a>
+          <a href="../index.html">Verilog Coding Style</a>
         
       </nav>
 
@@ -288,7 +288,7 @@
 </div></blockquote>
 <ol class="loweralpha simple">
 <li>前缀用于标志信号的特殊用途或特殊含义，以一个小写字母写在信号名前，信号名为大驼峰命名，整个信号为 <strong>小驼峰</strong> 命名。</li>
-<li>端口信号：(C1_1.1.3.2.b)</li>
+<li>端口信号：</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
@@ -364,7 +364,8 @@
 <li>由于 <strong>参数</strong> 和 <strong>宏</strong> 表示常数，与普通信号不同，因此所有字母全部大写，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。</li>
 <li>单词间用 ‘_’ 隔开。</li>
 <li>若某参数 <strong>PARAM_A</strong> 是 <strong>PARAM_B</strong> 的对数，可以写成 <strong>PARAM_B_LG</strong>，例如： <strong>PARAM_B_LG = $clog(PARAM_B)</strong>。</li>
-<li>在端口中定义顺序为: parameter &gt; parameter type &gt; localparam。</li>
+<li>在端口中定义顺序为: <strong>parameter</strong> &gt; <strong>parameter type</strong> &gt; <strong>localparam</strong>。</li>
+<li>localparam如果不会在端口定义中使用，可以在代码正文中定义。</li>
 </ol>
 </div>
 </div>
@@ -396,7 +397,7 @@
 </div>
 </div></blockquote>
 <ol class="loweralpha simple" start="3">
-<li>语句间可以有1个或多个空格。多余一个空格可以方便对齐和查看(对于开启彩虹对齐插件的开发者)。</li>
+<li>语句间可以有1个或多个空格。多余一个空格可以方便对齐和查看(便于使用彩虹对齐插件查看代码)。</li>
 <li>重要的block，及包含信号定义的block，需要添加 <strong>block name</strong> 。所有 <strong>module</strong> 和 <strong>有名字的block</strong> 主要添加对应的 <strong>ending name</strong>。</li>
 </ol>
 <blockquote>
@@ -484,7 +485,7 @@
 </pre></div>
 </div>
 </li>
-<li><p class="first">参数例化格式:</p>
+<li><p class="first">无参数例化格式:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="n">空格</span> <span class="o">+</span> <span class="n">module名</span> <span class="o">+</span> <span class="n">空格</span> <span class="o">+</span>  <span class="n">实例化名</span><span class="p">(</span>
                             <span class="n">端口连接</span><span class="o">...</span>
                           <span class="p">);</span>
@@ -595,7 +596,7 @@
 </div></blockquote>
 <ol class="loweralpha simple">
 <li>所有信号使用 <strong>logic</strong> 定义。</li>
-<li>在定义时直接复制的信号使用wire类型。因为logic不支持定义时赋值。</li>
+<li>在定义时直接赋值的信号使用wire类型。因为logic不支持定义时赋值。</li>
 <li>组合逻辑电路表达式中包含function，使用always_comb赋值。因为assign赋值时，使用function可能引起仿真器bug。</li>
 <li>同向结构化信号，尽量使用struct定义。struct类型可以通过 <strong>parameter type</strong> 在不同模块间传递。</li>
 </ol>
@@ -610,7 +611,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>0赋值使用：<strong>‘0</strong>，例如：<strong>assign dat = ‘0;</strong></li>
-<li>全1赋值值使用：<strong>‘1</strong>，例如：<strong>assign dat = ‘0;</strong></li>
+<li>全1赋值值使用：<strong>‘1</strong>，例如：<strong>assign dat = ‘1;</strong></li>
 <li>某确定值使用：<strong>位宽 + ‘b/d/h/o’ + 数值</strong>，例如 <strong>assign dat = 8’d1;</strong></li>
 </ul>
 </div></blockquote>
@@ -645,7 +646,7 @@
 </div>
 </div></blockquote>
 <ol class="loweralpha simple" start="6">
-<li>使用packed方式定义多维向量信号。例如：<strong>logic [7:0][2:0] dat;</strong></li>
+<li>使用packed方式定义多维向量信号。例如：<strong>logic [2:0][7:0] dat;</strong></li>
 <li>使用系统函数进行位宽相关计算。</li>
 </ol>
 <blockquote>
@@ -666,8 +667,8 @@
 </ol>
 <blockquote>
 <div><ul class="simple">
-<li>改写法综合生产的电路简洁高效，Bug少。</li>
-<li>改写法可以用来代替三目运算符 ()?: ，实现更好的性能。</li>
+<li>综合生产的电路简洁高效，Bug少。</li>
+<li>可以用来代替三目运算符 ()?: ，实现更好的性能。</li>
 </ul>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use like this.</span>
 <span class="k">assign</span> <span class="n">dat</span>  <span class="o">=</span> <span class="p">{</span><span class="nb">$bits</span><span class="p">(</span><span class="n">a</span><span class="p">){(</span><span class="n">x</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="o">==</span><span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">)}}</span> <span class="o">&amp;</span> <span class="n">a</span><span class="p">;</span>
@@ -747,11 +748,11 @@
 </ol>
 <blockquote>
 <div><ul class="simple">
-<li>case条件如果互斥，使用：unique case(xxx) inside 或 unique case(1’b1)</li>
-<li>case条件若非互斥，使用：priority case(xxx) inside 或 priority case(1’b1)</li>
-<li>设计中，尽量使用unique case。综合后生成无优先级电路，priority生成带优先级电路。</li>
+<li>case条件如果互斥，使用：<strong>unique case(xxx) inside</strong> 或 <strong>unique case(1’b1)</strong></li>
+<li>case条件若非互斥，使用：<strong>priority case(xxx) inside</strong> 或 <strong>priority case(1’b1)</strong></li>
+<li>设计中，尽量使用**unique case**。综合后生成无优先级电路，priority生成带优先级电路。</li>
 <li>case条件复杂，需要在判断条件后添加注释说明判断条件含义。</li>
-<li>default规范。<ul>
+<li>default规范:<ul>
 <li>若有一个固定默认值，则default为固定值。</li>
 <li>若case条件已经是full case，则default替换为：’<strong>// full case</strong>’。注意在full case的情况下，不要写default，不然综合器会发现无法进入该条件，报warning。</li>
 <li>若不存在default，则禁止使用case语句。这种情况使用case有可能造成后仿与前仿行为不一致。</li>
@@ -851,7 +852,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, ll
+        &copy; Copyright 2019, Zion Research Team
 
     </p>
   </div>
