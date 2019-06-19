@@ -97,7 +97,7 @@ a) 所有信号采用 **小驼峰** 命名方式。
 
 
 a) 前缀用于标志信号的特殊用途或特殊含义，以一个小写字母写在信号名前，信号名为大驼峰命名，整个信号为 **小驼峰** 命名。
-b) 端口信号：(C1_1.1.3.2.b)
+b) 端口信号：
 
   - input: **i** (input port)， 例如：**iAaaBbb** 
   - inout: **b** (bi-directional port)， 例如：**bAaaBbb**
@@ -163,6 +163,7 @@ a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此�
 b) 单词间用 \'_\' 隔开。
 c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog(PARAM_B)**。
 d) 在端口中定义顺序为: **parameter** > **parameter type** > **localparam**。
+e) localparam如果不会在端口定义中使用，可以在代码正文中定义。
 
 1.2 格式规范
 ************
@@ -193,7 +194,7 @@ b) begin 在当前行末尾，不重新开启一行。end 与 else 写在同一�
       end
     end
 
-c) 语句间可以有1个或多个空格。多余一个空格可以方便对齐和查看(对于开启彩虹对齐插件的开发者)。
+c) 语句间可以有1个或多个空格。多余一个空格可以方便对齐和查看(便于使用彩虹对齐插件查看代码)。
 d) 重要的block，及包含信号定义的block，需要添加 **block name** 。所有 **module** 和 **有名字的block** 主要添加对应的 **ending name**。
 
   .. code-block:: verilog
@@ -277,7 +278,7 @@ b) 有参数例化格式::
                                 端口连接...
                               );
 
-c) 参数例化格式::
+c) 无参数例化格式::
 
     2空格 + module名 + 空格 +  实例化名(
                                 端口连接...
@@ -376,7 +377,7 @@ f) 完整示例代码：
     end
 
 a) 所有信号使用 **logic** 定义。
-b) 在定义时直接复制的信号使用wire类型。因为logic不支持定义时赋值。
+b) 在定义时直接赋值的信号使用wire类型。因为logic不支持定义时赋值。
 c) 组合逻辑电路表达式中包含function，使用always_comb赋值。因为assign赋值时，使用function可能引起仿真器bug。
 d) 同向结构化信号，尽量使用struct定义。struct类型可以通过 **parameter type** 在不同模块间传递。
 
@@ -388,7 +389,7 @@ b) LSB最好从0开始，如果有特殊需求，LSB可以从非零值开始，�
 c) 固定值赋值使用以下方式：
 
   - 0赋值使用：**'0**，例如：**assign dat = '0;**
-  - 全1赋值值使用：**'1**，例如：**assign dat = '0;**
+  - 全1赋值值使用：**'1**，例如：**assign dat = '1;**
   - 某确定值使用：**位宽 + 'b/d/h/o' + 数值**，例如 **assign dat = 8'd1;**
 
 d) 当两个信号位宽有相关性，使用$bits()代替parameter定义信号位宽，这样可以使电路更利于复用，减少位宽对应参数变化引起的问题。
@@ -432,8 +433,8 @@ g) 使用系统函数进行位宽相关计算。
 
 a) 在设计中使用data mask写法：**yy = {$bits(xx){en}} & xx;**
   
-  - 改写法综合生产的电路简洁高效，Bug少。
-  - 改写法可以用来代替三目运算符 ()?: ，实现更好的性能。
+  - 综合生产的电路简洁高效，Bug少。
+  - 可以用来代替三目运算符 ()?: ，实现更好的性能。
 
   .. code-block:: verilog
 
@@ -498,11 +499,11 @@ h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如�
 
 i) case 语句用法规范。
 
-  - case条件如果互斥，使用：unique case(xxx) inside 或 unique case(1'b1)
-  - case条件若非互斥，使用：priority case(xxx) inside 或 priority case(1'b1)
-  - 设计中，尽量使用unique case。综合后生成无优先级电路，priority生成带优先级电路。
+  - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**
+  - case条件若非互斥，使用：**priority case(xxx) inside** 或 **priority case(1'b1)**
+  - 设计中，尽量使用**unique case**。综合后生成无优先级电路，priority生成带优先级电路。
   - case条件复杂，需要在判断条件后添加注释说明判断条件含义。
-  - default规范。
+  - default规范:
     
     - 若有一个固定默认值，则default为固定值。
     - 若case条件已经是full case，则default替换为：'**// full case**'。注意在full case的情况下，不要写default，不然综合器会发现无法进入该条件，报warning。
