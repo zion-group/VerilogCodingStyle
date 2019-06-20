@@ -520,7 +520,7 @@ i) case 语句用法规范。
 
   - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**
   - case条件若非互斥，使用：**priority case(xxx) inside** 或 **priority case(1'b1)**
-  - 设计中，尽量使用**unique case**。综合后生成无优先级电路，priority生成带优先级电路。
+  - 设计中，尽量使用 **unique case** 。综合后生成无优先级电路，priority生成带优先级电路。
   - case条件复杂，需要在判断条件后添加注释说明判断条件含义。
   - default规范:
     
