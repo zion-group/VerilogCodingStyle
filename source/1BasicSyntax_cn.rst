@@ -541,6 +541,43 @@ i) case 语句用法规范。
         default: dat2 = '0;
       endcase
 
+j) 在always块中对多个信号进行条件赋值时，必须在所有条件下对每个信号赋值。设计时可采用下一方法中任意一种：
+  - 在条件赋值前给信号默认值，在条件赋值时对部分信号赋值。
+  - 在所有条件分支中写明所有信号赋值。
+
+    .. code-block:: verilog
+
+    // Assignment with default value
+    always_comb begin
+      a = '0;
+      b = '0;
+      if(x) begin
+        a = '1;
+      end else begin
+        b = '1;
+      end
+    end
+
+    // Assign value to all signals in each condition
+    always_comb begin
+      if(x) begin
+        c = '1;
+        d = '0;
+      end else begin
+        c = '0;
+        d = '1;
+      end
+    end
+
+    // Code write as below is wrong. It will generate latches.
+    always_comb begin
+      if(x) begin
+        m = '1;
+      end else begin
+        n = '1;
+      end
+    end
+
 1.3.4 时序电路设计规范
 ======================
 
