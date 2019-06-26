@@ -68,17 +68,17 @@ e) always中如果需要遍历一个向量内的所有信号，使用foreach循�
 
   .. code-block:: verilog
 
-    `define typedef_DemoStruct(width) \
+    `define typedef_DemoSt(width) \
       typedef struct packed{\
         logic [width-1:0] dat;\
       }
-    `define DemoStruct(width) \
+    `define DemoSt(width) \
       struct packed{\
         logic [width-1:0] dat;\
       }
 
-    `typedef_DemoStruct(8) type_StructD;
-    type_StructD datSt;
+    `typedef_DemoSt(8) type_DemoSt;
+    type_DemoSt datSt;
     struct packed{
         logic [7:0] dat;
     }datTempSt;
@@ -86,8 +86,8 @@ e) always中如果需要遍历一个向量内的所有信号，使用foreach循�
 
 a) 同方向有相关性信号，推荐使用struct定义。
 b) 结构体定义必须使用packed形式。
-c) 直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义。
-d) typedef struct 类型名用 **大驼峰** 命名法，**type_** 作为前缀。struct定义的变量用 **小驼峰** 命名法，**St** 作为后缀。
+c) 直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义类型，使用 **typedef_** 作为前缀，类型名用 **大驼峰** 命名法，结尾用 **St** 作为后缀。
+d) struct 信号定格式：信号名用 **大驼峰** 命名法，**type_** 作为前缀。struct定义的变量用 **小驼峰** 命名法，**St** 作为后缀。
 e) 使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)
 f) struct 可以使用 **'( )** 操作符。
 g) union定义方式与struct相同，变量后缀为 **Un** 。
@@ -123,7 +123,7 @@ e) package中定义的function必须 **包含automatic** 声明。
       logic [3:0] datOh;  // All signal defined in 'logic'.
       logic [1:0] dat;
       logic       datOh0,datOh1,datOh2,datOh3;
-      typedef struct packed{logic dat1;logic [1:0] dat2;} type_DataStruct;
+      typedef struct packed{logic dat1;logic [1:0] dat2;} type_DataSt;
       assign datOh0 = datOh[0];
       assign datOh1 = datOh[1];   // Only bit selection/extension is allowed.
       assign datOh2 = datOh[2];
@@ -154,8 +154,8 @@ e) package中定义的function必须 **包含automatic** 声明。
       TestItf.datIn iDatIfIf,
       output logic oResult
     );
-      typedef iDatIf.type_DataStruct type_DatStruct;  // Use typedef in interface.
-      type_DatStruct dataSt;
+      typedef iDatIf.type_DataSt type_DatSt;  // Use typedef in interface.
+      type_DatSt dataSt;
       assign dataSt = iDatIf.BiggerThan1();   // Use function in interface.
       assign oResult = dataSt.dat1;
     endmodule: ModuleBb
