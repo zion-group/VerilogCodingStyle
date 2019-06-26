@@ -145,13 +145,13 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
     parameter PARAM_A = 2;
     localparam PARAM_B = 3;
     localparam PARAM_A_LG = $clog(PARAM_A);
-    parameter type TypeA = logic [3:0];
+    parameter type type_A = logic [3:0];
 
     module Demo
     #(PARAM_A = 1,
       PARAM_B = 2,
     parameter type
-      TypeA = logic [3:0],
+      type_A = logic [3:0],
     localparam
       PARAM_C = 3
     )(
@@ -164,6 +164,7 @@ b) 单词间用 \'_\' 隔开。
 c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog(PARAM_B)**。
 d) 在端口中定义顺序为: **parameter** > **parameter type** > **localparam**。
 e) localparam如果不会在端口定义中使用，可以在代码正文中定义。
+f) 定义类型以 **'type_'** 作为前缀，类型名以 **大驼峰** 方式命名。
 
 1.2 格式规范
 ************
@@ -277,8 +278,8 @@ a) 模块例化时，只有定义信号类型的参数在例化时传递，其�
             .o(o)
           );
 
-    Sub #(.TypeA(logic [3:0])
-          .TypeB(logic [3:0]))
+    Sub #(.type_A(logic [3:0])
+          .type_B(logic [3:0]))
         U_Sub(
           .a(a),
           .b(b),
@@ -343,8 +344,8 @@ f) 完整示例代码：
       output logic [7:0] datMult
     ); 
     
-      Mult  #(.A_TYPE(logic [3:0]),
-              .B_TYPE(logic [3:0]))
+      Mult  #(.type_A(logic [3:0]),
+              .type_B(logic [3:0]))
             U_Mult(
               .iDatA(iDatA),
               .iDatB(iDatB),
@@ -492,9 +493,9 @@ e) 使用操作符：**'( )**。
   .. code-block:: verilog
 
     logic [7:0][2:0] a;
-    typedef logic [2:0][7:0] NewType;
-    NewType b;
-    assign b = NewType'(a);
+    typedef logic [2:0][7:0] type_dat;
+    type_dat b;
+    assign b = type_dat'(a);
 
 f) 使用操作符：**>>>**。**该操作符必须对signed类型信号是用，否则计算结果错误**。
 
