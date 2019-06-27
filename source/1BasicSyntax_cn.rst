@@ -260,7 +260,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
       ...
     endmodule: DemoLib_Aaa
 
-1.2.2.2 module例化格式
+1.2.2.3 module例化格式
 ----------------------
 
 a) 模块例化时，只有定义信号类型的参数在例化时传递，其他参数在module结尾统一使用defparam定义。理由如下：
@@ -516,7 +516,6 @@ h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如�
         ...
       end
     end
-
 i) case 语句用法规范。
 
   - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**
