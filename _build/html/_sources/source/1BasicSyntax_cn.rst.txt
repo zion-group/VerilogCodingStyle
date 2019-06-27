@@ -171,7 +171,26 @@ e) localparam如果不会在端口定义中使用，可以在代码正文中定�
 1.2.1 文件头
 ============
 
-TBD
+每个设计文件都要包含文件头，文件头格式如下：
+
+  .. code-block:: verilog
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // Copyright(C) Zion Team. Open source License: MIT.
+  // ALL RIGHT RESERVED
+  // Filename : Demo.sv
+  // Author   : Zion
+  // Date     : 2019-06-20
+  // Version  : 0.1
+  // Description :
+  //    ...
+  //    ...
+  // Modification History:
+  //   Date   |   Author   |   Version   |   Change Description         
+  //==============================================================================
+  // 19-06-02 |    Zion    |     0.1     | Original Version
+  // ...
+  //////////////////////////////////////////////////////////////////////////////// 
 
 1.2.2 代码格式
 ==================
@@ -501,7 +520,7 @@ i) case 语句用法规范。
 
   - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**
   - case条件若非互斥，使用：**priority case(xxx) inside** 或 **priority case(1'b1)**
-  - 设计中，尽量使用**unique case**。综合后生成无优先级电路，priority生成带优先级电路。
+  - 设计中，尽量使用 **unique case** 。综合后生成无优先级电路，priority生成带优先级电路。
   - case条件复杂，需要在判断条件后添加注释说明判断条件含义。
   - default规范:
     
@@ -540,6 +559,43 @@ i) case 语句用法规范。
         end
         default: dat2 = '0;
       endcase
+
+j) 在always块中对多个信号进行条件赋值时，必须在所有条件下对每个信号赋值。设计时可采用下一方法中任意一种：
+  - 在条件赋值前给信号默认值，在条件赋值时对部分信号赋值。
+  - 在所有条件分支中写明所有信号赋值。
+
+  .. code-block:: verilog
+
+    // Assignment with default value
+    always_comb begin
+      a = '0;
+      b = '0;
+      if(x) begin
+        a = '1;
+      end else begin
+        b = '1;
+      end
+    end
+
+    // Assign value to all signals in each condition
+    always_comb begin
+      if(x) begin
+        c = '1;
+        d = '0;
+      end else begin
+        c = '0;
+        d = '1;
+      end
+    end
+
+    // Code write as below is wrong. It will generate latches.
+    always_comb begin
+      if(x) begin
+        m = '1;
+      end else begin
+        n = '1;
+      end
+    end
 
 1.3.4 时序电路设计规范
 ======================

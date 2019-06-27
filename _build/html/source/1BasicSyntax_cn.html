@@ -373,7 +373,27 @@
 <h2>1.2 格式规范<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id10">
 <h3>1.2.1 文件头<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>每个设计文件都要包含文件头，文件头格式如下：</p>
+<blockquote>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>// Copyright(C) Zion Team. Open source License: MIT.
+// ALL RIGHT RESERVED
+// Filename : Demo.sv
+// Author   : Zion
+// Date     : 2019-06-20
+// Version  : 0.1
+// Description :
+//    …
+//    …
+// Modification History:
+//   Date   |   Author   |   Version   |   Change Description
+//==============================================================================
+// 19-06-02 |    Zion    |     0.1     | Original Version
+// …
+////////////////////////////////////////////////////////////////////////////////</p>
+</div></blockquote>
 </div>
 <div class="section" id="id11">
 <h3>1.2.2 代码格式<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
@@ -750,7 +770,7 @@
 <div><ul class="simple">
 <li>case条件如果互斥，使用：<strong>unique case(xxx) inside</strong> 或 <strong>unique case(1’b1)</strong></li>
 <li>case条件若非互斥，使用：<strong>priority case(xxx) inside</strong> 或 <strong>priority case(1’b1)</strong></li>
-<li>设计中，尽量使用**unique case**。综合后生成无优先级电路，priority生成带优先级电路。</li>
+<li>设计中，尽量使用 <strong>unique case</strong> 。综合后生成无优先级电路，priority生成带优先级电路。</li>
 <li>case条件复杂，需要在判断条件后添加注释说明判断条件含义。</li>
 <li>default规范:<ul>
 <li>若有一个固定默认值，则default为固定值。</li>
@@ -787,6 +807,47 @@
     <span class="k">end</span>
     <span class="k">default</span><span class="o">:</span> <span class="n">dat2</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
   <span class="k">endcase</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="10">
+<li>在always块中对多个信号进行条件赋值时，必须在所有条件下对每个信号赋值。设计时可采用下一方法中任意一种：</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>在条件赋值前给信号默认值，在条件赋值时对部分信号赋值。</li>
+<li>在所有条件分支中写明所有信号赋值。</li>
+</ul>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Assignment with default value</span>
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">// Assign value to all signals in each condition</span>
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="m">&#39;0</span><span class="p">;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">// Code write as below is wrong. It will generate latches.</span>
+<span class="k">always_comb</span> <span class="k">begin</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="m">&#39;1</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 </div>
 </div></blockquote>
