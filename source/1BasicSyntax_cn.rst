@@ -505,6 +505,7 @@ f) 使用操作符：**>>>**。**该操作符必须对signed类型信号是用�
     assign a = b >>> 4;
 
 g) 组合逻辑使用 **assign** 和 **always_comb** 块。在always_comb块中，使用 **'='** 赋值。
+
 h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如果有多判断条件存在，使用case语句。简单的 if()...else... 语句综合生成无优先级电路。而 if()... else if()... else... 语句在大多数情况下会综合出带优先级逻辑。为避免过度使用else if引入不必要的逻辑路径，禁止在逻辑电路中使用该语法。
 
   .. code-block:: verilog
@@ -516,6 +517,7 @@ h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如�
         ...
       end
     end
+
 i) case 语句用法规范。
 
   - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**

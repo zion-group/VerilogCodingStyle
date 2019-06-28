@@ -100,7 +100,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id11">1.2.2 代码格式</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id12">1.2.2.1 通用格式</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module">1.2.2.2 module端口格式</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">1.2.2.2 module例化格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">1.2.2.3 module例化格式</a></li>
 </ul>
 </li>
 </ul>
@@ -343,14 +343,14 @@
 <div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define DEMO_MACRO 1</span>
 <span class="k">parameter</span> <span class="no">PARAM_A</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
 <span class="k">localparam</span> <span class="no">PARAM_B</span> <span class="o">=</span> <span class="mh">3</span><span class="p">;</span>
-<span class="k">localparam</span> <span class="no">PARAM_A_LG</span> <span class="o">=</span> <span class="n">$clog</span><span class="p">(</span><span class="no">PARAM_A</span><span class="p">);</span>
-<span class="k">parameter</span> <span class="k">type</span> <span class="n">TypeA</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="k">localparam</span> <span class="no">PARAM_A_LG</span> <span class="o">=</span> <span class="n">$clog2</span><span class="p">(</span><span class="no">PARAM_A</span><span class="p">);</span>
+<span class="k">parameter</span> <span class="k">type</span> <span class="n">type_A</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
 
 <span class="k">module</span> <span class="n">Demo</span>
 <span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span>
   <span class="no">PARAM_B</span> <span class="o">=</span> <span class="mh">2</span><span class="p">,</span>
 <span class="k">parameter</span> <span class="k">type</span>
-  <span class="n">TypeA</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span>
+  <span class="n">type_A</span> <span class="o">=</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span>
 <span class="k">localparam</span>
   <span class="no">PARAM_C</span> <span class="o">=</span> <span class="mh">3</span>
 <span class="p">)(</span>
@@ -363,9 +363,10 @@
 <ol class="loweralpha simple">
 <li>由于 <strong>参数</strong> 和 <strong>宏</strong> 表示常数，与普通信号不同，因此所有字母全部大写，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。</li>
 <li>单词间用 ‘_’ 隔开。</li>
-<li>若某参数 <strong>PARAM_A</strong> 是 <strong>PARAM_B</strong> 的对数，可以写成 <strong>PARAM_B_LG</strong>，例如： <strong>PARAM_B_LG = $clog(PARAM_B)</strong>。</li>
+<li>若某参数 <strong>PARAM_A</strong> 是 <strong>PARAM_B</strong> 的对数，可以写成 <strong>PARAM_B_LG</strong>，例如： <strong>PARAM_B_LG = $clog2(PARAM_B)</strong>。</li>
 <li>在端口中定义顺序为: <strong>parameter</strong> &gt; <strong>parameter type</strong> &gt; <strong>localparam</strong>。</li>
 <li>localparam如果不会在端口定义中使用，可以在代码正文中定义。</li>
+<li>定义类型以 <strong>‘type_’</strong> 作为前缀，类型名以 <strong>大驼峰</strong> 方式命名。</li>
 </ol>
 </div>
 </div>
@@ -440,7 +441,7 @@
 <span class="p">#(</span><span class="no">PARAM_A</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>            <span class="c1">// 第一个参数以 &#39;#(&#39; 开头，定义在新行中，前后无空格，省略parameter标识符。</span>
   <span class="no">P_B</span>     <span class="o">=</span> <span class="s">&quot;_&quot;</span><span class="p">,</span>            <span class="c1">// 其他parameter在新的行中定义，定义前需要 2个空格 进行缩进。</span>
 <span class="k">localparam</span>                  <span class="c1">// 若存在local parameter，localparam在新的一行中定义，前后无空格。</span>
-  <span class="no">P_B_LG</span> <span class="o">=</span> <span class="n">$clog</span><span class="p">(</span><span class="no">P_B</span><span class="p">),</span>      <span class="c1">// local parameter定义格式与parameter相同。</span>
+  <span class="no">P_B_LG</span> <span class="o">=</span> <span class="n">$clog2</span><span class="p">(</span><span class="no">P_B</span><span class="p">),</span>      <span class="c1">// local parameter定义格式与parameter相同。</span>
   <span class="no">PARAM_C</span> <span class="o">=</span> <span class="no">PARAM_A</span> <span class="o">-</span> <span class="mh">1</span>
 <span class="p">)(</span>                          <span class="c1">// 在新的行中写 &#39;参数定义右括号&#39; 和 &#39;端口定义左括号&#39;。</span>
   <span class="k">input</span>        <span class="n">clk</span><span class="p">,</span><span class="n">rst</span><span class="p">,</span>     <span class="c1">// 端口在新行中定义，2个空格缩进。&#39;clk,rst&#39; 可以写在同一行</span>
@@ -466,14 +467,14 @@
 </div></blockquote>
 </div>
 <div class="section" id="id13">
-<h4>1.2.2.2 module例化格式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<h4>1.2.2.3 module例化格式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <ol class="loweralpha simple">
 <li>模块例化时，只有定义信号类型的参数在例化时传递，其他参数在module结尾统一使用defparam定义。理由如下：</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
 <li>参数化设计中，参数定义数量很多，在module例化时传递大量参数影响代码阅读</li>
-<li>大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog…)，统一写在module结尾方便脚本进行自动生成。</li>
+<li>大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog2…)，统一写在module结尾方便脚本进行自动生成。</li>
 </ul>
 <p>示例代码：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">Adder</span> <span class="n">U_Adder</span><span class="p">(</span>
@@ -482,8 +483,8 @@
         <span class="p">.</span><span class="n">o</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
       <span class="p">);</span>
 
-<span class="n">Sub</span> <span class="p">#(.</span><span class="n">TypeA</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">])</span>
-      <span class="p">.</span><span class="n">TypeB</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
+<span class="n">Sub</span> <span class="p">#(.</span><span class="n">type_A</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">])</span>
+      <span class="p">.</span><span class="n">type_B</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
     <span class="n">U_Sub</span><span class="p">(</span>
       <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
       <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
@@ -558,8 +559,8 @@
   <span class="k">output</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datMult</span>
 <span class="p">);</span>
 
-  <span class="n">Mult</span>  <span class="p">#(.</span><span class="no">A_TYPE</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
-          <span class="p">.</span><span class="no">B_TYPE</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
+  <span class="n">Mult</span>  <span class="p">#(.</span><span class="n">type_A</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+          <span class="p">.</span><span class="n">type_B</span><span class="p">(</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]))</span>
         <span class="n">U_Mult</span><span class="p">(</span>
           <span class="p">.</span><span class="n">iDatA</span><span class="p">(</span><span class="n">iDatA</span><span class="p">),</span>
           <span class="p">.</span><span class="n">iDatB</span><span class="p">(</span><span class="n">iDatB</span><span class="p">),</span>
@@ -674,7 +675,7 @@
 <li>$bits：计算向量信号或struct信号的位宽。</li>
 <li>$size：计算当前向量中一共有多少组信号。</li>
 <li>$signed/$unsigned：有符号/无符号位宽扩展</li>
-<li>$clog：计算log<sub>2</sub>(x), 可以使用在端口定义中。</li>
+<li>$clog22：计算log<sub>2</sub>(x), 可以使用在端口定义中。</li>
 <li>$high：获取信号最高位。<strong>使用时需要小心，信号有可能不是第0开始</strong>。</li>
 <li>$low： 获取信号最低位。</li>
 </ul>
@@ -733,9 +734,9 @@
 </ol>
 <blockquote>
 <div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">NewType</span><span class="p">;</span>
-<span class="n">NewType</span> <span class="n">b</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">b</span> <span class="o">=</span> <span class="n">NewType</span><span class="p">&#39;(</span><span class="n">a</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">type_dat</span><span class="p">;</span>
+<span class="n">type_dat</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">b</span> <span class="o">=</span> <span class="n">type_dat</span><span class="p">&#39;(</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>

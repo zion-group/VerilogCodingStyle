@@ -226,17 +226,17 @@
 <div class="section" id="struct">
 <h2>2.2 struct 用法规范<a class="headerlink" href="#struct" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define typedef_DemoStruct(width) \</span>
+<div><div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cp">`define typedef_DemoSt(width) \</span>
 <span class="cp">  typedef struct packed{\</span>
 <span class="cp">    logic [width-1:0] dat;\</span>
 <span class="cp">  }</span>
-<span class="cp">`define DemoStruct(width) \</span>
+<span class="cp">`define DemoSt(width) \</span>
 <span class="cp">  struct packed{\</span>
 <span class="cp">    logic [width-1:0] dat;\</span>
 <span class="cp">  }</span>
 
-<span class="no">`typedef_DemoStruct</span><span class="p">(</span><span class="mh">8</span><span class="p">)</span> <span class="n">type_StructD</span><span class="p">;</span>
-<span class="n">type_StructD</span> <span class="n">datSt</span><span class="p">;</span>
+<span class="no">`typedef_DemoSt</span><span class="p">(</span><span class="mh">8</span><span class="p">)</span> <span class="n">type_DemoSt</span><span class="p">;</span>
+<span class="n">type_DemoSt</span> <span class="n">datSt</span><span class="p">;</span>
 <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span>
     <span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
 <span class="p">}</span><span class="n">datTempSt</span><span class="p">;</span>
@@ -247,8 +247,8 @@
 <ol class="loweralpha simple">
 <li>同方向有相关性信号，推荐使用struct定义。</li>
 <li>结构体定义必须使用packed形式。</li>
-<li>直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义。</li>
-<li>typedef struct 类型名用 <strong>大驼峰</strong> 命名法，<strong>type_</strong> 作为前缀。struct定义的变量用 <strong>小驼峰</strong> 命名法，<strong>St</strong> 作为后缀。</li>
+<li>直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义类型，使用 <strong>typedef_</strong> 作为前缀，类型名用 <strong>大驼峰</strong> 命名法，结尾用 <strong>St</strong> 作为后缀。</li>
+<li>struct 信号定格式：信号名用 <strong>大驼峰</strong> 命名法，<strong>type_</strong> 作为前缀。struct定义的变量用 <strong>小驼峰</strong> 命名法，<strong>St</strong> 作为后缀。</li>
 <li>使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)</li>
 <li>struct 可以使用 <strong>‘( )</strong> 操作符。</li>
 <li>union定义方式与struct相同，变量后缀为 <strong>Un</strong> 。</li>
@@ -285,7 +285,7 @@
   <span class="kt">logic</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">datOh</span><span class="p">;</span>  <span class="c1">// All signal defined in &#39;logic&#39;.</span>
   <span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
   <span class="kt">logic</span>       <span class="n">datOh0</span><span class="p">,</span><span class="n">datOh1</span><span class="p">,</span><span class="n">datOh2</span><span class="p">,</span><span class="n">datOh3</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span><span class="kt">logic</span> <span class="n">dat1</span><span class="p">;</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat2</span><span class="p">;}</span> <span class="n">type_DataStruct</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">struct</span> <span class="k">packed</span><span class="p">{</span><span class="kt">logic</span> <span class="n">dat1</span><span class="p">;</span><span class="kt">logic</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat2</span><span class="p">;}</span> <span class="n">type_DataSt</span><span class="p">;</span>
   <span class="k">assign</span> <span class="n">datOh0</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
   <span class="k">assign</span> <span class="n">datOh1</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>   <span class="c1">// Only bit selection/extension is allowed.</span>
   <span class="k">assign</span> <span class="n">datOh2</span> <span class="o">=</span> <span class="n">datOh</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
@@ -316,8 +316,8 @@
   <span class="n">TestItf</span><span class="p">.</span><span class="n">datIn</span> <span class="n">iDatIfIf</span><span class="p">,</span>
   <span class="k">output</span> <span class="kt">logic</span> <span class="n">oResult</span>
 <span class="p">);</span>
-  <span class="k">typedef</span> <span class="n">iDatIf</span><span class="p">.</span><span class="n">type_DataStruct</span> <span class="n">type_DatStruct</span><span class="p">;</span>  <span class="c1">// Use typedef in interface.</span>
-  <span class="n">type_DatStruct</span> <span class="n">dataSt</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">iDatIf</span><span class="p">.</span><span class="n">type_DataSt</span> <span class="n">type_DatSt</span><span class="p">;</span>  <span class="c1">// Use typedef in interface.</span>
+  <span class="n">type_DatSt</span> <span class="n">dataSt</span><span class="p">;</span>
   <span class="k">assign</span> <span class="n">dataSt</span> <span class="o">=</span> <span class="n">iDatIf</span><span class="p">.</span><span class="n">BiggerThan1</span><span class="p">();</span>   <span class="c1">// Use function in interface.</span>
   <span class="k">assign</span> <span class="n">oResult</span> <span class="o">=</span> <span class="n">dataSt</span><span class="p">.</span><span class="n">dat1</span><span class="p">;</span>
 <span class="k">endmodule</span><span class="o">:</span> <span class="n">ModuleBb</span>

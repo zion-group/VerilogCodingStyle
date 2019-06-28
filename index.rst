@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. image:: zion.svg
+.. image:: source/zion.svg
 
 Verilog/SystemVerilog 设计编码风格指南
 ======================================
