@@ -144,7 +144,7 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
     `define DEMO_MACRO 1
     parameter PARAM_A = 2;
     localparam PARAM_B = 3;
-    localparam PARAM_A_LG = $clog(PARAM_A);
+    localparam PARAM_A_LG = $clog2(PARAM_A);
     parameter type type_A = logic [3:0];
 
     module Demo
@@ -161,7 +161,7 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
 
 a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此所有字母全部大写，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。
 b) 单词间用 \'_\' 隔开。
-c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog(PARAM_B)**。
+c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog2(PARAM_B)**。
 d) 在端口中定义顺序为: **parameter** > **parameter type** > **localparam**。
 e) localparam如果不会在端口定义中使用，可以在代码正文中定义。
 f) 定义类型以 **'type_'** 作为前缀，类型名以 **大驼峰** 方式命名。
@@ -238,7 +238,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
     #(PARAM_A = "_",            // 第一个参数以 '#(' 开头，定义在新行中，前后无空格，省略parameter标识符。
       P_B     = "_",            // 其他parameter在新的行中定义，定义前需要 2个空格 进行缩进。
     localparam                  // 若存在local parameter，localparam在新的一行中定义，前后无空格。
-      P_B_LG = $clog(P_B),      // local parameter定义格式与parameter相同。
+      P_B_LG = $clog2(P_B),      // local parameter定义格式与parameter相同。
       PARAM_C = PARAM_A - 1
     )(                          // 在新的行中写 '参数定义右括号' 和 '端口定义左括号'。
       input        clk,rst,     // 端口在新行中定义，2个空格缩进。'clk,rst' 可以写在同一行
@@ -266,7 +266,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
 a) 模块例化时，只有定义信号类型的参数在例化时传递，其他参数在module结尾统一使用defparam定义。理由如下：
 
   - 参数化设计中，参数定义数量很多，在module例化时传递大量参数影响代码阅读
-  - 大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog...)，统一写在module结尾方便脚本进行自动生成。
+  - 大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog2...)，统一写在module结尾方便脚本进行自动生成。
 
   示例代码：
 
@@ -444,7 +444,7 @@ g) 使用系统函数进行位宽相关计算。
   - $bits：计算向量信号或struct信号的位宽。
   - $size：计算当前向量中一共有多少组信号。
   - $signed/$unsigned：有符号/无符号位宽扩展
-  - $clog：计算log\ :sub:`2`\(x), 可以使用在端口定义中。
+  - $clog22：计算log\ :sub:`2`\(x), 可以使用在端口定义中。
   - $high：获取信号最高位。**使用时需要小心，信号有可能不是第0开始**。
   - $low： 获取信号最低位。
 
