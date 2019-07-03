@@ -277,6 +277,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
       input c1,
       input c2
     );
+      ......
     endmodule: DemoGroupIO
 
 1.2.2.3 module例化格式
