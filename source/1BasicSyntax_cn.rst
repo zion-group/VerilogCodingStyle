@@ -260,6 +260,25 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
       ...
     endmodule: DemoLib_Aaa
 
+  如果模块端口较多，且不同端口连接模块不同，可以按照连接关系对端口进行分组：
+
+  .. code-block:: verilog
+
+    module DemoGroupIO
+    (
+      // function A IO
+      input  a1,
+      input  a2,
+      output a3,
+      // function B IO
+      input  b1,
+      output b2,
+      // function C IO
+      input c1,
+      input c2
+    );
+    endmodule: DemoGroupIO
+
 1.2.2.3 module例化格式
 ----------------------
 
