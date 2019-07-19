@@ -38,13 +38,13 @@ en --  --   --    --     enable
 op --  --   --    --     operation
 -- pkg --   --    --     package
 -- pkt --   --    --     packet
--- --  prio  --    --     priority
+-- --  prio --    --     priority
 -- reg --   --    --     register
 rd --  --   --    --     read
 -- rdy --   --    --     ready
 -- rst --   --    --     reset
 -- --  rslt --    --     resoult
--- rsp --   --    --     response
+-- --  resp --    --     response
 -- req --   --    --     require
 rx --  --   --    --     receive
 -- sel --   --    --     select
@@ -57,7 +57,7 @@ rx --  --   --    --     receive
 -- syn --   --    --     synchronous
 -- sys --   --    --     system
 -- tmp --   --    --     temporary
-tx --  --   trans --     transmit
+tx --  --   trans --     transmit, transmission
 -- vld --   --    --     valid
 -- vec --   --    --     vector
 wr --  --   --    --     write
