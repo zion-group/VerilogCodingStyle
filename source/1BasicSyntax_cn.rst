@@ -513,9 +513,9 @@ e) 使用操作符：**'( )**。
   .. code-block:: verilog
 
     logic [7:0][2:0] a;
-    typedef logic [2:0][7:0] type_dat;
-    type_dat b;
-    assign b = type_dat'(a);
+    typedef logic [2:0][7:0] type_Dat;
+    type_Dat b;
+    assign b = type_Dat'(a);
 
 f) 使用操作符：**>>>**。**该操作符必须对signed类型信号是用，否则计算结果错误**。
 
