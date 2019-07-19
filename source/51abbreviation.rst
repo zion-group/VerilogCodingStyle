@@ -51,7 +51,7 @@ rx --  --   --    --     receive
 -- stl --   --    --     stall
 -- slv --   --    --     slave
 -- src --   --    --     source
--- --  --   --    --     state
+-- --  stat --    --     state
 -- sum --   --    --     summary
 -- sub --   --    --     subtraction
 -- syn --   --    --     synchronous
