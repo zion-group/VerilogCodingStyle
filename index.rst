@@ -16,4 +16,6 @@ Verilog/SystemVerilog 设计编码风格指南
    source/1BasicSyntax_cn
    source/2AdvanceSyntax_cn
    source/3SpecialSyntax_cn
+   source/4Problems_FutureFeature.rst
+   source/51Abbreviation.rst
 
