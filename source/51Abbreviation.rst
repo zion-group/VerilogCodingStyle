@@ -57,7 +57,7 @@ rx --  --   --    --     receive
 -- syn --   --    --     synchronous
 -- sys --   --    --     system
 -- tmp --   --    --     temporary
-tx --  --   trans --     transmit, transmission
+tx --  trsm --    --     transmit, transmission
 -- vld --   --    --     valid
 -- vec --   --    --     vector
 wr --  --   --    --     write
