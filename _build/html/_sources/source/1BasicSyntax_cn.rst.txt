@@ -451,7 +451,7 @@ g) 使用系统函数进行位宽相关计算。
 1.3.3 组合逻辑电路设计规范
 ==========================
 
-a) 在设计中使用data mask写法：**yy = {$bits(xx){en}} & xx;**
+a. 在设计中使用data mask写法：**yy = {$bits(xx){en}} & xx;**
   
   - 综合生产的电路简洁高效，Bug少。
   - 可以用来代替三目运算符 ()?: ，实现更好的性能。
@@ -469,26 +469,26 @@ a) 在设计中使用data mask写法：**yy = {$bits(xx){en}} & xx;**
                   (x==2'd2 && y==2'd2)? b :
                   (x==2'd3 && y==2'd3)? c : d;
 
-b) 使用操作符：**inside**。
+#. 使用操作符：**inside**。
 
   .. code-block:: verilog
 
     assign datEn = dat inside {2'd1, 2'd3};
 
-c) 使用操作符：**{<<N{Signal}}** 或 **{>>N{Signal}}** 。
+#. 使用操作符：**{<<N{Signal}}** 或 **{>>N{Signal}}** 。
 
   .. code-block:: verilog
 
     assign a = {<<2{b}}; 
     assign b = {>>2{c}};
 
-d) 使用操作符：**==?** 或 **!=?**。
+#. 使用操作符：**==?** 或 **!=?**。
 
   .. code-block:: verilog
 
     assign datEn = (a ==? 3'b1?1) & (b !=? 3'b??1);
 
-e) 使用操作符：**'( )**。
+#. 使用操作符：**'( )**。
 
   .. code-block:: verilog
 
@@ -497,15 +497,17 @@ e) 使用操作符：**'( )**。
     type_dat b;
     assign b = type_dat'(a);
 
-f) 使用操作符：**>>>**。**该操作符必须对signed类型信号是用，否则计算结果错误**。
+#. 使用操作符：**>>>**。**该操作符必须对signed类型信号是用，否则计算结果错误**。
 
   .. code-block:: verilog
 
     logic signed [7:0] a,b;
     assign a = b >>> 4;
 
-g) 组合逻辑使用 **assign** 和 **always_comb** 块。在always_comb块中，使用 **'='** 赋值。
-h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如果有多判断条件存在，使用case语句。简单的 if()...else... 语句综合生成无优先级电路。而 if()... else if()... else... 语句在大多数情况下会综合出带优先级逻辑。为避免过度使用else if引入不必要的逻辑路径，禁止在逻辑电路中使用该语法。
+#. 组合逻辑使用 **assign** 和 **always_comb** 块。在always_comb块中，使用 **'='** 赋值。
+      
+      
+#. 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如果有多判断条件存在，使用case语句。简单的 if()...else... 语句综合生成无优先级电路。而 if()... else if()... else... 语句在大多数情况下会综合出带优先级逻辑。为避免过度使用else if引入不必要的逻辑路径，禁止在逻辑电路中使用该语法。
 
   .. code-block:: verilog
 
@@ -517,7 +519,7 @@ h) 在组合逻辑中，if只与else搭配， **不允许使用else if** 。如�
       end
     end
 
-i) case 语句用法规范。
+#. case 语句用法规范。
 
   - case条件如果互斥，使用：**unique case(xxx) inside** 或 **unique case(1'b1)**
   - case条件若非互斥，使用：**priority case(xxx) inside** 或 **priority case(1'b1)**
@@ -561,7 +563,7 @@ i) case 语句用法规范。
         default: dat2 = '0;
       endcase
 
-j) 在always块中对多个信号进行条件赋值时，必须在所有条件下对每个信号赋值。设计时可采用下一方法中任意一种：
+#. 在always块中对多个信号进行条件赋值时，必须在所有条件下对每个信号赋值。设计时可采用下一方法中任意一种：
   - 在条件赋值前给信号默认值，在条件赋值时对部分信号赋值。
   - 在所有条件分支中写明所有信号赋值。
 
