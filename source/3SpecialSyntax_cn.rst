@@ -256,7 +256,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 3.2.2 标准电路文件
 ==================
 
-所有package、interface和module都定义在标准电路文件中。在文件内定义顺序为 **package > interface > module** , 同优先级下，按首字母排序,由于package内部可能有依赖关系，若存在依赖关系，以依赖关系为准。示例代码如下：
+所有package、interface和module都定义在标准电路文件中。在文件内定义顺序为 **package > interface > module** , 同优先级下，按首字母排序,由于package内部可能有依赖关系，若存在依赖关系，以依赖关系为准。若是几个module(package、interface)构成不同的大的IP，可以在库内分成不同的section。示例代码如下：
 
   .. code-block:: verilog 
 
@@ -281,7 +281,20 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     endinterface: ZionCircuitLib_InvOutItf
 
     // module
-
+    ///////////////////////////////////////////////////////////////////////////////
+    // Module name : ZionCircuitLib_Inv
+    // Author      : Zion
+    // Date        : 2019-06-20
+    // Version     : 0.1
+    // Description :
+    //    ...
+    //    ...
+    // Modification History:
+    //   Date   |   Author   |   Version   |   Change Description         
+    //==============================================================================
+    // 19-06-02 |    Zion    |     0.1     | Original Version
+    // ...
+    //////////////////////////////////////////////////////////////////////////////// 
     `ifndef Disable_ZionCircuitLib_Inv
     `ifdef MACRO_TEMPLATE 
     `ifdef ZionCircuitLib_Inv
@@ -310,6 +323,8 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     `endif
 
 标准电路文件中，电路代码规范与文档中其他部分介绍相同。由于所有module都定义在同一个文件中，为了方便电路改动，增加模块编译开关。在示例代码中，ZionCircuitLib_Inv模块定义前增加编译开关：**\`ifndef Disable_ZionCircuitLib_Inv** 。在工程中如果需要自己重新实现该模块，可以使用该宏命令屏蔽此模块，用重新设计的代码进行替换。
+
+给每一个宏、package、interface、module增加 **注释头** (类似文件头), demo中为了简化代码，只定义了ZionCircuitLib_Inv模块的注释头。定义格式与文件头类似。
 
 3.2.3 头文件
 =============
