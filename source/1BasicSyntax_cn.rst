@@ -298,7 +298,7 @@ a) 模块例化时，只有定义信号类型的参数在例化时传递，其�
             .o(o)
           );
 
-    Sub #(.type_A(logic [3:0])
+    Sub #(.type_A(logic [3:0]),
           .type_B(logic [3:0]))
         U_Sub(
           .a(a),
