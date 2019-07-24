@@ -275,16 +275,16 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     //////////////////////////////////////////////////////////////////////////////// 
     `ifndef Disable_ZionCircuitLib_Inv
     `ifdef MACRO_TEMPLATE 
-    `ifdef ZionCircuitLib_Inv
-      `__DefErr__(ZionCircuitLib_Inv)
-    `else
-      `define ZionCircuitLib_Inv(UnitName,iDat_MT,oDat_MT) \
+      `ifdef ZionCircuitLib_Inv
+        `__DefErr__(ZionCircuitLib_Inv)
+      `else
+        `define ZionCircuitLib_Inv(UnitName,iDat_MT,oDat_MT) \
       ZionCircuitLib_Inv  #(.WIDTH($bits(iDat_MT)))        \
                             UnitName(                      \
                               .iDat(iDat_MT),              \
                               .oDat(oDat_MT)               \
                             )
-    `endif
+      `endif
     `endif
     module ZionCircuitLib_Inv
     #(WIDTH = "_"  //$bits(iDat)//
