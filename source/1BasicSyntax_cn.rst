@@ -657,7 +657,7 @@ e) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。�
   .. code-block:: verilog
 
     module TestAaa
-    #(NUM = 4
+    #(NUM = 4,
       int ADDRS = {0,1,2,3}
     )(
     ...
