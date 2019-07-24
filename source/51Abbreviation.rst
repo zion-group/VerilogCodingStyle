@@ -12,6 +12,8 @@
 == === ==== ===== ====== ==============================
 -- ack --   --    --     acknowledge
 -- --  addr --    --     address
+-- --  --   alloc --     allocate
+-- --  avlb --    --     available
 -- --  asyn --    --     asynchronous
 -- buf --   --    --     buffer
 -- blk --   --    --     block
@@ -20,6 +22,7 @@
 ck clk --   --    --     clock
 ch --  --   --    --     channel
 cs --  --   --    --     chip select
+cs --  --   --    --     current state
 -- cmd --   --    --     command
 -- cfg --   --    --     config, configuration
 -- --  ctrl --    --     control
@@ -52,11 +55,13 @@ eq --  --   --    --     equal
 -- mid --   --    --     middle
 -- mul --   --    --     multiplication
 -- nxt --   --    --     next
+ns --  --   --    --     next state
 -- num --   --    --     number
 oh --  --   --    --     onehot
 op --  --   --    --     operation
 -- pkg --   --    --     package
 -- pkt --   --    --     packet
+-- ptr --   --    --     pointer
 -- --  prev --    --     previous
 -- --  prim --    --     primary
 -- --  prio --    --     priority
@@ -65,9 +70,12 @@ rd --  --   --    --     read
 -- reg --   --    --     register
 -- rst --   --    --     reset
 -- --  rslt --    --     result
--- --  resp --    --     response
+rx rcv --   --    --     receive
+-- rls --   --    --     release
 -- req --   --    --     require
-rx --  --   --    --     receive
+-- res --   --    --     resource
+-- --  resp --    --     response
+-- ret --   --    --     return
 -- sel --   --    --     select
 -- slv --   --    --     slave
 -- src --   --    --     source
@@ -78,8 +86,10 @@ rx --  --   --    --     receive
 -- sub --   --    --     subtraction
 -- syn --   --    --     synchronous
 -- sys --   --    --     system
+-- tgt --   --    --     target
 -- tmp --   --    --     temporary
 tx --  trsm --    --     transmit, transmission
+-- --  updt --    --     update
 -- usr --   --    --     user
 -- vld --   --    --     valid
 -- val --   --    --     value
@@ -94,12 +104,4 @@ wr --  --   --    --     write
 2w 3w  4w   5w    6w     name
 == === ==== ===== ====== ==============================
 -- --  --   --    --     template
--- --  avlb --    --     available
--- --  --   alloc --     allocate
--- rcv --   --    --     receive
--- rls --   --    --     release
--- res --   --    --     resource
--- ret --   --    --     return
--- tgt --   --    --     target
--- --  updt --    --     update
 == === ==== ===== ====== ==============================
