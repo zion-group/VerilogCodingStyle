@@ -268,6 +268,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     `endif
     `endif
 
+    //section: DemoSection++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // package
 
     package ZionCircuitLib_DemoPkg;
@@ -321,10 +322,16 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     `ifdef __DefErr__
       `undef __DefErr__
     `endif
+    //endsection: DemoSection+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 标准电路文件中，电路代码规范与文档中其他部分介绍相同。由于所有module都定义在同一个文件中，为了方便电路改动，增加模块编译开关。在示例代码中，ZionCircuitLib_Inv模块定义前增加编译开关：**\`ifndef Disable_ZionCircuitLib_Inv** 。在工程中如果需要自己重新实现该模块，可以使用该宏命令屏蔽此模块，用重新设计的代码进行替换。
 
 给每一个宏、package、interface、module增加 **注释头** (类似文件头), demo中为了简化代码，只定义了ZionCircuitLib_Inv模块的注释头。定义格式与文件头类似。
+
+section定义方式：
+  
+  - 起始：'//' + 'section: '   + SectionName + '+++++++...+++++'
+  - 结束：'//' + 'endsection:' + SectionName + '+++++++...+++++'
 
 3.2.3 头文件
 =============
