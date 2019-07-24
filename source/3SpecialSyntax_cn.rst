@@ -7,6 +7,16 @@
 
 在进行电路设计时，很多特定的电路有固定的描述方法。为了提高电路的复用性，可以通过设计电路库的方式提供基础常见的电路模块。但是通用电路模块为了保持通用性，需要引入大量参数，导致电路调用时除了复杂的端口连接，还需要参数传递，而参数传递的笔误很多只会报warning，很难进行debug。通过模板的方式可以简化电路描述中很多代码书写，部分实现自动位宽匹配，比如：例化时指定位宽、可参数化代码中的信号扩展等等。此外可以在可以在电路模板中加入assert用于进行静态验证。
 
+使用宏的设计方法，要注意不要重复定义宏。为了方便定义，需要在一个文件中单独定义错误检验宏: **__DefErr__** 。
+
+  .. code-block:: verilog
+
+      `ifdef __DefErr__
+        Macro Define Error: __DefErr__ has already been defined!!
+      `else
+        `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
+      `endif
+
 3.1.1 基于宏的模板例化方法。
 ===============================
 
@@ -15,10 +25,9 @@
   .. code-block:: verilog 
 
     // Macro templete defination for ZionCircuitLib_Adder.
-    `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
     `ifdef MACRO_TEMPLATE 
       `ifdef ZionCircuitLib_Adder
-        __DefErr__(ZionCircuitLib_Adder)
+        `__DefErr__(ZionCircuitLib_Adder)
       `else
         `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\
       ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
@@ -102,20 +111,15 @@ j) 结束条件编译。
   .. code-block:: verilog 
 
     `ifdef MACRO_TEMPLATE 
-      `ifdef __DefErr__
-        Macro Define Error: __DefErr__ has already been defined!!
-      `else
-        `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
-      `endif
 
       `ifdef ZionCircuitLib_MaskM
-        __DefErr__(ZionCircuitLib_MaskM)
+        `__DefErr__(ZionCircuitLib_MaskM)
       `else
         `define ZionCircuitLib_MaskM(en,dat) ({$bits(dat){en}} & dat)
       `endif
 
       `ifdef ZionCircuitLib_OnehotM
-        __DefErr__(ZionCircuitLib_OnehotM)
+        `__DefErr__(ZionCircuitLib_OnehotM)
       `else
         `define ZionCircuitLib_OnehotM(iDat,oDat) \
       always_comb begin: Onehot_``oDat\
@@ -125,9 +129,6 @@ j) 结束条件编译。
       end\
       `endif
 
-      `ifdef __DefErr__
-        `undef __DefErr__
-      `endif
     `endif
 
 定义方式与2.1中基于宏的例化相似。定义宏前要检查是否出现重定义错误。若没有重定义，则定义宏电路。宏电路以 **'M'** 作为后缀。其他定义方式与前述相同。**此处电路描述代码缩进以行首为准，不以上一层define为准，便于EDA工具展开宏后进行代码调试。** 只有在 **以下两种情况下** 推荐使用宏定义进行电路设计：
@@ -157,14 +158,9 @@ j) 结束条件编译。
   .. code-block:: verilog
 
     `ifdef MACRO_TEMPLATE
-      `ifdef __DefErr__
-        Macro Define Error: __DefErr__ has already been defined!!
-      `else
-        `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
-      `endif
 
       `ifdef ZionCircuitLib_type_Onehot
-        __DefErr__(ZionCircuitLib_type_Onehot)
+        `__DefErr__(ZionCircuitLib_type_Onehot)
       `else
         `define ZionCircuitLib_type_Onehot(signalName,iDat,width=2**$size(iDat),offset=0) \
       logic [width-1:0] signalName;\
@@ -175,9 +171,6 @@ j) 结束条件编译。
       end\
       `endif
 
-      `ifdef __DefErr__
-        `undef __DefErr__
-      `endif
     `endif
 
 模板信号定义方式与前述宏电路定义类似，宏名以 **'type_'**作为前缀，与第一张语法规定中typedef新的数据类型相同。基于电路模板的信号定义调用方式如下：
@@ -223,21 +216,16 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 
   .. code-block:: verilog 
 
-    `ifdef MACRO_TEMPLATE 
-    `ifdef __DefErr__
-      Macro Define Error: __DefErr__ has already been defined!!
-    `else
-      `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
-    `endif
+    `ifdef MACRO_TEMPLATE
 
     `ifdef ZionCircuitLib_MaskM
-      __DefErr__(ZionCircuitLib_MaskM)
+      `__DefErr__(ZionCircuitLib_MaskM)
     `else
       `define ZionCircuitLib_MaskM(en,dat) ({$bits(dat){en}} & dat)
     `endif
 
     `ifdef ZionCircuitLib_type_Onehot
-      __DefErr__(ZionCircuitLib_type_Onehot)
+      `__DefErr__(ZionCircuitLib_type_Onehot)
     `else
       `define ZionCircuitLib_type_Onehot(signalName,iDat,width=2**$size(iDat),offset=0) \
     logic [width-1:0] signalName;\
@@ -248,9 +236,6 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     end\
     `endif
 
-    `ifdef __DefErr__
-      `undef __DefErr__
-    `endif
     `endif
 
 3.2.2 标准电路文件
@@ -259,14 +244,6 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 所有package、interface和module都定义在标准电路文件中。在文件内定义顺序为 **package > interface > module** , 同优先级下，按首字母排序,由于package内部可能有依赖关系，若存在依赖关系，以依赖关系为准。若是几个module(package、interface)有一定相关性(属于同一类型不同配置 或 一同构成一个大IP)，可以在库内分成不同的section。示例代码如下：
 
   .. code-block:: verilog 
-
-    `ifdef MACRO_TEMPLATE 
-    `ifdef __DefErr__
-      Macro Define Error: __DefErr__ has already been defined!!
-    `else
-      `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
-    `endif
-    `endif
 
     //section: DemoSection++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // package
@@ -299,7 +276,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     `ifndef Disable_ZionCircuitLib_Inv
     `ifdef MACRO_TEMPLATE 
     `ifdef ZionCircuitLib_Inv
-      __DefErr__(ZionCircuitLib_Inv)
+      `__DefErr__(ZionCircuitLib_Inv)
     `else
       `define ZionCircuitLib_Inv(UnitName,iDat_MT,oDat_MT) \
       ZionCircuitLib_Inv  #(.WIDTH($bits(iDat_MT)))        \
@@ -319,9 +296,6 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     endmodule: ZionCircuitLib_Inv
     `endif
 
-    `ifdef __DefErr__
-      `undef __DefErr__
-    `endif
     //endsection: DemoSection+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 标准电路文件中，电路代码规范与文档中其他部分介绍相同。由于所有module都定义在同一个文件中，为了方便电路改动，增加模块编译开关。在示例代码中，ZionCircuitLib_Inv模块定义前增加编译开关：**\`ifndef Disable_ZionCircuitLib_Inv** 。在工程中如果需要自己重新实现该模块，可以使用该宏命令屏蔽此模块，用重新设计的代码进行替换。
