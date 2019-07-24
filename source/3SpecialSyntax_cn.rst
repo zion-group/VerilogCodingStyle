@@ -256,7 +256,7 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 3.2.2 标准电路文件
 ==================
 
-所有package、interface和module都定义在标准电路文件中。在文件内定义顺序为 **package > interface > module** , 同优先级下，按首字母排序,由于package内部可能有依赖关系，若存在依赖关系，以依赖关系为准。若是几个module(package、interface)构成不同的大的IP，可以在库内分成不同的section。示例代码如下：
+所有package、interface和module都定义在标准电路文件中。在文件内定义顺序为 **package > interface > module** , 同优先级下，按首字母排序,由于package内部可能有依赖关系，若存在依赖关系，以依赖关系为准。若是几个module(package、interface)有一定相关性(属于同一类型不同配置 或 一同构成一个大IP)，可以在库内分成不同的section。示例代码如下：
 
   .. code-block:: verilog 
 
