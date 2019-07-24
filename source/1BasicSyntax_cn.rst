@@ -645,12 +645,39 @@ g) 尽量简化寄存器块中逻辑判断电路的复杂度，需要复杂逻�
 h) 推荐使用module对寄存器进行封装，在需要寄存器电路时直接调用。
 i) 当设计可能同时用于不同的工艺或器件中时，使用CfgDff进行寄存器电路实现。
 
-1.3.5 例化设计规范
+1.3.5 参数定义规范
+====================
+
+a) 只有可能在例化时传递的参数才可以定义为parameter，其他模块内部的信号都要定义为localparam。
+b) localparam可以定义在端口处，也可以在代码内有需要的地方再定义。
+c) 如果一个信号类型在模块端口或内部多次使用，则可以在module起始位置定义信号的type。
+d) verilog支持参数矩阵，定义时要把参数 **显式定义为int类型**。不然默认为 1bit 的 logic 信号。
+e) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。设计过程中注意不要超出参数范围。代码如下所示：
+
+  .. code-block:: verilog
+
+    module TestAaa
+    #(NUM = 4
+      int ADDRS = {0,1,2,3}
+    )(
+    ...
+    );
+    ...
+    endmodule: TestAaa
+
+    module tb;
+      TestAaa U_TestAaa(...);
+      defparam U_TestAaa.NUM = 8;
+      defparam U_TestAaa.ADDRS = {0,1,2,3,4,5,6,7};
+      ...
+    endmodule: tb
+
+1.3.6 例化设计规范
 ==================
 
 TBD
 
-1.3.6 FSM设计规范
+1.3.7 FSM设计规范
 =================
 
 TBD
