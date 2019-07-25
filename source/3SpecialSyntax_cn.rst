@@ -17,6 +17,8 @@
         `define __DefErr__(Str) Macro Define Error: Str has already been defined!!
       `endif
 
+为了方便设计，可以使用以及定义好的通用宏定义文件：`CommonDef.vh <https://github.com/zion-group/VerilogCodingStyle/blob/master/source/CommonDef.vh>`_。
+
 3.1.1 基于宏的模板例化方法。
 ===============================
 
