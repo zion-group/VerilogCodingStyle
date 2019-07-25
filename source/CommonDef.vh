@@ -2,7 +2,7 @@
 `define gen_elif else if
 `define gen_else else
 
-`defineMACRO_TEMPLATE
+`define MACRO_TEMPLATE
 
 `ifdef __DefErr__
   Macro Define Error: __DefErr__ has already been defined!!
