@@ -3,6 +3,7 @@
 `define gen_else else
 
 `define MACRO_TEMPLATE
+`define LIB_PARAMETER_ERROR_STOP
 
 `ifdef __DefErr__
   Macro Define Error: __DefErr__ has already been defined!!
