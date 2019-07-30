@@ -1,0 +1,1 @@
+This is a coding style document for SystemVerilog. It is used for hardware design, not for verification. If you like it, please give us a star. The whole document is shown in [Verilog Coding Style](https://verilogcodingstyle.readthedocs.io/en/latest/index.html).
