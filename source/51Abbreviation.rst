@@ -17,6 +17,7 @@
 -- --  asyn --    --     asynchronous
 -- buf --   --    --     buffer
 -- blk --   --    --     block
+bj --  --   --    --     branch & jump
 -- cap --   --    --     capacity
 -- clr --   --    --     clear
 ck clk --   --    --     clock
