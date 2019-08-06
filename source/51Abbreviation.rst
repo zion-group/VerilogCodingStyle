@@ -23,12 +23,13 @@ bj --  --   --    --     branch & jump
 ck clk --   --    --     clock
 ch --  --   --    --     channel
 cs --  --   --    --     chip select
-cs --  --   --    --     current state
+-- cmp --   --    --     compare
 -- cmd --   --    --     command
 -- cfg --   --    --     config, configuration
 -- --  ctrl --    --     control
 -- cnt --   --    --     counter
 -- --  curr --    --     current
+cs --  --   --    --     current state
 -- dat --   --    --     data
 -- dst --   --    --     destination
 -- div --   --    --     division
