@@ -411,6 +411,6 @@ a) 在module下一行import之前引用宏库：`Use_ZionCircuitLib(z)
   - 此时，库内任意元素的调用，以 **z** 开头。
   - 若当前module只使用了一个宏库，则括号内可以指定缩写也 **可以为空** ，此时直接调用元素即可。
   - 无论缩写内容是什么，宏都会扩展为全名，比如：**`zInv -> ZionCircuitLib_Inv**，因此在仿真、综合中相关内容都是以该库元素全名显示。
-  - 在endmodule前 **Unuse* 相应的库：**`Unuse_ZionCircuitLib(z)** 。
+  - 在endmodule前 **Unuse** 相应的库：**`Unuse_ZionCircuitLib(z)** 。
 
 
