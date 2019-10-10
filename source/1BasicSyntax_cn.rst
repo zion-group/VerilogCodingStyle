@@ -166,6 +166,11 @@ d) 在端口中定义顺序为: **parameter** > **parameter type** > **localpara
 e) localparam如果不会在端口定义中使用，可以在代码正文中定义。
 f) 定义类型以 **'type_'** 作为前缀，类型名以 **大驼峰** 方式命名。
 
+1.1.4 特殊注释命名
+==================
+
+文件中如果有待实现功能或待完善的注释，使用 **TODO** 标注。如果有BUG，使用 **FIXME** 标注。VS Code编辑器中有插件Todo Tree可以列出文档中所有标注的位置。
+
 1.2 格式规范
 ************
 
@@ -678,9 +683,43 @@ e) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。�
 1.3.6 例化设计规范
 ==================
 
-TBD
+TODO
 
 1.3.7 FSM设计规范
 =================
 
-TBD
+TODO
+
+1.4 仿真规范
+************
+
+1.4.1 信息打印规范
+==================
+
+a) 参数检查等功能可以放置在initial块中。发现代码错误的情况使用 **$error**, 不使用'$display',因为$error在打印信息时可以提示错误位置。添加宏定义控制变量 **CHECK_ERR_EXIT**。开启该宏后，发生错误时可以停止仿真。
+  .. code-block:: verilog
+    module Dff
+    #(WIDTH_IN  = "_", // width of input data
+      WIDTH_OUT = "_"  // width of output data
+    )(
+      input                        clk,
+      input        [WIDTH_IN -1:0] iDat,
+      output logic [WIDTH_OUT-1:0] oDat
+    );
+
+      always_ff@(posedge clk)
+        oDat <= iDat;
+
+      // parameter check, if the width of input data and output data are not equal, print error.
+      initial begin
+        if(WIDTH_IN != WIDTH_OUT) begin
+          $error("Parameter Err: Dff IO width mismatch!!");
+          `ifdef CHECK_ERR_EXIT
+            $finish;
+          `endif
+        end
+      end
+
+    endmodule: Dff
+
+TODO: 多等级打印
