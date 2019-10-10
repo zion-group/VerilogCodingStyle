@@ -105,38 +105,30 @@ j) 结束条件编译。
 3.1.2 基于宏的电路设计方法
 ==========================
 
-由于目前调用module进行电路设计有诸多限制(不能在interface中使用等等)，而标准中规定的参数化function还有很多EDA不能支持，因此需要使用宏对需要封装的电路进行设计。
-
-3.1.2.1 基于宏的电路模块设计
--------------------------------
+由于目前调用module进行电路设计有诸多限制(不能在interface中使用等等)，而标准中规定的参数化function还有很多EDA不能支持，因此需要使用宏对需要封装的电路进行设计，以实现类似参数化function功能。
 
   .. code-block:: verilog 
 
-    `ifdef MACRO_TEMPLATE 
-
-      `ifdef ZionCircuitLib_MaskM
-        `__DefErr__(ZionCircuitLib_MaskM)
-      `else
-        `define ZionCircuitLib_MaskM(en,dat) ({$bits(dat){en}} & dat)
-      `endif
-
-      `ifdef ZionCircuitLib_OnehotM
-        `__DefErr__(ZionCircuitLib_OnehotM)
-      `else
-        `define ZionCircuitLib_OnehotM(iDat,oDat) \
-      always_comb begin: Onehot_``oDat\
-        foreach(oDat[i])begin\
-          oDat[i] = (iDat==i);\
-        end\
-      end\
-      `endif
-
+    `ifdef ZionCircuitLib_MaskM
+      `__DefErr__(ZionCircuitLib_MaskM)
+    `else
+      `define ZionCircuitLib_MaskM(en,dat) ({$bits(dat){en}} & dat)
     `endif
 
-定义方式与2.1中基于宏的例化相似。定义宏前要检查是否出现重定义错误。若没有重定义，则定义宏电路。宏电路以 **'M'** 作为后缀。其他定义方式与前述相同。**此处电路描述代码缩进以行首为准，不以上一层define为准，便于EDA工具展开宏后进行代码调试。** 只有在 **以下两种情况下** 推荐使用宏定义进行电路设计：
+    `ifdef ZionCircuitLib_OnehotM
+      `__DefErr__(ZionCircuitLib_OnehotM)
+    `else
+      `define ZionCircuitLib_OnehotM(iDat,oDat) \
+    foreach(oDat[i])begin     \
+          oDat[i] = (iDat==i);\
+        end                   \
+    `endif
+
+
+定义方式与2.1中基于宏的例化相似。定义宏前要检查是否出现重定义错误。若没有重定义，则定义宏电路。宏电路以 **'M'** 作为后缀。其他定义方式与前述相同。**此处电路描述代码缩进以行首为准，不以上一层define为准，便于EDA工具展开宏后进行代码调试。定义时，第一行无缩进，其他行在缩进两次基础上再根据需要缩进** 只有在 **以下两种情况下** 推荐使用宏定义进行电路设计：
 
   - **单行宏** ：当前电路需要在一行代码内实现，即要实现类似function中return效果。
-  - **多行宏** ：当前电路可能会在interface、function中使用。(interface中不能调用module)
+  - **多行宏** ：当前电路可能会在always_comb块、function中使用。
 
 宏电路设计方法只适用于常用基础电路，复杂电路必须使用module实现。对于所设计的宏电路，必须在文档中明确标识该宏适用于哪种场景。基于宏的电路模块调用方式如下：
 
@@ -145,49 +137,14 @@ j) 结束条件编译。
     module Test;
     ...
 
-    logic [width-1:0] datOh;
-    `ZionCircuitLib_OnehotM(dat,datOh);
-    logic [width-1:0] finalDat;
-    assign finalDat = `ZionCircuitLib_MaskM(en,datOh);
+      logic [width-1:0] datOh;
+      always_comb begin
+        `ZionCircuitLib_OnehotM(dat,datOh);
+      end
+      logic [width-1:0] finalDat;
+      assign finalDat = `ZionCircuitLib_MaskM(en,datOh);
 
     endmodule: Test
-
-3.1.2.2 基于模板的信号定义方法
-----------------------------------
-
-电路设计中经常会遇到需要使用特定电路(已经设计完毕的通用电路)的情况。此时需要定义信号，例化module(或直接用代码进行电路描述)。在这样的场景中，信号定义和电路描述都有固定的形式，因此可以通过宏模板进行信号定义同时自动实现针对该信号的电路描述。如下所示：
-
-  .. code-block:: verilog
-
-    `ifdef MACRO_TEMPLATE
-
-      `ifdef ZionCircuitLib_type_Onehot
-        `__DefErr__(ZionCircuitLib_type_Onehot)
-      `else
-        `define ZionCircuitLib_type_Onehot(signalName,iDat,width=2**$size(iDat),offset=0) \
-      logic [width-1:0] signalName;\
-      always_comb begin\
-        foreach(signalName[i])begin\
-          signalName[i] = (iDat == i + offset);\
-        end\
-      end\
-      `endif
-
-    `endif
-
-模板信号定义方式与前述宏电路定义类似，宏名以 **'type_'**作为前缀，与第一张语法规定中typedef新的数据类型相同。基于电路模板的信号定义调用方式如下：
-
-  .. code-block:: verilog
-
-    module Test;
-    ...
-
-    assign dat = ... ;
-    `ZionCircuitLib_type_Onehot(datOh,dat);
-
-    endmodule: Test
-
-该设计方法类似于面向对象语言的设计理念，针对一个信号直接引入相应的电路描述，通过该方法可以利用输入信号自动推断输出信号位宽，自动定义信号并描述得到该信号需要的电路。
 
 3.1.3 宏模板设计方法应用注意事项
 ===============================
@@ -382,10 +339,11 @@ c) 第二部分为宏库的具体定义。
 3.2.4 宏库使用方法
 ==================
 
-假设已经存在 ZionCircuitLib 电路库中的相关文件。库的使用方式如下：
+假设已经存在 ZionCircuitLib 电路库中的相关文件。库的使用可以作用于一个module(interface)或者一个文件，例子如下：
 
   .. code-block:: verilog 
 
+    // file A, `Use_XxxLib @ beginning of the module, `Unuse_XxxLib @ end of the module.
     module TestModule
     `Use_ZionCircuitLib(z)
     import `zDemoPkg::*;
@@ -403,6 +361,14 @@ c) 第二部分为宏库的具体定义。
 
     `Unuse_ZionCircuitLib(z)
     endmodule: TestModule
+
+    // file B， `Use_XxxLib @ beginning of the file, `Unuse_XxxLib @ end of the file.
+    `Use_ZionCircuitLib(z)
+    ...
+    ...
+    `Unuse_ZionCircuitLib(z)
+
+
 
 a) 在module下一行import之前引用宏库：`Use_ZionCircuitLib(z)
 
