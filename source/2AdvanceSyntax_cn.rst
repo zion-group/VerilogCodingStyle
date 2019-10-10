@@ -170,20 +170,20 @@ c) 实现与interface相关性较高的逻辑，通过以下两种方式：
 
   - 单独实现一个module。
 
-    1. 命名方式：**interface名称 + Unit**。在module设计需要实现的电路。
-    2. 在interface中 **添加modport：Unit**，在例化interface的位置例化该module，传递interface到module内。
+    设计一个单独的module，将interface作为接口，将逻辑放置在module内。对于复杂的电路实现，推荐这种方式。
 
   - 在interface中设计 **function** 或 **task**。
   
     1. 将需要实现的功能设计在interface的 **function** 或 **task** 中。
     2. 通过modport将 function 或 task 直接 **import** 到module中。
     3. 在module中直接调用。
-    4. 注意：function 或 task 可以直接访问interface里的信号，不需要通过端口传递。
+    4. function 或 task 可以直接访问interface里的信号，不需要通过端口传递。
+    5. 建议只使用function，不使用task。在function中不要放置带复杂的逻辑。
 
 d) 可以在interface中typedef数据类型，通过interface将数据类型引入到module中。
-e) 标准中允许在module中直接访问interface中的parameter，该功能目前尚未被EDA工具支持。(TBD:EDA工具更新后重新测试)
+e) 标准中允许在module中直接访问interface中的parameter，该功能目前尚未被EDA工具支持。(TODO:EDA工具更新后重新测试)
 f) 减少在interface中的input信号数量，尤其是会参与计算的信号。在测试中遇到过相关EDA工具Bug。
 g) interface在端口定义和信号连接时必须 **指定modport** 。否则综合会提示信号未使用warning。
 h) 通过 **interface + modport + 参数化设计** 可以实现verilog可变端口数量。
 
-TBD：在附录中给出各种复杂设计下的Demo。
+TODO：在附录中给出各种复杂设计下的Demo。
