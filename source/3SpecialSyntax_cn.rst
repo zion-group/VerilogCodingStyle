@@ -26,21 +26,19 @@
 
   .. code-block:: verilog 
 
-    // Macro templete defination for ZionCircuitLib_Adder.
-    `ifdef MACRO_TEMPLATE 
-      `ifdef ZionCircuitLib_Adder
-        `__DefErr__(ZionCircuitLib_Adder)
-      `else
-        `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT)\
-      ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
-                              .WIDTH_O($bits(oDat_MT)),  \
-                              .TypeB(TypeB_MT))          \
-                            UnitName(                    \
-                              .iDatA(iDatA_MT),          \
-                              .iDatB(iDatB_MT),          \
-                              .oDat(oDat_MT)             \
-                            )
-      `endif
+    // Macro template defination for ZionCircuitLib_Adder.
+    `ifdef ZionCircuitLib_Adder
+      `__DefErr__(ZionCircuitLib_Adder)
+    `else
+      `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT) \
+    ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)), \
+                            .WIDTH_O($bits(oDat_MT)),  \
+                            .TypeB(TypeB_MT))          \
+                          UnitName(                    \
+                            .iDatA(iDatA_MT),          \
+                            .iDatB(iDatB_MT),          \
+                            .oDat(oDat_MT)             \
+                          )
     `endif
     module ZionCircuitLib_Adder
     #(WIDTH_A = "_",  //$bits(iDatA)//
@@ -57,16 +55,15 @@
 
 按照规范设计module。在module定义上声明宏模板。宏模板格式：
 
-a) 条件编译语句：'**`ifdef MACRO_TEMPLATE**'，通过宏定义指定是否启用全部宏模板。
-b) 重定义检查。该写法不符合verilog语法，因此在编译时，无论编译选项如何设置，只要发现重复宏定义就会报Error。
-c) 定义宏模板，宏模板定义第一行无空格，结尾直接使用 '**\\**' 换行。
-d) 宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。 **此处代码缩进以行首为准，不以上一层define为准，便于EDA工具展开宏后进行代码调试。**
-e) 参数中先定义例化名称，再定义type参数，最后定义输入、输出端口。
-f) 输入输出端口与端口名称相同，增加 '_MT' 后缀。
-g) 完成module定义。
-h) 定义module时，参数在两个 '**//**' 间标注计算方法。在后面的 '**//**'后写注释。若某参数与端口无关则不标注计算方法。(该写法用于宏自动生成)
-i) 除最后一行外，其他行宏以 '**\\**' 结尾。(多行宏定义标准写法)
-j) 结束条件编译。
+a) 重定义检查。该写法不符合verilog语法，因此在编译时，无论编译选项如何设置，只要发现重复宏定义就会报Error。
+b) 定义宏模板，宏模板定义第一行无空格，结尾直接使用 '**\\**' 换行。
+c) 宏对应的module在新一行中缩进2个空格，直接按照例化格式书写。 **此处代码缩进以行首为准，不以上一层define为准，便于EDA工具展开宏后进行代码调试。**
+d) 参数中先定义例化名称，再定义type参数，最后定义输入、输出端口。
+e) 输入输出端口与端口名称相同，增加 '_MT' 后缀。
+f) 完成module定义。
+g) 定义module时，参数在两个 '**//**' 间标注计算方法。在后面的 '**//**'后写注释。若某参数与端口无关则不标注计算方法。(该写法用于宏自动生成)
+h) 除最后一行外，其他行宏以 '**\\**' 结尾。(多行宏定义标准写法)
+i) 结束条件编译。
 
 宏模板例化代码如下：
 
@@ -171,11 +168,9 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
 3.2.1 宏电路文件
 ================
 
-所有宏电路都定义在同一个宏电路文件中，定义方式与3.1.2中相同。如下示例代码中展示了ZionCircuitLib电路库的宏电路文件(ZionCircuitLib.vm)。该文件中定义了一个MaskM宏，一个type_Onehot模板信号类型。
+所有宏电路都定义在同一个宏电路文件中，定义方式与3.1.2中相同。如下示例代码中展示了ZionCircuitLib电路库的宏电路文件(ZionCircuitLib.vm)。该文件中定义了一个MaskM宏，一个OnehotM宏。
 
   .. code-block:: verilog 
-
-    `ifdef MACRO_TEMPLATE
 
     `ifdef ZionCircuitLib_MaskM
       `__DefErr__(ZionCircuitLib_MaskM)
@@ -183,18 +178,13 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
       `define ZionCircuitLib_MaskM(en,dat) ({$bits(dat){en}} & dat)
     `endif
 
-    `ifdef ZionCircuitLib_type_Onehot
-      `__DefErr__(ZionCircuitLib_type_Onehot)
+    `ifdef ZionCircuitLib_OnehotM
+      `__DefErr__(ZionCircuitLib_OnehotM)
     `else
-      `define ZionCircuitLib_type_Onehot(signalName,iDat,width=2**$size(iDat),offset=0) \
-    logic [width-1:0] signalName;\
-    always_comb begin\
-      foreach(signalName[i])begin\
-        signalName[i] = (iDat == i + offset);\
-      end\
-    end\
-    `endif
-
+      `define ZionCircuitLib_OnehotM(iDat,oDat) \
+    foreach(oDat[i])begin     \
+          oDat[i] = (iDat==i);\
+        end                   \
     `endif
 
 3.2.2 标准电路文件
@@ -233,17 +223,15 @@ Verilog/SystemVerilog中没有基于库、包的设计方法，也没有对应�
     // ...
     //////////////////////////////////////////////////////////////////////////////// 
     `ifndef Disable_ZionCircuitLib_Inv
-    `ifdef MACRO_TEMPLATE 
-      `ifdef ZionCircuitLib_Inv
-        `__DefErr__(ZionCircuitLib_Inv)
-      `else
-        `define ZionCircuitLib_Inv(UnitName,iDat_MT,oDat_MT) \
-      ZionCircuitLib_Inv  #(.WIDTH($bits(iDat_MT)))        \
-                            UnitName(                      \
-                              .iDat(iDat_MT),              \
-                              .oDat(oDat_MT)               \
-                            )
-      `endif
+    `ifdef ZionCircuitLib_Inv
+      `__DefErr__(ZionCircuitLib_Inv)
+    `else
+      `define ZionCircuitLib_Inv(UnitName,iDat_MT,oDat_MT) \
+    ZionCircuitLib_Inv  #(.WIDTH($bits(iDat_MT)))        \
+                          UnitName(                      \
+                            .iDat(iDat_MT),              \
+                            .oDat(oDat_MT)               \
+                          )
     `endif
     module ZionCircuitLib_Inv
     #(WIDTH = "_"  //$bits(iDat)//
@@ -272,10 +260,6 @@ section定义方式：
 宏库头文件书写格式如下所示。
 
   .. code-block:: verilog 
-
-    // import DemoLib
-
-    `ifdef MACRO_TEMPLATE 
 
     `define ZionCircuitLib_MacroDef(ImportName, DefName)                      \
       `ifdef ImportName``DefName                                              \
@@ -318,23 +302,22 @@ section定义方式：
       `undef ImportName``Inv
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    `endif
 
-a) 只有定义 **`ifdef MACRO_TEMPLATE** 才会启用头文件。文件分为两部分。
-b) 第一部分为通用宏定义，可以用宏直接定义不同的module等。
-  
-  - ZionCircuitLib_MacroDef：用于定义 **宏** 和 **模板类型**。
-  - ZionCircuitLib_PackageDef：用于定义 package。
-  - ZionCircuitLib_InterfaceDef：用于定义 interface。
-  - ZionCircuitLib_ModuleDef：用于定义module。
-  - 这四个定义宏中，公共部分为电路库名称，建立新库是，需要将该部分内所有 **ZionCircuitLib** 替换为新库名称。
+文件分为两部分：
+  a) 第一部分为通用宏定义，可以用宏直接定义不同的module等。
 
-c) 第二部分为宏库的具体定义。
+    - ZionCircuitLib_MacroDef：用于定义 **宏** 和 **模板类型**。
+    - ZionCircuitLib_PackageDef：用于定义 package。
+    - ZionCircuitLib_InterfaceDef：用于定义 interface。
+    - ZionCircuitLib_ModuleDef：用于定义module。
+    - 这四个定义宏中，公共部分为电路库名称，建立新库是，需要将该部分内所有 **ZionCircuitLib** 替换为新库名称。
 
-  - 定义格式：**Use_ZionCircuitLib(ImportName)**。
-  - ZionCircuitLib 为库名称。
-  - ImportName为在module内调用时使用的缩写。当一个module内使用多个库时，该缩写可以用于找到电路库名称。
-  - 由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。
+  b) 第二部分为宏库的具体定义。
+
+    - 定义格式：**Use_ZionCircuitLib(ImportName)**。
+    - ZionCircuitLib 为库名称。
+    - ImportName为在module内调用时使用的缩写。当一个module内使用多个库时，该缩写可以用于找到电路库名称。
+    - 由于宏定义是全局有效，为了避免互相干扰，需要在宏库使用完毕后将已定义的宏进行undefine。因此用相同的方法定义Unuse宏。
 
 3.2.4 宏库使用方法
 ==================
