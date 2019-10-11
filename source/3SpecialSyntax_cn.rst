@@ -41,8 +41,8 @@
                             )
     `endif
     module ZionCircuitLib_Adder
-    #(WIDTH_A = "_",  //$bits(iDatA)//
-      WIDTH_O = "_",  //$bits(oDat)//
+    #(WIDTH_A = "_",  //$bits(iDatA)// width of iDatA
+      WIDTH_O = "_",  //$bits(oDat) // width of oDat 
     parameter type
       TypeB = "_"
     )(
