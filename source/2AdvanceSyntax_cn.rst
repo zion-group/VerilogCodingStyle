@@ -8,7 +8,7 @@
 
 a) 不显示声明 **generate** 和 **endgenerate**。不声明在标准中允许，且没有任何影响。
 b) 给必要的生成块 **添加block name**。若在生成语句中调用module或定义信号，该module或信号通过block name访问。若没有显示定义block name，仿真器或综合器会自动生成。
-c) 互斥的block可以使用**相同的block name**。比如：if(...)begin:BlkName ... end else begin:BlkName ... end。 
+c) 互斥的block可以使用 **相同的block name**。比如：if(...) begin :BlkName ... end else begin:BlkName ... end。 
 d) 所有在生成语句中使用的所有变量都是 **固定值** (参数 或 宏)，不是电路中的信号。
 e) 条件电路生成使用宏定义实现，用以区分电路中信号的 if 判断。
     ..
