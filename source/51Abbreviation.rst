@@ -37,6 +37,7 @@ en --  --   --    --     enable
 eq --  --   --    --     equal
 -- err --   --    --     error
 -- --  exec --    --     execute
+-- --  extd --    --     extend
 -- fnl --   --    --     final
 -- fls --   --    --     flush
 -- fwd --   --    --     forward
