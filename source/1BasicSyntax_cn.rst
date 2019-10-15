@@ -184,10 +184,13 @@ f) 定义类型以 **'type_'** 作为前缀，类型名以 **大驼峰** 方式�
     ///////////////////////////////////////////////////////////////////////////////
     // Copyright(C) Zion Team. Open source License: MIT.
     // ALL RIGHT RESERVED
-    // Filename : Demo.sv
-    // Author   : Zion
-    // Date     : 2019-06-20
-    // Version  : 0.1
+    // File name   : Demo.sv
+    // Author      : Zion
+    // Date        : 2019-06-20
+    // Version     : 0.1
+    // Parameter   :
+    //    ...
+    //    ...
     // Description :
     //    ...
     //    ...
