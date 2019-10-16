@@ -340,7 +340,7 @@ section定义方式：
       `zInv(U_Inv,iDat,datOut.dat);
 
       always_comb begin
-        `ztype_Onehot(datOutOh,datOut.dat);
+        `zOnehot(datOutOh,datOut.dat);
       end
       assign oDat = `zMaskM(en,datOutOh);
 
