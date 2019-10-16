@@ -44,10 +44,10 @@
     #(WIDTH_A = "_",  //$bits(iDatA)// width of iDatA
       WIDTH_O = "_",  //$bits(oDat) // width of oDat 
     parameter type
-      TypeB = "_"
+      TypeB   = "_"   //            // data type of iDatB
     )(
       input  [WIDTH_A-1:0] iDatA,
-      input  [WIDTH_B-1:0] iDatB,
+      input  TypeB         iDatB,
       output [WIDTH_O-1:0] oDat
     );
       assign oDat = iDatA + iDatB;
