@@ -30,10 +30,10 @@
     `ifdef ZionCircuitLib_Adder
       `__DefErr__(ZionCircuitLib_Adder)
     `else
-      `define ZionCircuitLib_Adder(UnitName,TypeB_MT,iDatA_MT,iDatB_MT,oDat_MT) \
+      `define ZionCircuitLib_Adder(UnitName,type_B_MT,iDatA_MT,iDatB_MT,oDat_MT) \
     ZionCircuitLib_Adder  #(.WIDTH_A($bits(iDatA_MT)),   \
                               .WIDTH_O($bits(oDat_MT)),  \
-                              .TypeB(TypeB_MT))          \
+                              .type_B(type_B_MT))        \
                             UnitName(                    \
                               .iDatA(iDatA_MT),          \
                               .iDatB(iDatB_MT),          \
@@ -44,10 +44,10 @@
     #(WIDTH_A = "_",  //$bits(iDatA)// width of iDatA
       WIDTH_O = "_",  //$bits(oDat) // width of oDat 
     parameter type
-      TypeB   = "_"   //            // data type of iDatB
+      type_B  = "_"   //            // data type of iDatB
     )(
       input  [WIDTH_A-1:0] iDatA,
-      input  TypeB         iDatB,
+      input  type_B        iDatB,
       output [WIDTH_O-1:0] oDat
     );
       assign oDat = iDatA + iDatB;
@@ -69,17 +69,17 @@ i) 结束条件编译。
 
   .. code-block:: verilog 
 
-    `ZionCircuitLib_Adder (UnitName,TypeB,InA,InB,Out);
+    `ZionCircuitLib_Adder (UnitName,type_B,InA,InB,Out);
 
     `ZionCircuitLib_Adder (UnitName,
-                            TypeB,   //TypeB
+                            type_B,  //type_B
                                 
                             InA,InB, //input
                             Out      //output
                           );
 
     `ZionCircuitLib_Adder (UnitName, 
-                            TypeB,  //TypeB
+                            type_B, //type_B
                             
                             InA,    //iDatA
                             InB,    //iDatB
