@@ -307,122 +307,135 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
 1.2.2.3 module例化格式
 ----------------------
 
-a) 模块例化时，只有定义信号类型的参数在例化时传递，其他参数在module结尾统一使用defparam定义。理由如下：
-
-  - 参数化设计中，参数定义数量很多，在module例化时传递大量参数影响代码阅读
-  - 大部分参数可以通过已连接的端口用系统函数进行计算($bits,$size,$clog2...)，统一写在module结尾方便脚本进行自动生成。
-
-  示例代码：
+a) 模块例化时，参数在例化时通过 **'#()'** 直接传递，尽量避免使用 **defparam**，因为在最新的标准中，已经不推荐使用defparam定义参数。模块例化可以在同一行完成，也可以分多行完成。示例代码：
 
   .. code-block:: verilog
 
-    Adder U_Adder(
-            .a(a),
-            .b(b),
-            .o(o)
-          );
+    Adder 
+      U_Adder(
+        .a(a),
+        .b(b),
+        .o(o)
+      );
 
-    Sub #(.type_A(logic [3:0]),
-          .type_B(logic [3:0]))
-        U_Sub(
-          .a(a),
-          .b(b),
-          .o(o)
-        );
+    Sub#(
+        .type_A(logic [3:0]),
+        .type_B(logic [3:0]))
+      U_Sub(
+        .a(a),
+        .b(b),
+        .o(o)
+      );
+    
+    And#(.width(8)) U_And(.a(a),.b(b),.o(o));
+    And#(8) U_And(a,b,o);
 
-    defparam U_Addr.WIDTH_A = 4;
-    defparam U_Addr.WIDTH_B = 4;
+b) 单行例化格式::
+   
+    2空格 + module名 + #( + 参数列表 + ) + 1空格 + 实例化名 + ( + 端口列表 +);
+   
+c) 有参数例化格式::
 
+    2空格 + module名 + #(
+    6空格 +       第一个参数传递 ，
+                  第二个参数传递))
+    4空格 +    实例化名(
+    6空格          端口连接...
+    4空格 +    );
 
-b) 有参数例化格式::
+d) 无参数例化格式::
 
-    2空格 + module名 + 空格 +  #(第一个参数传递 ，
-                                第二个参数传递))
-                              实例化名(
-                                端口连接...
-                              );
+    2空格 + module名  
+    4空格 +    实例化名(
+    6空格 +       端口连接...
+    4空格 +    );
 
-c) 无参数例化格式::
+e) **参数传递** 及 **端口连接** 格式
 
-    2空格 + module名 + 空格 +  实例化名(
-                                端口连接...
-                              );
-
-d) **参数传递** 及 **端口连接** 格式
-
-  - 尽量避免使用 **'.*'** 方式连接，容易引起隐藏的Bug。
+  - 尽量避免使用 **'.*'** 方式连接，容易引起隐藏的Bug。如果对代码非常熟悉，且很有必要的情况下可以使用 '.*' 进行端口连接，使用这种方式需要在注释中说明连接了哪些端口。
   - 使用 **'.port(signal)'** 连接信号和端口。
-  - 若信号和端口命名相同，可以使用 **'.port'** 方式连接。
+  - 若信号和端口命名相同，可以使用 **'.port'** 方式连接。比如：带有寄存器的模块连接时，时钟和复位端口连接可使用 '.clk,.rst,'。
   - 连接顺序：input, inout, output。
-  - 同方向端口顺序：clock, reset, enable, data。
+  - 同方向端口顺序：clock, reset, clear, enable, data。
 
-e) 若需要使用不指定端口，按顺序连接的方式，按照如下格式书写并用注释进行标注：
-
-  .. code-block:: verilog
-
-    ModuleName  U1_ModuleName(signal1,signal2,signal3,signal4,signal5);
-
-    ModuleName  U2_ModuleName(
-                  signal1,signal2,  //input
-                  signal3,          //inout
-                  signal4,signal5   //output 
-                );
-
-    ModuleName  U3_ModuleName(
-                  signal1,     //port1
-                  signal2,     //port2
-                  signal3,     //port3
-                  signal4,     //port4
-                  signal5      //port5
-                );
-
-f) 完整示例代码：
+f) 若需要使用不指定端口，按顺序连接的方式，按照如下格式书写并用注释进行标注：
 
   .. code-block:: verilog
 
-    module AaaBbb
+    // 单行例化
+    ModuleName#(parameter_1)  U1_ModuleName(signal_1,signal_2,signal_3,signal_4,signal_5);
+
+    // 多行例化，端口按方向分类
+    ModuleName#(
+        P_A)
+      U2_ModuleName(
+        signal_1,signal_2,  //input
+        signal_3,           //inout
+        signal_4,signal_5   //output 
+      );
+
+    // 多行例化，每个端口占用一行
+    ModuleName  
+      U3_ModuleName(
+        signal_1, //port_1
+        signal_2, //port_2
+        signal_3, //port_3
+        signal_4, //port_4
+        signal_5  //port_5
+      );
+
+g) 完整示例代码：
+
+  .. code-block:: verilog
+
+    module DemoModule
     (
       input        [3:0] iDatA,
       input        [3:0] iDatB,
-      output logic [4:0][4:0] datSum,
-      output logic [7:0] datMult
+      output logic [4:0][4:0] oDatSum,
+      output logic [7:0] oDatMult
     ); 
     
-      Mult  #(.type_A(logic [3:0]),
-              .type_B(logic [3:0]))
-            U_Mult(
-              .iDatA(iDatA),
-              .iDatB(iDatB),
-              .oDat(datMult)
-            );
+      Mult#(
+          .type_A(logic [3:0]),
+          .type_B(logic [3:0]),
+          .WIDTH($bits(datMult)))
+        U_Mult(
+          .iDatA(iDatA),
+          .iDatB(iDatB),
+          .oDat(oDatMult)
+        );
 
-      Adder U_Adder(
-              .iDatA(iDatA),
-              .iDatB(iDatB),
-              .oDat(datSum[0])
-            );
+      Adder 
+        U_Adder(
+          .iDatA(iDatA),
+          .iDatB(iDatB),
+          .oDat(oDatSum[0])
+        );
 
-      Adder U0_Adder(
-              .iDatA,
-              .iDatB,
-              .oDat(datSum[1]));
+      Adder 
+        U0_Adder(
+          .iDatA,
+          .iDatB,
+          .oDat(oDatSum[1])
+        );
 
-      Adder U1_Adder(iDatA,iDatB,datSum[2]);
+      Adder U1_Adder(iDatA,iDatB,oDatSum[2]);
 
-      Adder U2_Adder(
-              iDatA,iDatB,//input
-              datSum[3]   //output
-            );
+      Adder 
+        U2_Adder(
+          iDatA,iDatB,//input
+          oDatSum[3]   //output
+        );
 
-      Adder U3_Adder(
-              iDatA,   //iDatA
-              iDatB,   //iDatB
-              datSum[4]//oDat
-            );
+      Adder 
+        U3_Adder(
+          iDatA,   //iDatA
+          iDatB,   //iDatB
+          datSum[4]//oDat
+        );
 
-      defparam U_Mult.WIDTH = $bits(datMult);
-
-    endmodule : AaaBbb
+    endmodule : DemoModule
 
 1.3 设计规范
 ************
