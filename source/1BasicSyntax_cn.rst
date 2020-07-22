@@ -521,9 +521,9 @@ a) 在设计中使用data mask写法：**yy = {$bits(xx){en}} & xx;**
 
     // Use like this.
     assign dat  = {$bits(a){(x==2'd1 && y==2'd1)}} & a;
-                  {$bits(b){(x==2'd1 && y==2'd1)}} & b;
-                  {$bits(c){(x==2'd1 && y==2'd1)}} & c;
-                  {$bits(d){(x==2'd1 && y==2'd1)}} & d;
+                  {$bits(b){(x==2'd2 && y==2'd2)}} & b;
+                  {$bits(c){(x==2'd3 && y==2'd3)}} & c;
+                  {$bits(d){(x==2'd4 && y==2'd4)}} & d;
 
     // Dont use like this!!
     assign dat  = (x==2'd1 && y==2'd1)? a :
