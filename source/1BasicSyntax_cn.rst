@@ -142,34 +142,34 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
   .. code-block:: verilog
   
     `define DEMO_MACRO 1
-    parameter PARAM_A = 2;
-    localparam PARAM_B = 3;
-    localparam PARAM_A_LG = $clog2(PARAM_A);
-    parameter type type_A = logic [3:0];
+    parameter  P_PARAM_A    = 2;
+    localparam P_PARAM_B    = 3;
+    localparam P_PARAM_A_LG = $clog2(PARAM_A);
+    parameter  type type_A  = logic [3:0];
 
     module Demo
-    #(PARAM_A = 1,
-      PARAM_B = 2,
+    #(P_PARAM_A = 1,
+      P_PARAM_B = 2,
     parameter type
       type_A = logic [3:0],
     localparam
-      PARAM_C = 3
+      P_PARAM_C = 3
     )(
     );
 
     endmodule
 
-a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此所有字母全部大写(因为全大写字符串在编辑器中高亮与普通字符串不同)，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。
+a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此所有字母全部大写(因为全大写字符串在编辑器中高亮与普通字符串不同)，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。除type参数意外以外，其他参数定义(parameter和localparam)以 **\'P_\'** 开始。
 b) 单词间用 \'_\' 隔开。
-c) 若某参数 **PARAM_A** 是 **PARAM_B** 的对数，可以写成 **PARAM_B_LG**，例如： **PARAM_B_LG = $clog2(PARAM_B)**。
+c) 若某参数 **P_PARAM_A** 是 **P_PARAM_B** 的对数，可以写成 **P_PARAM_B_LG**，例如： **P_PARAM_B_LG = $clog2(P_PARAM_B)**。
 d) 在端口中定义顺序为: **parameter** > **parameter type** > **localparam**。
-e) localparam如果不会在端口定义中使用，可以在代码正文中定义。
+e) **localparam** 如果不会在端口定义中使用，可以在代码正文中定义。
 f) 定义类型以 **'type_'** 作为前缀，类型名以 **大驼峰** 方式命名。
 
 1.1.4 特殊注释命名
 ==================
 
-文件中如果有待实现功能或待完善的注释，使用 **TODO** 标注。如果有BUG，使用 **FIXME** 标注。VS Code编辑器中有插件Todo Tree可以列出文档中所有标注的位置。
+文件中如果有待实现功能或待完善的注释，使用 **TODO** 标注。如果有BUG，使用 **FIXME** 标注。编辑器中有插件可以列出文档中所有标注的位置。
 
 1.2 格式规范
 ************
