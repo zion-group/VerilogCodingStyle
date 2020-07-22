@@ -433,7 +433,7 @@ g) 完整示例代码：
         U3_Adder(
           iDatA,   //iDatA
           iDatB,   //iDatB
-          datSum[4]//oDat
+          oDatSum[4]//oDat
         );
 
     endmodule : DemoModule
