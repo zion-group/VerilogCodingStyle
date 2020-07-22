@@ -14,7 +14,7 @@ a) 每个文件中只包含一个module、class、package，文件名与文件�
   
     module TestModule;
     ...
-    endmodule: TestModule
+    endmodule : TestModule
 
   上述代码保存在 **TestModule.sv** 文件中。
 
@@ -40,12 +40,12 @@ a) 以 **大驼峰** 格式命名，package以Pkg结尾。
     //AaBbCc.sv
     module AaBbCc;
       ...
-    endmodule: AaBbCc
+    endmodule : AaBbCc
 
     //XxxYyyPkg.sv
     package XxxYyyPkg;
       ...
-    endpackage: XxxYyyPkg
+    endpackage : XxxYyyPkg
 
 b) 若module属于某个电路库，module命名格式：**电路库名称 + '_' + module名称**。
 
@@ -53,7 +53,7 @@ b) 若module属于某个电路库，module命名格式：**电路库名称 + '_'
 
     module ZionCircuitLib_Max
       ...
-    endmodule: ZionCircuitLib_Max
+    endmodule : ZionCircuitLib_Max
 
 c) module例化使用前缀：**\'U\_\'** 或 **\'Ux\_\'**。
 
@@ -93,7 +93,7 @@ a) 所有信号采用 **小驼峰** 命名方式。
 
       ...
 
-    endmodule: DemoModule
+    endmodule : DemoModule
 
 
 a) 前缀用于标志信号的特殊用途或特殊含义，以一个小写字母写在信号名前，信号名为大驼峰命名，整个信号为 **小驼峰** 命名。
@@ -157,7 +157,7 @@ d) 同步后信号：**s** (synchronous)，例如：**aWrEn_s**。
     )(
     );
 
-    endmodule
+    endmodule : Demo
 
 a) 由于 **参数** 和 **宏** 表示常数，与普通信号不同，因此所有字母全部大写(因为全大写字符串在编辑器中高亮与普通字符串不同)，以便于信号进行区分。只有传递数据类型的参数可以包含小写字母。除type参数意外以外，其他参数定义(parameter和localparam)以 **\'P_\'** 开始。
 b) 单词间用 \'_\' 隔开。
@@ -239,15 +239,15 @@ c) 语句间可以有1个或多个空格。多余一个空格可以方便对齐�
 
 
 
-d) 重要的block，及包含信号定义的block，需要添加 **block name** 。所有 **module**， **interface**， **package** 和 **有名字的block** 主要添加对应的 **ending name**。
+d) 重要的block，及包含信号定义的block，需要添加 **block name** 。所有 **module**， **interface**， **package** 和 **有名字的block** 主要添加对应的 **ending name**。**block name** 和 **ending name** 之前的 **\':\'** 前后都需要添加空格。
 
   .. code-block:: verilog
 
     module DemoModule();
       always_comb begin: DemoBlock
         ...
-      end: DemoBlock
-    endmodule: DemoModule
+      end : DemoBlock
+    endmodule : DemoModule
 
 1.2.2.2 module端口格式
 ----------------------
@@ -259,20 +259,20 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
     module DemoLib_ModuleXxxYyy // 单独一行，前后无空格。
     import DemoAaaPkg::*;       // 引用package，单独一行，前后无空格。
     import DemoBbbPkg::*;       // 多个package写在不同的行中。
-    #(PARAM_A = "_",            // 第一个参数以 '#(' 开头，定义在新行中，前后无空格，省略parameter标识符。
-      P_B     = "_",            // 其他parameter在新的行中定义，定义前需要 2个空格 进行缩进。
+    #(P_A = "_",                // 第一个参数以 '#(' 开头，定义在新行中，前后无空格，省略parameter标识符。
+      P_B = "_",                // 其他parameter在新的行中定义，定义前需要 2个空格 进行缩进。
     localparam                  // 若存在local parameter，localparam在新的一行中定义，前后无空格。
-      P_B_LG = $clog2(P_B),      // local parameter定义格式与parameter相同。
-      PARAM_C = PARAM_A - 1
+      P_B_LG = $clog2(P_B),     // local parameter定义格式与parameter相同。
+      P_C = P_A - 1
     )(                          // 在新的行中写 '参数定义右括号' 和 '端口定义左括号'。
-      input        clk,rst,     // 端口在新行中定义，2个空格缩进。'clk,rst' 可以写在同一行
-      input        iEn,         // 端口定义顺序：input, inout, output。
-      input        iDat,        // 同方向端口定义顺序：clock, reset, enable, data。
-      inout        bVld,        
-      output logic oDat,
+      input        clk,rst ,    // 端口在新行中定义，2个空格缩进。'clk,rst' 可以写在同一行。
+      input        iEn     ,    // 端口定义顺序：input, inout, output。
+      input        iDat    ,    // 同方向端口定义顺序：clock, reset, enable, data。
+      inout        bVld    ,    // 端口和参数定义结尾的逗号分隔符可以对齐也可以不对齐。      
+      output logic oDat
     );                          // 端口定义 右括号 及 分号 单独一行，前后无空格。
       ...
-    endmodule: DemoLib_ModuleXxxYyy //单独一行，前后无空格。添加 ending name。
+    endmodule : DemoLib_ModuleXxxYyy //单独一行，前后无空格。添加 ending name。':' 前后各有一个空格。
 
 
     module DemoLib_Aaa
@@ -282,7 +282,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
       output oDat
     );
       ...
-    endmodule: DemoLib_Aaa
+    endmodule : DemoLib_Aaa
 
   如果模块端口较多，且不同端口连接模块不同，可以按照连接关系对端口进行分组：
 
