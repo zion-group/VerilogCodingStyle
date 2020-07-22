@@ -244,7 +244,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
   .. code-block:: verilog
 
     module DemoModule();
-      always_comb begin: DemoBlock
+      always_comb begin : DemoBlock
         ...
       end : DemoBlock
     endmodule : DemoModule
@@ -302,7 +302,7 @@ d) 重要的block，及包含信号定义的block，需要添加 **block name** 
       input c2
     );
       ......
-    endmodule: DemoGroupIO
+    endmodule : DemoGroupIO
 
 1.2.2.3 module例化格式
 ----------------------
@@ -422,7 +422,7 @@ f) 完整示例代码：
 
       defparam U_Mult.WIDTH = $bits(datMult);
 
-    endmodule: AaaBbb
+    endmodule : AaaBbb
 
 1.3 设计规范
 ************
@@ -690,14 +690,14 @@ e) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。�
     ...
     );
     ...
-    endmodule: TestAaa
+    endmodule : TestAaa
 
     module tb;
       TestAaa U_TestAaa(...);
       defparam U_TestAaa.NUM = 8;
       defparam U_TestAaa.ADDRS = {0,1,2,3,4,5,6,7};
       ...
-    endmodule: tb
+    endmodule : tb
 
 1.3.6 例化设计规范
 ==================
@@ -739,6 +739,6 @@ a) 参数检查等功能可以放置在initial块中。发现代码错误的情�
         end
       end
 
-    endmodule: Dff
+    endmodule : Dff
 
 TODO: 多等级打印
