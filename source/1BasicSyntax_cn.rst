@@ -662,29 +662,31 @@ j) 在always块中对多个信号进行条件赋值时，必须在所有条件�
 1.3.4 时序电路设计规范
 ======================
 
-a) 寄存器设计使用：**always_ff**
-b) 锁存器设计使用：**always_latch**
-c) 寄存器电路赋值使用：**<=**
-d) 寄存器设计时，信号顺序遵循：reset > enable > assignment。**信号保持的else不要写**。
+a) 寄存器设计使用：**always_ff**， 赋值符号：**<=**
+b) 锁存器设计使用：**always_latch**， 赋值符号：**=**
+c) 寄存器设计时，信号顺序遵循：reset > enable > assignment。**信号保持的else不要写**。
 
   .. code-block:: verilog
 
     always_ff (posedge clk, negedge rst)
       if(!rst)
-        dat <= ...;
-      else if(en)
-        if(a)
-          dat <= ...;
+        dat <= P_INI_DAT;
+      else 
+        if(clr)
+          dat <= P_INI_DAT;
         else
-          dat <= ...;
-    //else  <---------- Dont write the assignment for data keeping!
-    //  dat <= dat; <-- Dont write the assignment for data keeping! 
+          if(en)
+            if(a)
+              dat <= datA;
+            else
+              dat <= datB;
+          //else  <---------- Dont write the assignment for data keeping!
+          //  dat <= dat; <-- Dont write the assignment for data keeping! 
 
-e) 在IC设计中，使用 **异步低有效** 复位。标准单元对于这种复位方式支持更好。
-f) 在FPGA设计中，使用 **同步高有效** 复位。
-g) 尽量简化寄存器块中逻辑判断电路的复杂度，需要复杂逻辑的场景中，先使用组合逻辑电路计算寄存器数据，再保存到寄存器中。
-h) 推荐使用module对寄存器进行封装，在需要寄存器电路时直接调用。
-i) 当设计可能同时用于不同的工艺或器件中时，使用CfgDff进行寄存器电路实现。
+d) 在IC设计中，使用 **异步低有效** 复位。标准单元对于这种复位方式支持更好。
+e) 在FPGA设计中，使用 **同步高有效** 复位。
+f) 尽量简化寄存器块中逻辑判断电路的复杂度，需要复杂逻辑的场景中，先使用组合逻辑电路计算寄存器数据，再保存到寄存器中。
+g) 推荐使用module对寄存器进行封装，在需要寄存器电路时直接调用。
 
 1.3.5 参数定义规范
 ====================
