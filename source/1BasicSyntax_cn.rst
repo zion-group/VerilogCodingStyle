@@ -459,7 +459,7 @@ b) 在定义时直接赋值的信号使用wire类型。因为logic不支持定�
 c) 组合逻辑电路表达式中包含function，使用always_comb赋值。因为assign赋值时，使用function可能引起仿真器bug。
 d) 同向结构化信号，尽量使用struct定义。struct类型可以通过 **parameter type** 在不同模块间传递。
 
-1.3.2 位宽定义
+1.3.2 位宽定义及固定值赋值
 ==============
 
 a) MSB写在左侧，LSB写在右侧。
