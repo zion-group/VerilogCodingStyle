@@ -121,7 +121,7 @@ g) union定义方式与struct相同，变量后缀为 **Un** 。
   .. code-block:: verilog
 
     package BasicPkg;
-      parameter PARAM_A = 1;
+      parameter P_A = 1;
 
       function automatic logic [3:0] DatAnd(input [3:0] in1,in2)
         return in1 & in2;
@@ -139,7 +139,7 @@ d) package中定义的function必须 **包含automatic** 声明。
   .. code-block:: verilog
 
     interface TestItf
-    #(PARAM_A = "_"
+    #(P_A = "_"
     );
 
       logic [3:0] datOh;  // All signal defined in 'logic'.
