@@ -20,32 +20,30 @@ c) 互斥的block可以使用 **相同的block name**。例如：
    
 d) 所有在生成语句中使用的所有变量都是 **固定值** (参数 或 宏)，不是电路中的信号。
 e) 条件电路生成使用宏定义实现，用以区分电路中信号的 if 判断。
-    ..
-      ``该注释无任何意义，用于在编辑时让verilog中define正常显示。
 
-  .. code-block:: verilog
+   .. code-block:: verilog
 
-    `define gen_if   if
-    `define gen_elif else if
-    `define gen_else else
+     `define gen_if   if
+     `define gen_elif else if
+     `define gen_else else
 
-    `gen_if(PARAM_A == 1)begin: dat
-      assign dat1 = xx;
-    end `gen_else begin: dat
-      assign dat1 = yy;
-    end
+     `gen_if(PARAM_A == 1)begin: dat
+       assign dat1 = xx;
+     end `gen_else begin: dat
+       assign dat1 = yy;
+     end
 
-    always_comb begin
-      `gen_if(PARAM_A == 1) begin
-        dat2 = xx;
-      end `gen_else begin
-        dat2 = yy;
-      end
-    end
+     always_comb begin
+       `gen_if(PARAM_A == 1) begin
+         dat2 = xx;
+       end `gen_else begin
+         dat2 = yy;
+       end
+     end
 
 c) 生成块中for循环写法：**for(genvar i=0; i<xx; i++)**
 d) always中for循环写法：**for(int i=0; i<xx; i++)**
-e) for循环的边界判断尽量使用系统函数根据信号进行启动推断。循环变量自加可以使用 **‘i++’** 计算符。
+e) for循环的边界判断尽量使用系统函数根据信号进行自动推断。循环变量自加可以使用 **‘i++’** 计算符。
 f) always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：**foreach(dat[i])**
 
   .. code-block:: verilog
