@@ -80,13 +80,13 @@ i) always中如果需要遍历一个向量内的所有信号，使用foreach循�
 
     // Define a struct signal directly.
     struct packed{
-        logic [7:0] dat;
+      logic [7:0] dat;
     }dat1St;
     
     // Define a struct type and define a struct signal by the new type.
     typedef struct packed{
-        logic [7:0] dat;
-      }type_Demo2St;
+      logic [7:0] dat;
+    }type_Demo2St;
     type_DemoAaSt dat2St;
     
     // Parameterized struct definition by macro.
