@@ -118,8 +118,7 @@ g) union定义方式与struct相同，变量后缀为 **Un** 。
 a) 有相关性的信号、参数、数据类型、函数可以集合在一起定义在一个package内。
 b) package以 **大驼峰** 方式命名，以 **Pkg** 作为名称结尾。
 c) package内的定义都不支持参数化。(SystemVerilog标准中尚不支持)
-d) 利用package可以进行参数无关的电路抽象。例如：指令集中基本指令执行功能可抽象为function。
-e) package中定义的function必须 **包含automatic** 声明。
+d) package中定义的function必须 **包含automatic** 声明。
 
 2.4 interface 用法规范 
 **********************
