@@ -363,10 +363,11 @@ f) 若需要使用不指定端口，按顺序连接的方式，按照如下格�
 
   .. code-block:: verilog
 
-    // 单行例化
+    // Instantiation in a single line.
     ModuleName#(parameter_1)  U1_ModuleName(signal_1,signal_2,signal_3,signal_4,signal_5);
 
-    // 多行例化，端口按方向分类
+    // Instantiation in multiple lines. 
+    // Ports are defined in different lines according to their direction.
     ModuleName#(
         P_A)
       U2_ModuleName(
@@ -375,7 +376,8 @@ f) 若需要使用不指定端口，按顺序连接的方式，按照如下格�
         signal_4,signal_5   //output 
       );
 
-    // 多行例化，每个端口占用一行
+    // Instantiation in multiple lines.
+    // Each port is defined in its own line. 
     ModuleName  
       U3_ModuleName(
         signal_1, //port_1
