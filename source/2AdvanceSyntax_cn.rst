@@ -41,10 +41,10 @@ e) 条件电路生成使用宏定义实现，用以区分电路中信号的 if �
        end
      end
 
-c) 生成块中for循环写法：**for(genvar i=0; i<xx; i++)**
-d) always中for循环写法：**for(int i=0; i<xx; i++)**
-e) for循环的边界判断尽量使用系统函数根据信号进行自动推断。循环变量自加可以使用 **‘i++’** 计算符。
-f) always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：**foreach(dat[i])**
+f) 生成块中for循环写法：**for(genvar i=0; i<xx; i++)**
+g) always中for循环写法：**for(int i=0; i<xx; i++)**
+h) for循环的边界判断尽量使用系统函数根据信号进行自动推断。循环变量自加可以使用 **‘i++’** 计算符。
+i) always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：**foreach(dat[i])**
 
   .. code-block:: verilog
 
