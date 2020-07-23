@@ -78,27 +78,40 @@ i) always中如果需要遍历一个向量内的所有信号，使用foreach循�
 
   .. code-block:: verilog
 
+    // Define a struct signal directly.
+    struct packed{
+        logic [7:0] dat;
+    }dat1St;
+    
+    // Define a struct type and define a struct signal by the new type.
+    typedef struct packed{
+        logic [7:0] dat;
+      }type_Demo2St;
+    type_DemoAaSt dat2St;
+    
+    // Parameterized struct definition by macro.
     `define typedef_DemoSt(width) \
       typedef struct packed{\
         logic [width-1:0] dat;\
       }
-    `define DemoSt(width) \
+    `define type_DemoSt(width) \
       struct packed{\
         logic [width-1:0] dat;\
       }
 
-    `typedef_DemoSt(8) type_DemoSt;
-    type_DemoSt datSt;
-    struct packed{
-        logic [7:0] dat;
-    }datTempSt;
-    assign datSt = dat'(datTempSt);
+    // Define struct type and struct variable by macro.
+    `typedef_DemoSt(8) type_Demo3St;
+    type_Demo3St dat3St;
+    `type_DemoSt(8) dat4St;
+    
+    // Type convert by casting operating.
+    assign dat3St = dat3St'(dat4St);
 
 a) 同方向有相关性信号，推荐使用struct定义。
 b) 结构体定义必须使用packed形式。
-c) 直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义类型，使用 **typedef_** 作为前缀，类型名用 **大驼峰** 命名法，结尾用 **St** 作为后缀。
-d) struct 信号定格式：信号名用 **大驼峰** 命名法，**type_** 作为前缀。struct定义的变量用 **小驼峰** 命名法，**St** 作为后缀。
-e) 使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)
+c) 直接使用struct定义在不同位置的变量会被EDA工具认为是两个不同变量。当需要在多处定义相同struct时，使用typedef形式定义类型，使用 **type_** 作为前缀，类型名用 **大驼峰** 命名法，结尾用 **St** 作为后缀。
+d) struct定义的变量用 **小驼峰** 命名法，**St** 作为后缀。
+e) 使用宏实现参数化struct定义，建议同时定义 typedef 和 非typedef 两种方式。两种宏分别以：**typedef_** 和 **type_** 作为前缀，使用 **大驼峰** 命名法，**St** 作为后缀。(SystemVerilog标准中使用virtual class实现参数化struct定义，该语法尚未被部分EDA工具支持。)
 f) struct 可以使用 **'( )** 操作符。
 g) union定义方式与struct相同，变量后缀为 **Un** 。
 
