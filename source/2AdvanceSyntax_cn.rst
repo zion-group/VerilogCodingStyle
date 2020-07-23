@@ -7,7 +7,7 @@
 
 
 a) 不显示声明 **generate** 和 **endgenerate**。不声明在标准中允许，且没有任何影响。
-b) 给必要的生成块 **添加block name**。若在生成语句中调用module或定义信号，该module或信号通过block name访问。若没有显示定义block name，仿真器或综合器会自动生成。
+b) 给必要的生成块 **添加block name** ，带有block name的块需要添加对应的 **ending name**。若在生成语句中调用module或定义信号，该module或信号通过block name访问。若没有显示定义block name，仿真器或综合器会自动生成。**在使用生成块时，尽量给所有的生成块命名。**
 c) 互斥的block可以使用 **相同的block name**。例如：
 
    .. code-block:: verilog
@@ -45,19 +45,21 @@ e) 条件电路生成使用宏定义实现，用以区分电路中信号的 if �
 
 c) 生成块中for循环写法：**for(genvar i=0; i<xx; i++)**
 d) always中for循环写法：**for(int i=0; i<xx; i++)**
-e) always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：**foreach(dat[i])**
+e) for循环的边界判断尽量使用系统函数根据信号进行启动推断。循环变量自加可以使用 **‘i++’** 计算符。
+f) always中如果需要遍历一个向量内的所有信号，使用foreach循环实现：**foreach(dat[i])**
 
   .. code-block:: verilog
 
     // Define signal outside the loop generate block is recommended.
     logic [WIDTH-1:0] dat1;
-    for(genvar i=0;i<WIDTH;i++)begin: dat1
+    // It is recommended to use $bits(dat1) instead of WIDTH.
+    for(genvar i=0;i<$bits(dat1);i++) begin : dat1_Gen
       assign dat1[i] = xx[i];
-    end
+    end : dat1_Gen
 
-    for(genvar i=0;i<WIDTH;i++)begin: dat2Block
+    for(genvar i=0;i<WIDTH;i++) begin : dat2Block
       wire dat2 = xx[i];  // The signal dat2 can only be accessed by block name: dat2Block.
-    end
+    end : dat2Block_Gen
 
     logic [WIDTH-1:0] dat3,dat4;
     always_comb begin
