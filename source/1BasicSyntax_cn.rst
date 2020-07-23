@@ -513,17 +513,17 @@ g) 使用系统函数进行位宽相关计算。
 
 h) 如果定义MSB在左侧，LSB在右侧，从0开始的信号，比如：[7:0] 或 [31:0]，推荐使用预定义的宏进行位宽定义，可以增强可读性，降低bug出现几率。
 
-  - `w()：用 **参数**、**宏定义** 或 **计算式** 定义信号位宽。宏定义：`define w(__width__)  (__width__):0
-  - `b()：根据一个已知信号的定义 **相同位宽** 的信号。宏定义：`define b(__signal__) (__signal__):0
+  - `w()：用 **参数**、**宏定义** 或 **计算式** 定义信号位宽。
+  - `b()：根据一个已知信号的定义 **相同位宽** 的信号。
   - 用法示例:
   
-  .. code-block:: verilog
+    .. code-block:: verilog
   
-    `define w(__width__)  (__width__):0
-    `define b(__signal__) (__signal__):0
+      `define w(__width__)  (__width__):0
+      `define b(__signal__) (__signal__):0
     
-    logic [`w(P_WIDTH)] datA;
-    logic [`w(P_WIDTH)]['b(datA)] datB;
+      logic [`w(P_WIDTH)] datA;
+      logic [`w(P_WIDTH)]['b(datA)] datB;
 
 1.3.3 组合逻辑电路设计规范
 ==========================
