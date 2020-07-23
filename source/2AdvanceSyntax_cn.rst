@@ -57,13 +57,14 @@ f) always中如果需要遍历一个向量内的所有信号，使用foreach循�
       assign dat1[i] = xx[i];
     end : dat1_Gen
 
+    // Use WIDTH is also allowed.
     for(genvar i=0;i<WIDTH;i++) begin : dat2Block
       wire dat2 = xx[i];  // The signal dat2 can only be accessed by block name: dat2Block.
     end : dat2Block_Gen
 
     logic [WIDTH-1:0] dat3,dat4;
     always_comb begin
-      for(int i=0;i<WIDTH;i++)begin
+      for(int i=0;i<$bits(dat3);i++)begin
         dat3[i] = xx[i];
       end
     end
