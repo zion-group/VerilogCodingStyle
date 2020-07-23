@@ -27,14 +27,14 @@ e) 条件电路生成使用宏定义实现，用以区分电路中信号的 if �
      `define gen_elif else if
      `define gen_else else
 
-     `gen_if(PARAM_A == 1)begin: dat
+     `gen_if(P_PARAM_A == 1) begin : dat
        assign dat1 = xx;
      end `gen_else begin: dat
        assign dat1 = yy;
      end
 
      always_comb begin
-       `gen_if(PARAM_A == 1) begin
+       `gen_if(P_PARAM_A == 1) begin
          dat2 = xx;
        end `gen_else begin
          dat2 = yy;
@@ -49,26 +49,26 @@ i) always中如果需要遍历一个向量内的所有信号，使用foreach循�
   .. code-block:: verilog
 
     // Define signal outside the loop generate block is recommended.
-    logic [WIDTH-1:0] dat1;
-    // It is recommended to use $bits(dat1) instead of WIDTH.
+    logic [P_WIDTH-1:0] dat1;
+    // It is recommended to use $bits(dat1) instead of P_WIDTH.
     for(genvar i=0;i<$bits(dat1);i++) begin : dat1_Gen
       assign dat1[i] = xx[i];
     end : dat1_Gen
 
-    // Use WIDTH is also allowed.
-    for(genvar i=0;i<WIDTH;i++) begin : dat2Block
+    // Use P_WIDTH is also allowed.
+    for(genvar i=0;i<P_WIDTH;i++) begin : dat2Block
       wire dat2 = xx[i];  // The signal dat2 can only be accessed by block name: dat2Block.
     end : dat2Block_Gen
 
-    logic [WIDTH-1:0] dat3,dat4;
+    logic [P_WIDTH-1:0] dat3,dat4;
     always_comb begin
-      for(int i=0;i<$bits(dat3);i++)begin
+      for(int i=0;i<$bits(dat3);i++) begin
         dat3[i] = xx[i];
       end
     end
 
     always_comb begin
-      foreach(iDatA[i])begin
+      foreach(iDatA[i]) begin
         dat4[i] = xx[i];
       end
     end
