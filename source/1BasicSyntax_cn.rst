@@ -710,24 +710,36 @@ g) 推荐使用module对寄存器进行封装，在需要寄存器电路时直�
 a) 只有可能在例化时传递的参数才可以定义为parameter，其他模块内部的信号都要定义为localparam。
 b) localparam可以定义在端口处，也可以在代码内有需要的地方再定义。
 c) 如果一个信号类型在模块端口或内部多次使用，则可以在module起始位置定义信号的type。
-d) verilog支持参数矩阵，定义时要把参数 **显式定义为int类型**。不然默认为 1bit 的 logic 信号。
-e) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。设计过程中注意不要超出参数范围。代码如下所示：
+d) verilog参数默认无类型, 会根据实际传递参数的不同。参数定义时，仅使用以下俩种类：
+   
+   - 无类型字符串。不带类型的字符串参数，可以通过传递不同的名字，使得同一模块有不同实现。尤其适用于硬核IP的例化（比如：SRAM）。该类型参数必须在其他参数前定义。字符串定义使用双引号 **"**（sv中字符串不支持单引号）。在定义字符串参数时，应尽量减少字母数量，防止综合后，在module名中加入过长的字符串。
+   - 固定值参数。sv支持多维参数，且只有packed类型的多维参数可以使用{}运算符统一赋值，因此所有固定值参数要显式定义类型。由于int类型不支持packed数组，因此统一定义参数类型 **intp：typedef logic [31:0] intp;**。所有参数使用intp定义。
+ 
+e) 如果参数必须在例化时手动传入，则在参数定义时，不要设置默认值。
+f) 如果需要定义动态参数矩阵，需要先定义矩阵维度参数。设计过程中注意不要超出参数范围。代码如下所示：
 
   .. code-block:: verilog
 
-    module TestAaa
-    #(NUM = 4,
-      int ADDRS = {0,1,2,3}
+    module TestModule
+    #(     P_STRING = "TestModule",
+      intp P_NUM    = 2           ,
+      intp P_ADDRS  = {0,1}       ,
+      intp P_WIDTH
     )(
-    ...
+      ...
     );
-    ...
-    endmodule : TestAaa
+      ...
+    endmodule : TestModule
 
     module tb;
-      TestAaa U_TestAaa(...);
-      defparam U_TestAaa.NUM = 8;
-      defparam U_TestAaa.ADDRS = {0,1,2,3,4,5,6,7};
+      TestModule #(
+          .P_STRING("U_Test")
+          .P_NUM(4)
+          .P_ADDRS({32'd0,32'd1,32'd2,32'd3}),
+          .P_WIDTH(32'd32)) // P_WIDTH is necessary, since it has no default value.
+        U_Test(
+          ...
+        );
       ...
     endmodule : tb
 
