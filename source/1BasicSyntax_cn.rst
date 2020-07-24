@@ -318,7 +318,7 @@ a) 模块例化时，参数在例化时通过 **'#()'** 直接传递，尽量避
         .o(o)
       );
 
-    Sub#(
+    Sub #(
         .type_A(logic [3:0]),
         .type_B(logic [3:0]))
       U_Sub(
@@ -327,16 +327,16 @@ a) 模块例化时，参数在例化时通过 **'#()'** 直接传递，尽量避
         .o(o)
       );
     
-    And#(.width(8)) U_And(.a(a),.b(b),.o(o));
-    And#(8) U_And(a,b,o);
+    And #(.width(8)) U_And(.a(a),.b(b),.o(o));
+    And #(8) U_And(a,b,o);
 
 b) 单行例化格式::
    
-    2空格 + module名 + #( + 参数列表 + ) + 1空格 + 实例化名 + ( + 端口列表 +);
+    2空格 + module名 + 1空格 + #( + 参数列表 + ) + 1空格 + 实例化名 + ( + 端口列表 +);
    
 c) 有参数例化格式::
 
-    2空格 + module名 + #(
+    2空格 + module名 + 1空格 + #(
     6空格 +       第一个参数 ，
                   ...
     6空格 +       第N个参数))
@@ -364,11 +364,11 @@ f) 若需要使用不指定端口，按顺序连接的方式，按照如下格�
   .. code-block:: verilog
 
     // Instantiation in a single line.
-    ModuleName#(parameter_1)  U1_ModuleName(signal_1,signal_2,signal_3,signal_4,signal_5);
+    ModuleName #(parameter_1)  U1_ModuleName(signal_1,signal_2,signal_3,signal_4,signal_5);
 
     // Instantiation in multiple lines. 
     // Ports are defined in different lines according to their direction.
-    ModuleName#(
+    ModuleName #(
         P_A)
       U2_ModuleName(
         signal_1,signal_2,  //input
@@ -399,7 +399,7 @@ g) 完整示例代码：
       output logic [7:0] oDatMult
     ); 
     
-      Mult#(
+      Mult #(
           .type_A(logic [3:0]),
           .type_B(logic [3:0]),
           .WIDTH($bits(datMult)))
