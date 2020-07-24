@@ -680,7 +680,7 @@ j) 在always块中对多个信号进行条件赋值时，必须在所有条件�
 
 a) 寄存器设计使用：**always_ff**， 赋值符号：**<=**
 b) 锁存器设计使用：**always_latch**， 赋值符号：**=**
-c) 寄存器设计时，信号顺序遵循：reset > enable > assignment。**信号保持的else不要写**。
+c) 寄存器设计时，信号顺序遵循：reset > clear > enable > assignment。**信号保持的else不要写**。
 
   .. code-block:: verilog
 
