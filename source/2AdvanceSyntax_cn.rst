@@ -139,7 +139,7 @@ d) package中定义的function必须 **包含automatic** 声明。
   .. code-block:: verilog
 
     interface TestItf
-    #(P_A = "_"
+    #(P_A
     );
 
       logic [3:0] datOh;  // All signal defined in 'logic'.
@@ -162,14 +162,14 @@ d) package中定义的function必须 **包含automatic** 声明。
       modport datIn(input dat, import BiggerThan1); // import function in modport.
       modport Unit(input datOh0,datOh1,datOh2,datOh3, output dat, import Codec);
 
-    endinterface: TestItf
+    endinterface : TestItf
 
     module TestItfUnit
     (
       TestItf.Unit bDatIf
     );
       bDatIf.Codec();
-    endmodule: TestItfUnit
+    endmodule : TestItfUnit
 
     module ModuleBb
     (
@@ -180,10 +180,10 @@ d) package中定义的function必须 **包含automatic** 声明。
       type_DatSt dataSt;
       assign dataSt = iDatIf.BiggerThan1();   // Use function in interface.
       assign oResult = dataSt.dat1;
-    endmodule: ModuleBb
+    endmodule : ModuleBb
 
 a) interface名称定义使用 **Itf** 作为后缀，信号定义使用 **If** 作为后缀。内部信号使用 **logic** 或 **struct** 定义。
-b) interface中只能存在 **位选择、位截取、位扩展** 逻辑电路，不能存在任何会生成具体器件的逻辑电路。
+b) 用于模块间互联的interface中，值允许存在 **位选择、位截取、位扩展** 逻辑电路，不能存在任何会生成具体器件的逻辑电路。
 
   - interface中实现的电路逻辑在综合后会直接出现在例化interface的module中，这种写法不利于综合、后端流程。因此不允许直接在interface中实现具体电路。
   - 位选择、位截取、位扩展逻辑并不存在实际电路，只是改变连接关系，不影响其他流程。
@@ -207,5 +207,6 @@ e) 标准中允许在module中直接访问interface中的parameter，该功能�
 f) 减少在interface中的input信号数量，尤其是会参与计算的信号。在测试中遇到过相关EDA工具Bug。
 g) interface在端口定义和信号连接时必须 **指定modport** 。否则综合会提示信号未使用warning。
 h) 通过 **interface + modport + 参数化设计** 可以实现verilog可变端口数量。
+i) 利用interface可以进行电路封装，将通用电路在interface内实现，可选电路使用function实现。在使用时，根据需要调用对应的function。在此情况下interface内可以包含实际电路。
 
 TODO：在附录中给出各种复杂设计下的Demo。
